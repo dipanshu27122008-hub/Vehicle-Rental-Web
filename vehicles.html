@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Vehicles | Drivora</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/vehicle.css">
+    <link rel="stylesheet" href="./css/booking.css">
+</head>
+
+<body class="page">
+    <header class="header">
+        <a href="./index.html" class="logo"><img src="./assets/logo/logo drivora.png" alt="Drivora Logo"></a>
+        <nav class="navbar" aria-label="Primary navigation">
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">☰</button>
+            <ul class="nav-links" id="primary-navigation">
+                <li class="nav-item"><a href="./index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="./about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="./vehicles.html" class="nav-link active" aria-current="page">Vehicles</a></li>
+                <li class="nav-item"><a href="./gallery.html" class="nav-link">Gallery</a></li>
+                <li class="nav-item"><a href="./contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="./contact.html" class="nav-link book-now">Book Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content vehicles-page">
+        <section class="vehicles-hero" aria-labelledby="vehicles-heading">
+            <p class="hero-badge">Find your perfect ride</p>
+            <h1 id="vehicles-heading" class="section-title">Our Vehicles</h1>
+            <p>Choose from premium cars and bikes for every kind of journey.</p>
+            <div class="vehicle-stats" aria-label="Drivora statistics">
+                <div><strong>120+</strong><span>Vehicles</span></div>
+                <div><strong>15</strong><span>Cities</span></div>
+                <div><strong>24/7</strong><span>Support</span></div>
+                <div><strong>5000+</strong><span>Happy Customers</span></div>
+            </div>
+        </section>
+
+        <section class="vehicle-controls" aria-label="Vehicle search and filters">
+            <div class="search-field">
+                <label for="vehicle-search">Search vehicles</label>
+                <input type="search" id="vehicle-search" name="vehicle-search" placeholder="Search BMW, Tesla, SUV or Sedan">
+            </div>
+            <div class="search-field">
+                <label for="vehicle-category">Category</label>
+                <select id="vehicle-category" name="category">
+                    <option value="all">All Vehicles</option>
+                    <option value="suv">SUV</option>
+                    <option value="sedan">Sedan</option>
+                    <option value="luxury">Luxury</option>
+                    <option value="electric">Electric</option>
+                    <option value="bike">Bike</option>
+                    <option value="convertible">Convertible</option>
+                    <option value="van">Van</option>
+                    <option value="sports">Sports</option>
+                    <option value="pickup">Pickup</option>
+                    <option value="hatchback">Hatchback</option>
+                    <option value="minivan">Minivan</option>
+                </select>
+            </div>
+            <div class="search-field">
+                <label for="vehicle-sort">Sort</label>
+                <select id="vehicle-sort" name="sort">
+                    <option value="default">Default</option>
+                    <option value="price-low">Price Low to High</option>
+                    <option value="price-high">Price High to Low</option>
+                    <option value="rating">Rating</option>
+                </select>
+            </div>
+            <div class="filter-chips" aria-label="Quick vehicle categories">
+                <button type="button" class="filter-chip active" data-filter="all">All</button>
+                <button type="button" class="filter-chip" data-filter="suv">SUV</button>
+                <button type="button" class="filter-chip" data-filter="sedan">Sedan</button>
+                <button type="button" class="filter-chip" data-filter="luxury">Luxury</button>
+                <button type="button" class="filter-chip" data-filter="electric">Electric</button>
+                <button type="button" class="filter-chip" data-filter="bike">Bike</button>
+                <button type="button" class="filter-chip" data-filter="convertible">Convertible</button>
+                <button type="button" class="filter-chip" data-filter="van">Van</button>
+                <button type="button" class="filter-chip" data-filter="sports">Sports</button>
+                <button type="button" class="filter-chip" data-filter="pickup">Pickup</button>
+                <button type="button" class="filter-chip" data-filter="hatchback">Hatchback</button>
+                <button type="button" class="filter-chip" data-filter="minivan">Minivan</button>
+            </div>
+        </section>
+
+        <section class="vehicles-list" aria-labelledby="available-vehicles-heading">
+            <h2 id="available-vehicles-heading" class="section-title">Available Vehicles</h2>
+            <div class="vehicle-grid">
+                <article class="vehicle-card" data-category="suv" data-vehicle-id="bmw-x5">
+                    <button class="wishlist-button" type="button" aria-label="Add BMW X5 to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/bmw x5.jpg" alt="BMW X5 SUV">
+                    <h3>BMW X5</h3>
+                    <p class="vehicle-type">SUV &bull; Automatic &bull; Petrol</p>
+                    <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
+                    <p class="vehicle-price">₹4,500/day</p>
+                    <button class="btn btn-secondary book-button" type="button" data-vehicle="BMW X5">Book Now</button>
+                </article>
+
+                <article class="vehicle-card" data-category="sedan" data-vehicle-id="mercedes-c-class">
+                    <button class="wishlist-button" type="button" aria-label="Add Mercedes C-Class to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/c class.jpg" alt="Mercedes C-Class sedan">
+                    <h3>Mercedes C-Class</h3>
+                    <p class="vehicle-type">Sedan &bull; Automatic &bull; Petrol</p>
+                    <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
+                    <p class="vehicle-price">₹3,600/day</p>
+                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Mercedes C-Class">Book Now</button>
+                </article>
+
+                <article class="vehicle-card" data-category="electric" data-vehicle-id="tesla-model-3">
+                    <button class="wishlist-button" type="button" aria-label="Add Tesla Model 3 to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/model 3.jpg" alt="Tesla Model 3 electric sedan">
+                    <h3>Tesla Model 3</h3>
+                    <p class="vehicle-type">Electric &bull; Automatic &bull; Electric</p>
+                    <p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p>
+                    <p class="vehicle-price">₹3,900/day</p>
+                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Tesla Model 3">Book Now</button>
+                </article>
+
+                <article class="vehicle-card" data-category="luxury" data-vehicle-id="audi-q7">
+                    <button class="wishlist-button" type="button" aria-label="Add Audi Q7 to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/audi q7.jpg" alt="Audi Q7 SUV">
+                    <h3>Audi Q7</h3>
+                    <p class="vehicle-type">Luxury &bull; Automatic &bull; Diesel</p>
+                    <p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p>
+                    <p class="vehicle-price">₹5,200/day</p>
+                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Audi Q7">Book Now</button>
+                </article>
+
+                <article class="vehicle-card" data-category="sedan" data-vehicle-id="honda-city">
+                    <button class="wishlist-button" type="button" aria-label="Add Honda City to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/honda city.jpg" alt="Honda City sedan">
+                    <h3>Honda City</h3>
+                    <p class="vehicle-type">Sedan &bull; Manual &bull; Petrol</p>
+                    <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
+                    <p class="vehicle-price">₹2,400/day</p>
+                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Honda City">Book Now</button>
+                </article>
+
+                <article class="vehicle-card" data-category="bike" data-vehicle-id="royal-enfield-classic">
+                    <button class="wishlist-button" type="button" aria-label="Add Royal Enfield Classic to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/bullet.jpg" alt="Royal Enfield Classic motorcycle">
+                    <h3>Royal Enfield Classic</h3>
+                    <p class="vehicle-type">Bike &bull; Manual &bull; Petrol</p>
+                    <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
+                    <p class="vehicle-price">₹1,500/day</p>
+                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Royal Enfield Classic">Book Now</button>
+                </article>
+
+                <article class="vehicle-card" data-category="convertible" data-vehicle-id="mini-convertible">
+                    <button class="wishlist-button" type="button" aria-label="Add Mini Convertible to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/convertiblemini.jpg" alt="Mini Convertible">
+                    <h3>Mini Convertible</h3><p class="vehicle-type">Convertible &bull; Automatic &bull; Petrol</p><p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p><p class="vehicle-price">₹3,200/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Mini Convertible">Book Now</button>
+                </article>
+                <article class="vehicle-card" data-category="bike" data-vehicle-id="continental-gt-650">
+                    <button class="wishlist-button" type="button" aria-label="Add Continental GT 650 to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/bikegt650.jpg" alt="Continental GT 650 motorcycle">
+                    <h3>Continental GT 650</h3><p class="vehicle-type">Bike &bull; Manual &bull; Petrol</p><p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p><p class="vehicle-price">₹2,000/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Continental GT 650">Book Now</button>
+                </article>
+                <article class="vehicle-card" data-category="electric" data-vehicle-id="ola-s1">
+                    <button class="wishlist-button" type="button" aria-label="Add Ola S1 to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/electricscooterolas1.jpg" alt="Ola S1 electric scooter">
+                    <h3>Ola S1</h3><p class="vehicle-type">Electric Scooter &bull; Automatic &bull; Electric</p><p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p><p class="vehicle-price">₹900/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Ola S1">Book Now</button>
+                </article>
+                <article class="vehicle-card" data-category="van" data-vehicle-id="toyota-commuter-van">
+                    <button class="wishlist-button" type="button" aria-label="Add Toyota Commuter Van to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/vancommuter.jpg" alt="Toyota Commuter Van">
+                    <h3>Toyota Commuter Van</h3><p class="vehicle-type">Van &bull; Manual &bull; Diesel</p><p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p><p class="vehicle-price">₹4,000/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Toyota Commuter Van">Book Now</button>
+                </article>
+                <article class="vehicle-card" data-category="sports" data-vehicle-id="volkswagen-virtus-gt">
+                    <button class="wishlist-button" type="button" aria-label="Add Volkswagen Virtus GT to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/sportsvirtusgt.jpg" alt="Volkswagen Virtus GT">
+                    <h3>Volkswagen Virtus GT</h3><p class="vehicle-type">Sports &bull; Manual &bull; Petrol</p><p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p><p class="vehicle-price">₹3,400/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Volkswagen Virtus GT">Book Now</button>
+                </article>
+                <article class="vehicle-card" data-category="pickup" data-vehicle-id="isuzu-pickup">
+                    <button class="wishlist-button" type="button" aria-label="Add Isuzu Pickup to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/pickupisuzu.jpg" alt="Isuzu Pickup Truck">
+                    <h3>Isuzu Pickup</h3><p class="vehicle-type">Pickup &bull; Manual &bull; Diesel</p><p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p><p class="vehicle-price">₹3,800/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Isuzu Pickup">Book Now</button>
+                </article>
+                <article class="vehicle-card" data-category="hatchback" data-vehicle-id="tata-altroz">
+                    <button class="wishlist-button" type="button" aria-label="Add Tata Altroz to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/hatchbackaltroz.jpg" alt="Tata Altroz hatchback">
+                    <h3>Tata Altroz</h3><p class="vehicle-type">Hatchback &bull; Manual &bull; Petrol</p><p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p><p class="vehicle-price">₹1,800/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Tata Altroz">Book Now</button>
+                </article>
+                <article class="vehicle-card" data-category="luxury" data-vehicle-id="bmw-i7">
+                    <button class="wishlist-button" type="button" aria-label="Add BMW i7 to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/luxuryi7.jpg" alt="BMW i7 luxury electric sedan">
+                    <h3>BMW i7</h3><p class="vehicle-type">Luxury &bull; Automatic &bull; Electric</p><p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p><p class="vehicle-price">₹7,500/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="BMW i7">Book Now</button>
+                </article>
+                <article class="vehicle-card" data-category="minivan" data-vehicle-id="toyota-hiace">
+                    <button class="wishlist-button" type="button" aria-label="Add Toyota Hiace to wishlist" aria-pressed="false">&#9825;</button>
+                    <img src="./assets/vehicles/minivantoyotahiace.jpg" alt="Toyota Hiace Minivan">
+                    <h3>Toyota Hiace</h3><p class="vehicle-type">Minivan &bull; Manual &bull; Diesel</p><p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p><p class="vehicle-price">₹4,300/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Toyota Hiace">Book Now</button>
+                </article>
+
+            </div>
+
+            <section class="no-vehicles" hidden aria-live="polite">
+                <p class="no-vehicles-icon" aria-hidden="true">🚫</p>
+                <h2>No vehicles match your search.</h2>
+                <p>Try another keyword.</p>
+            </section>
+
+            <nav class="pagination" aria-label="Vehicle pages"></nav>
+        </section>
+
+        <section class="booking-banner" aria-labelledby="help-heading">
+            <div>
+                <h2 id="help-heading">Need Help Choosing?</h2>
+                <p>Our team is available 24/7.</p>
+            </div>
+            <a href="./contact.html" class="btn btn-primary">Contact Us</a>
+        </section>
+    </main>
+    <div id="booking-modal" class="booking-modal" hidden aria-hidden="true">
+        <div class="booking-modal__backdrop" data-close-booking></div>
+        <section class="booking-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="booking-title">
+            <button class="booking-modal__close" type="button" aria-label="Close booking form" data-close-booking>&times;</button><p class="hero-badge">Reserve your ride</p><h2 id="booking-title">Book <span id="booking-vehicle"></span></h2>
+            <form id="booking-form" novalidate><input id="booking-vehicle-input" name="vehicle" type="hidden"><label for="booking-name">Your name</label><input id="booking-name" name="name" type="text" required><label for="booking-phone">Phone number</label><input id="booking-phone" name="phone" type="tel" inputmode="numeric" required><div class="booking-date-row"><div><label for="pickup-date">Pickup date</label><input id="pickup-date" name="pickup" type="date" required></div><div><label for="return-date">Return date</label><input id="return-date" name="return" type="date" required></div></div><p id="booking-error" class="booking-error" role="alert"></p><button class="btn btn-primary" type="submit">Confirm Booking</button><p id="booking-success" class="booking-success" role="status"></p></form>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h3>Drivora</h3>
+                <p>Premium car rental service for every journey.</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./vehicles.html">Vehicles</a></li>
+                    <li><a href="./about.html">About</a></li>
+                    <li><a href="./contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Contact</h3>
+                <p>Email: drivora@gmail.com</p>
+                <p>Phone: +91 9216660715</p>
+                <p style="margin-top: 0.8rem;"><strong>Follow Us</strong></p>
+                <p><a href="https://www.instagram.com/prajapatji__03_/" target="_blank" rel="noopener noreferrer">Instagram</a> | Twitter | <a href="https://www.linkedin.com/in/dipanshu-kumar-63891b382" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 Drivora. All rights reserved.</p>
+    </footer>
+    <script src="./js/app.js"></script>
+    <script src="./js/navbar.js"></script>
+    <script src="./js/storage.js"></script>
+    <script src="./js/search.js"></script>
+    <script src="./js/filter.js"></script>
+    <script src="./js/book.js"></script>
+</body>
+
+</html>

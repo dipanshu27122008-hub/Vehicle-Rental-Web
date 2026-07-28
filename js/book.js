@@ -1,0 +1,9 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("booking-modal"); if (!modal) return;
+  const form = document.getElementById("booking-form"), error = document.getElementById("booking-error"), success = document.getElementById("booking-success");
+  const close = () => { modal.hidden = true; modal.setAttribute("aria-hidden", "true"); };
+  document.querySelectorAll(".book-button").forEach((button) => button.addEventListener("click", () => { form.reset(); error.textContent = ""; success.textContent = ""; document.getElementById("booking-vehicle").textContent = button.dataset.vehicle; document.getElementById("booking-vehicle-input").value = button.dataset.vehicle; modal.hidden = false; modal.setAttribute("aria-hidden", "false"); document.getElementById("booking-name").focus(); }));
+  modal.querySelectorAll("[data-close-booking]").forEach((button) => button.addEventListener("click", close));
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !modal.hidden) close(); });
+  form.addEventListener("submit", (event) => { event.preventDefault(); const name = form.elements.name.value.trim(), phone = form.elements.phone.value.trim(), pickup = form.elements.pickup.value, returnDate = form.elements.return.value; if (!name || !/^\d{10}$/.test(phone) || !pickup || !returnDate || returnDate < pickup) { error.textContent = "Enter your name, a 10-digit phone number, and valid pickup and return dates."; return; } const bookings = JSON.parse(localStorage.getItem("drivora-bookings") || "[]"); bookings.push({ vehicle: form.elements.vehicle.value, name, phone, pickup, returnDate }); localStorage.setItem("drivora-bookings", JSON.stringify(bookings)); error.textContent = ""; success.textContent = "✓ Booking successful! Thank you for choosing Drivora."; form.reset(); });
+});

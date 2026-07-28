@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drivora</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/booking.css">
+</head>
+
+<body class="page">
+    <header class="header">
+        <a href="./index.html" class="logo"><img src="./assets/logo/logo drivora.png" alt="Drivora Logo"
+                height="20"></a>
+        <nav class="navbar" aria-label="Primary navigation">
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">☰</button>
+            <ul class="nav-links" id="primary-navigation">
+                <li class="nav-item"><a href="./index.html" class="nav-link active">Home</a></li>
+                <li class="nav-item"><a href="./about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="./vehicles.html" class="nav-link">Vehicles</a></li>
+                <li class="nav-item"><a href="./gallery.html" class="nav-link">Gallery</a></li>
+                <li class="nav-item"><a href="./contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="./contact.html" class="nav-link book-now">Book Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="hero">  
+            <div class="hero-content">
+                <p class="hero-badge">★★★★★ Premium Rental Service</p>
+                <h1 class="hero-title">Drive Smarter.<br>Travel Better.</h1>
+                <p class="hero-text">Discover premium vehicles for every journey with comfort, style, and reliability.
+                </p>
+                <div class="hero-actions">
+                    <a href="./vehicles.html" class="btn btn-primary">Explore Vehicles</a>
+                    <a href="./contact.html" class="btn btn-secondary">Book Now</a>
+                </div>
+                <ul class="hero-highlights">
+                    <li>✔ No Hidden Charges</li>
+                    <li>✔ 24/7 Support</li>
+                    <li>✔ Instant Booking</li>
+                </ul>
+            </div>
+            <div class="hero-image" id="hero-slider" aria-label="Featured vehicles">
+                <img id="hero-image" class="hero-slide is-active" src="./assets/hero/car1.png" alt="Luxury SUV">
+                <img id="hero-image-next" class="hero-slide" src="" alt="">
+                <button class="slider-control slider-control--previous" type="button" aria-label="Show previous vehicle">&#10094;</button>
+                <button class="slider-control slider-control--next" type="button" aria-label="Show next vehicle">&#10095;</button>
+                <div class="slider-dots" aria-label="Choose featured vehicle"></div>
+            </div>
+        </section>
+
+        <section class="quick-search">
+            <div class="quick-search-box">
+                <div class="search-field">
+                    <label>Pickup City</label>
+                    <select>
+                        <option>Jaipur</option>
+                        <option>Delhi</option>
+                        <option>Mumbai</option>
+                    </select>
+                </div>
+                <div class="search-field">
+                    <label>Vehicle Type</label>
+                    <select>
+                        <option>SUV</option>
+                        <option>Sedan</option>
+                        <option>Luxury</option>
+                    </select>
+                </div>
+                <div class="search-field">
+                    <label>Rental Days</label>
+                    <select>
+                        <option>3 Days</option>
+                        <option>5 Days</option>
+                        <option>7 Days</option>
+                    </select>
+                </div>
+                <a href="./vehicles.html" class="btn btn-primary search-btn">Find Vehicle</a>
+            </div>
+        </section>
+
+        <section class="weather-section" aria-labelledby="weather-heading">
+            <div>
+                <p class="hero-badge">Plan smarter</p>
+                <h2 id="weather-heading" class="section-title">Weather-based vehicle recommendation</h2>
+                <p>Check your destination's current weather before choosing a ride.</p>
+            </div>
+            <form id="weather-form" class="weather-form">
+                <label for="weather-city">Enter city</label>
+                <div><input id="weather-city" type="text" value="Jaipur" placeholder="e.g. Jaipur" required><button class="btn btn-primary" type="submit">Check Weather</button></div>
+            </form>
+            <div id="weather-result" class="weather-result" aria-live="polite" hidden>
+                <span id="weather-icon" class="weather-icon" aria-hidden="true"></span>
+                <div><strong id="weather-temperature"></strong><span id="weather-description"></span></div>
+                <div><span>Humidity</span><strong id="weather-humidity"></strong></div>
+                <div><span>Recommended vehicle</span><strong id="weather-recommendation"></strong></div>
+            </div>
+            <p id="weather-error" class="weather-error" role="alert"></p>
+        </section>
+
+        <section class="categories">
+            <h2 class="section-title">Browse by Category</h2>
+            <div class="category-grid">
+                <article class="category-card">
+                    <div class="category-icon"><img src="./assets/vehicles/suv logo.webp" alt="SUV" height="100px" width="100px"></div>
+                    <h3>SUVs</h3>
+                    <p>Spacious comfort for family and city travel.</p>
+                </article>
+                <article class="category-card">
+                    <div class="category-icon"><img src="./assets/vehicles/sedan logo.webp" alt="Sedans" height="100px" width="100px"></div>
+                    <h3>Sedans</h3>
+                    <p>Elegant and efficient for daily commuting.</p>
+                </article>
+                <article class="category-card">
+                    <div class="category-icon"><img src="./assets/vehicles/luxury logo.webp" alt="Luxury" height="100px" width="100px"></div>
+                    <h3>Luxury Cars</h3>
+                    <p>Premium comfort and standout design.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="featured-vehicles">
+            <h2 class="section-title">Featured Vehicles</h2>
+            <div class="vehicle-grid">
+                <article class="vehicle-card">
+                    <img src="./assets/vehicles/bmw x5.jpg" alt="BMW X5">
+                    <h3>BMW X5</h3>
+                    <p class="vehicle-type">SUV</p>
+                    <p class="vehicle-price">₹4500/day</p>
+                    <p class="vehicle-rating">⭐⭐⭐⭐☆</p>
+                    <button class="btn btn-secondary book-button" type="button" data-vehicle="BMW X5">Book Now</button>
+                </article>
+                <article class="vehicle-card">
+                    <img src="./assets/vehicles/c class.jpg" alt="Mercedes C-Class">
+                    <h3>Mercedes C-Class</h3>
+                    <p class="vehicle-type">Sedan</p>
+                    <p class="vehicle-price">₹3600/day</p>
+                    <p class="vehicle-rating">⭐⭐⭐⭐☆</p>
+                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Mercedes C-Class">Book Now</button>
+                </article>
+                <article class="vehicle-card">
+                    <img src="./assets/vehicles/model 3.jpg" alt="Tesla Model 3">
+                    <h3>Tesla Model 3</h3>
+                    <p class="vehicle-type">Luxury</p>
+                    <p class="vehicle-price">₹3900/day</p>
+                    <p class="vehicle-rating">⭐⭐⭐⭐⭐</p>
+                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Tesla Model 3">Book Now</button>
+                </article>
+            </div>
+            <div class="view-all-container">
+                <a href="./vehicles.html" class="view-all">View All Vehicles →</a>
+            </div>
+        </section>
+
+        <section class="why-choose-us">
+            <h2 class="section-title">Why Choose Us</h2>
+            <div class="benefits-grid">
+                <article class="benefit-card">
+                    <div class="benefit-icon">🛡</div>
+                    <h3>Secure Booking</h3>
+                    <p>Book with confidence and complete peace of mind.</p>
+                </article>
+                <article class="benefit-card">
+                    <div class="benefit-icon">⏰</div>
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock help whenever you need it.</p>
+                </article>
+                <article class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Best Price</h3>
+                    <p>Transparent pricing with no surprise charges.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <h2 class="section-title">How It Works</h2>
+            <div class="benefits-grid">
+                <article class="benefit-card">
+                    <h3>1. Choose Vehicle</h3>
+                    <p>Select the car that suits your trip and comfort.</p>
+                </article>
+                <article class="benefit-card">
+                    <h3>2. Book Online</h3>
+                    <p>Reserve in minutes with quick and secure payment.</p>
+                </article>
+                <article class="benefit-card">
+                    <h3>3. Enjoy Ride</h3>
+                    <p>Pick up your car and enjoy a smooth experience.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <h2 class="section-title">What Customers Say</h2>
+            <div class="testimonial-grid">
+                <article class="testimonial-card">
+                    <p class="stars">⭐⭐⭐⭐⭐</p>
+                    <p>“Excellent service and premium vehicles.”</p>
+                    <strong>Rahul Sharma</strong>
+                </article>
+                <article class="testimonial-card">
+                    <p class="stars">⭐⭐⭐⭐☆</p>
+                    <p>“Smooth booking process and very helpful support.”</p>
+                    <strong>Aisha Verma</strong>
+                </article>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2 class="section-title">Ready to Ride?</h2>
+            <p>Book your perfect vehicle today and enjoy a premium experience.</p>
+            <a href="./contact.html" class="btn btn-primary">Get Started</a>
+        </section>
+    </main>
+
+    <div id="booking-modal" class="booking-modal" hidden aria-hidden="true">
+        <div class="booking-modal__backdrop" data-close-booking></div>
+        <section class="booking-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="booking-title">
+            <button class="booking-modal__close" type="button" aria-label="Close booking form" data-close-booking>&times;</button>
+            <p class="hero-badge">Reserve your ride</p><h2 id="booking-title">Book <span id="booking-vehicle"></span></h2>
+            <form id="booking-form" novalidate>
+                <input id="booking-vehicle-input" name="vehicle" type="hidden">
+                <label for="booking-name">Your name</label><input id="booking-name" name="name" type="text" required>
+                <label for="booking-phone">Phone number</label><input id="booking-phone" name="phone" type="tel" inputmode="numeric" required>
+                <div class="booking-date-row"><div><label for="pickup-date">Pickup date</label><input id="pickup-date" name="pickup" type="date" required></div><div><label for="return-date">Return date</label><input id="return-date" name="return" type="date" required></div></div>
+                <p id="booking-error" class="booking-error" role="alert"></p><button class="btn btn-primary" type="submit">Confirm Booking</button><p id="booking-success" class="booking-success" role="status"></p>
+            </form>
+        </section>
+    </div>
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h3>Drivora</h3>
+                <p>Premium car rental service for every journey.</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./vehicles.html">Vehicles</a></li>
+                    <li><a href="./about.html">About</a></li>
+                    <li><a href="./contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Contact</h3>
+                <p>Email: drivora@gmail.com</p>
+                <p>Phone: +91 9216660715</p>
+                <p style="margin-top: 0.8rem;"><strong>Follow Us</strong></p>
+                <p>📱 <a href="https://www.instagram.com/prajapatji__03_/" target="_blank" rel="noopener noreferrer">Instagram</a> | 🐦 Twitter | 💼 <a href="https://www.linkedin.com/in/dipanshu-kumar-63891b382" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+            </div>
+        </div>
+        <p class="footer-copy">© 2026 Drivora. All rights reserved.</p>
+    </footer>
+    <script src="./js/app.js"></script>
+    <script src="./js/navbar.js"></script>
+    <script src="./js/slider.js"></script>
+    <script src="./js/weather.js"></script>
+    <script src="./js/book.js"></script>
+</body>
+
+</html>
