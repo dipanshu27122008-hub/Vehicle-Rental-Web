@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Drivora for vehicle rental support and booking assistance.">
+    <title>Contact Us | Drivora</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/contact.css">
+</head>
+
+<body class="page">
+    <header class="header">
+        <a href="./index.html" class="logo"><img src="./assets/logo/logo drivora.png" alt="Drivora Logo"></a>
+        <nav class="navbar" aria-label="Primary navigation">
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">☰</button>
+            <ul class="nav-links" id="primary-navigation">
+                <li class="nav-item"><a href="./index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="./about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="./vehicles.html" class="nav-link">Vehicles</a></li>
+                <li class="nav-item"><a href="./gallery.html" class="nav-link">Gallery</a></li>
+                <li class="nav-item"><a href="./contact.html" class="nav-link active" aria-current="page">Contact</a></li>
+                <li class="nav-item"><a href="./contact.html" class="nav-link book-now">Book Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content contact-page">
+        <section class="contact-hero" aria-labelledby="contact-heading">
+            <div class="contact-hero-content">
+                <p class="eyebrow">Contact Us</p>
+                <h1 id="contact-heading">We're here to help.</h1>
+                <p>Have questions about rentals? Our team is ready to assist you anytime.</p>
+                <a href="./vehicles.html" class="btn btn-primary">Browse Vehicles</a>
+            </div>
+            <div class="contact-hero-image">
+                <img src="./assets/vehicles/audi q7.jpg" alt="Premium Drivora vehicle ready for collection">
+                <div class="hero-note"><span aria-hidden="true">&#128222;</span><div><strong>Fast, friendly support</strong><small>Here when you need us</small></div></div>
+            </div>
+        </section>
+
+        <section aria-labelledby="contact-info-heading">
+            <div class="section-heading"><p class="eyebrow">Reach Out</p><h2 id="contact-info-heading" class="section-title">Contact information</h2></div>
+            <div class="contact-info-grid">
+                <article class="contact-info-card"><span aria-hidden="true">&#128205;</span><h3>Address</h3><p>Jaipur, Rajasthan</p></article>
+                <article class="contact-info-card"><span aria-hidden="true">&#128222;</span><h3>Phone</h3><p><a href="tel:+919876543210">+91 9216660715</a></p></article>
+                <article class="contact-info-card"><span aria-hidden="true">&#9993;</span><h3>Email</h3><p><a href="mailto:drivora@gmail.com">drivora@gmail.com</a></p></article>
+                <article class="contact-info-card"><span aria-hidden="true">&#128339;</span><h3>Working Hours</h3><p>Mon–Sun<br>9:00 AM – 9:00 PM</p></article>
+            </div>
+        </section>
+
+        <section class="contact-details" aria-labelledby="form-heading">
+            <div class="contact-form-panel">
+                <p class="eyebrow">Send a Message</p>
+                <h2 id="form-heading" class="section-title">How can we help?</h2>
+                <form id="contact-form" action="#" method="post" novalidate>
+                    <div class="form-row">
+                        <div class="form-field"><label for="full-name">Full Name</label><input id="full-name" name="full-name" type="text" autocomplete="name" placeholder="Your full name" aria-describedby="full-name-error"><p class="field-error" id="full-name-error" aria-live="polite"></p></div>
+                        <div class="form-field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" aria-describedby="email-error"><p class="field-error" id="email-error" aria-live="polite"></p></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field"><label for="phone">Phone Number</label><input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="10-digit phone number" aria-describedby="phone-error"><p class="field-error" id="phone-error" aria-live="polite"></p></div>
+                        <div class="form-field"><label for="vehicle-type">Vehicle Interested In</label><select id="vehicle-type" name="vehicle-type" aria-describedby="vehicle-type-error"><option value="" selected disabled>Select vehicle type</option><option>SUV</option><option>Sedan</option><option>Luxury Car</option><option>Electric Vehicle</option><option>Bike</option></select><p class="field-error" id="vehicle-type-error" aria-live="polite"></p></div>
+                    </div>
+                    <div class="form-field"><label for="message">Message</label><textarea id="message" name="message" rows="5" placeholder="Tell us how we can help" aria-describedby="message-error"></textarea><p class="field-error" id="message-error" aria-live="polite"></p></div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <p id="form-success" class="form-success" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+            <div class="map-panel">
+                <div class="map-heading"><span aria-hidden="true">&#128205;</span><div><h2>Drivora Office</h2><p>Jaipur, Rajasthan</p></div></div>
+                <iframe title="Map showing Jaipur, Rajasthan" src="https://www.google.com/maps?q=Jaipur%2C%20Rajasthan&z=12&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>
+
+        <section class="faq-section" aria-labelledby="faq-heading">
+            <div class="section-heading"><p class="eyebrow">Need to Know</p><h2 id="faq-heading" class="section-title">Frequently asked questions</h2></div>
+            <div class="faq-list">
+                <details><summary>What documents are required?</summary><p>A valid driving license and government-issued ID are required at pickup.</p></details>
+                <details><summary>Can I cancel my booking?</summary><p>Yes, you can cancel before your scheduled pickup time.</p></details>
+                <details><summary>Is fuel included?</summary><p>No. Fuel charges are separate and depend on your usage.</p></details>
+                <details><summary>Is there a security deposit?</summary><p>Yes, the security deposit depends on the vehicle category you choose.</p></details>
+            </div>
+        </section>
+
+        <section class="contact-cta" aria-labelledby="contact-cta-heading">
+            <div><h2 id="contact-cta-heading">Ready to book your next ride?</h2><p>Choose from our premium fleet today.</p></div>
+            <a href="./vehicles.html" class="btn btn-primary">Explore Vehicles</a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div><h3>Drivora</h3><p>Premium car rental service for every journey.</p></div>
+            <div><h3>Quick Links</h3><ul><li><a href="./index.html">Home</a></li><li><a href="./vehicles.html">Vehicles</a></li><li><a href="./about.html">About</a></li><li><a href="./contact.html">Contact</a></li></ul></div>
+            <div><h3>Contact</h3><p>Email: drivora@gmail.com</p><p>Phone: +91 9216660715</p><p style="margin-top: 0.8rem;"><strong>Follow Us</strong></p><p><a href="https://www.instagram.com/prajapatji__03_/" target="_blank" rel="noopener noreferrer">Instagram</a> | Twitter | <a href="https://www.linkedin.com/in/dipanshu-kumar-63891b382" target="_blank" rel="noopener noreferrer">LinkedIn</a></p></div>
+        </div>
+        <p class="footer-copy">&copy; 2026 Drivora. All rights reserved.</p>
+    </footer>
+    <script src="./js/app.js"></script>
+    <script src="./js/navbar.js"></script>
+    <script src="./js/validation.js"></script>
+</body>
+</html>
