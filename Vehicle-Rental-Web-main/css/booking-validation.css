@@ -1,0 +1,11 @@
+/* Inline feedback for the customer type and KYC booking form. */
+.booking-modal input.is-invalid,
+.booking-modal select.is-invalid,
+.booking-modal textarea.is-invalid {
+    border-color: #dc2626;
+}
+
+.booking-modal .field-error {
+    display: block;
+    min-height: 1.1rem;
+}

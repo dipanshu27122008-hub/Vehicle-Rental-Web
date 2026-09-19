@@ -96,13 +96,16 @@ document.addEventListener("DOMContentLoaded", () => {
   pagination?.addEventListener("click", (event) => {
     const button = event.target.closest("button[data-page]");
     if (!button || button.disabled) return;
-    const lastPage = Math.ceil(originalOrder.filter(({ card }) => selectedCategory === "all" || card.dataset.category === selectedCategory).length / pageSize);
+    const searchTerm = normalise(searchInput?.value || "");
+    const year = yearSelect?.value || "all";
+    const lastPage = Math.ceil(originalOrder.filter(({ card }) => normalise(card.textContent).includes(searchTerm) && (selectedCategory === "all" || card.dataset.category === selectedCategory) && (year === "all" || String(card.dataset.modelYear) === year)).length / pageSize);
     currentPage = button.dataset.page === "previous" ? currentPage - 1 : button.dataset.page === "next" ? currentPage + 1 : Number(button.dataset.page);
     currentPage = Math.min(Math.max(currentPage, 1), lastPage || 1);
     filterVehicles();
     vehicleGrid.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
+  document.addEventListener("vehicles:ratings-updated", () => filterVehicles());
   updateActiveButton();
   filterVehicles();
 });
