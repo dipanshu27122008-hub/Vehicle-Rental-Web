@@ -1,0 +1,23 @@
+{
+  "name": "vehicle-rental-web",
+  "version": "1.0.0",
+  "description": "Drivora - Premium Vehicle Rental Service",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dipanshu27122008-hub/Vehicle-Rental-Web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dipanshu27122008-hub/Vehicle-Rental-Web/issues"
+  },
+  "homepage": "https://github.com/dipanshu27122008-hub/Vehicle-Rental-Web#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
