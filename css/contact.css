@@ -10,11 +10,19 @@
 }
 
 .eyebrow {
+    display: inline-block;
     color: var(--primary);
-    font-size: .85rem;
+    font-size: .82rem;
     font-weight: 800;
     letter-spacing: .08em;
     text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
 }
 
 .section-heading {
@@ -23,7 +31,7 @@
 }
 
 .section-heading .eyebrow {
-    margin-bottom: .35rem;
+    margin-bottom: .5rem;
 }
 
 .section-heading .section-title {
@@ -62,6 +70,7 @@
     height: 360px;
     object-fit: cover;
     border-radius: 24px;
+    border: 3px solid var(--glass-border);
     box-shadow: var(--shadow);
 }
 
@@ -72,9 +81,12 @@
     display: flex;
     align-items: center;
     gap: .75rem;
-    padding: .85rem 1rem;
-    background: #fff;
-    border-radius: 14px;
+    padding: .85rem 1.1rem;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
     box-shadow: var(--shadow);
 }
 
@@ -82,9 +94,12 @@
 .contact-info-card>span {
     display: grid;
     place-items: center;
-    width: 42px;
-    height: 42px;
-    background: #eff6ff;
+    width: 44px;
+    height: 44px;
+    background: rgba(239, 246, 255, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
     border-radius: 12px;
     font-size: 1.25rem;
 }
@@ -100,7 +115,7 @@
 }
 
 .hero-note small {
-    color: #64748b;
+    color: #475569;
     font-size: .78rem;
 }
 
@@ -112,10 +127,19 @@
 
 .contact-info-card {
     padding: 1.5rem;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 18px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 22px;
     box-shadow: var(--shadow);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.contact-info-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255, 255, 255, 0.96);
+    box-shadow: var(--shadow-hover);
 }
 
 .contact-info-card>span {
@@ -130,7 +154,7 @@
 
 .contact-info-card p,
 .contact-info-card a {
-    color: #64748b;
+    color: #475569;
 }
 
 .contact-info-card a:hover {
@@ -147,14 +171,16 @@
 .contact-form-panel,
 .map-panel {
     padding: clamp(1.5rem, 4vw, 2.25rem);
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 22px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
     box-shadow: var(--shadow);
 }
 
 .contact-form-panel .eyebrow {
-    margin-bottom: .35rem;
+    margin-bottom: .5rem;
 }
 
 .contact-form-panel .section-title {
@@ -185,19 +211,23 @@
 .form-field textarea {
     width: 100%;
     padding: .8rem .9rem;
-    color: var(--text);
+    color: var(--dark);
     font: inherit;
     resize: vertical;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 10px;
+    background: var(--glass-input);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    transition: border-color .2s ease, box-shadow .2s ease;
 }
 
 .form-field input:focus,
 .form-field select:focus,
 .form-field textarea:focus {
-    outline: 2px solid rgba(37, 99, 235, .2);
+    outline: none;
     border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .2);
 }
 
 .form-field input.is-invalid,
@@ -209,7 +239,7 @@
 .form-field input.is-invalid:focus,
 .form-field select.is-invalid:focus,
 .form-field textarea.is-invalid:focus {
-    outline-color: rgba(220, 38, 38, .18);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, .18);
 }
 
 .field-error {
@@ -226,8 +256,11 @@
     padding: .8rem 1rem;
     color: #166534;
     font-weight: 700;
-    background: #dcfce7;
-    border-radius: 10px;
+    background: rgba(220, 252, 231, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
 }
 
 .form-success.is-visible {
@@ -258,7 +291,7 @@
 }
 
 .map-heading p {
-    color: #64748b;
+    color: #475569;
     font-size: .9rem;
 }
 
@@ -280,10 +313,14 @@
 }
 
 .faq-list details {
-    padding: 1.15rem 1.25rem;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 14px;
+    padding: 1.15rem 1.35rem;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    transition: border-color .2s ease;
 }
 
 .faq-list summary {
@@ -294,11 +331,11 @@
 
 .faq-list p {
     margin-top: .7rem;
-    color: #64748b;
+    color: #475569;
 }
 
 .faq-list details[open] {
-    border-color: #bfdbfe;
+    border-color: rgba(59, 130, 246, 0.45);
 }
 
 .contact-cta {
@@ -309,8 +346,12 @@
     padding: clamp(2rem, 5vw, 3.5rem) !important;
     margin-top: 5rem;
     color: #fff;
-    background: var(--dark);
-    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 58, 138, 0.82) 100%);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 26px;
+    box-shadow: 0 20px 48px rgba(15, 23, 42, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25);
 }
 
 .contact-cta h2 {

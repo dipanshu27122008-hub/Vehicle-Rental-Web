@@ -1,9 +1,10 @@
 .header {
-  box-shadow: none;
-  transition: box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.85);
+  transition: box-shadow 0.25s ease, background 0.25s ease;
 }
 
 .header.is-scrolled {
+  background: rgba(255, 255, 255, 0.76);
   box-shadow: var(--shadow);
 }
 
@@ -51,8 +52,11 @@
     align-items: stretch;
     gap: 0;
     padding: 0.75rem 3% 1rem;
-    background: white;
-    border-top: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
     box-shadow: var(--shadow);
   }
 
