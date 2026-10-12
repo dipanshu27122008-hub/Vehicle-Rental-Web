@@ -1,0 +1,15 @@
+{
+  "name": "drivora-vehicle-rental",
+  "version": "1.0.0",
+  "description": "Drivora Vehicle Rental Web Application with Vercel Serverless API & Supabase PostgreSQL Database",
+  "private": true,
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}

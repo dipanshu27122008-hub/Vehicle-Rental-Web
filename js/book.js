@@ -26,6 +26,65 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("input", (event) => { if (event.target.name === "pickup" || event.target.name === "return") updateSummary(); });
   form.addEventListener("change", (event) => { if (event.target.name === "customerType") { renderFields(); clearValidation(); error.textContent = ""; } updateSummary(); });
   modal.querySelectorAll("[data-close-booking]").forEach((button) => button.addEventListener("click", close)); document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !modal.hidden) close(); });
-  form.addEventListener("submit", (event) => { event.preventDefault(); const firstInvalid = validate(); if (firstInvalid) { error.textContent = "Please correct the highlighted fields."; firstInvalid.focus(); return; } const data = Object.fromEntries(new FormData(form).entries()), vehicle = vehicleFor(selectedVehicle), days = rentalDays(), total = vehicle.price * days; const booking = { id: `DRV-${Math.random().toString(36).slice(2, 8).toUpperCase()}`, vehicle: selectedVehicle, modelYear: data.modelYear, name: data.name.trim(), phone: data.phone.trim(), email: data.email.trim(), pickup: data.pickup, returnDate: data.return, days, dailyPrice: vehicle.price, totalAmount: total, customerType: data.customerType, kycStatus: "Pending Verification", createdAt: new Date().toISOString() }; const bookings = JSON.parse(localStorage.getItem("drivora-bookings") || "[]"); bookings.push(booking); localStorage.setItem("drivora-bookings", JSON.stringify(bookings)); const documentNumber = data.customerType === "nri" ? data.passport : data.licence, kyc = JSON.parse(localStorage.getItem("drivora-kyc-data") || "[]"); kyc.push({ bookingId: booking.id, vehicle: selectedVehicle, customerType: data.customerType, name: booking.name, email: booking.email, phone: booking.phone, documentsProvided: true, documentLast4: documentNumber.slice(-4), kycStatus: "Pending Verification", submittedAt: booking.createdAt }); localStorage.setItem("drivora-kyc-data", JSON.stringify(kyc)); form.hidden = true; confirmation.hidden = false; confirmation.innerHTML = `<p class="confirmation-check">✓</p><h2>Booking Confirmed</h2><p class="confirmation-id">Booking ID: <strong>${booking.id}</strong></p><dl><div><dt>Vehicle</dt><dd>${booking.vehicle}</dd></div><div><dt>Dates</dt><dd>${formatDate(booking.pickup)} – ${formatDate(booking.returnDate)}</dd></div><div><dt>Total</dt><dd>${money(booking.totalAmount)}</dd></div></dl><p class="kyc-note">KYC Status: Pending Verification</p><button class="btn btn-primary" type="button" data-close-booking>Done</button>`; confirmation.querySelector("[data-close-booking]").addEventListener("click", close); confirmation.querySelector("button").focus(); });
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const firstInvalid = validate();
+    if (firstInvalid) { error.textContent = "Please correct the highlighted fields."; firstInvalid.focus(); return; }
+    const data = Object.fromEntries(new FormData(form).entries()), vehicle = vehicleFor(selectedVehicle), days = rentalDays(), total = vehicle.price * days;
+    const documentNumber = data.customerType === "nri" ? data.passport : data.licence;
+    const booking = {
+      id: `DRV-${Math.random().toString(36).slice(2, 8).toUpperCase()}`,
+      vehicle: selectedVehicle,
+      modelYear: data.modelYear,
+      name: data.name.trim(),
+      phone: data.phone.trim(),
+      email: data.email.trim(),
+      pickup: data.pickup,
+      returnDate: data.return,
+      days,
+      dailyPrice: vehicle.price,
+      totalAmount: total,
+      customerType: data.customerType,
+      governmentIdType: data.governmentIdType || null,
+      documentLast4: documentNumber ? documentNumber.slice(-4) : null,
+      country: data.country || null,
+      address: data.address ? data.address.trim() : null,
+      kycStatus: "Pending Verification",
+      createdAt: new Date().toISOString()
+    };
+
+    // Save to localStorage for instant offline/demo persistence
+    const bookings = JSON.parse(localStorage.getItem("drivora-bookings") || "[]");
+    bookings.push(booking);
+    localStorage.setItem("drivora-bookings", JSON.stringify(bookings));
+
+    const kyc = JSON.parse(localStorage.getItem("drivora-kyc-data") || "[]");
+    kyc.push({
+      bookingId: booking.id,
+      vehicle: selectedVehicle,
+      customerType: data.customerType,
+      name: booking.name,
+      email: booking.email,
+      phone: booking.phone,
+      documentsProvided: true,
+      documentLast4: booking.documentLast4,
+      kycStatus: "Pending Verification",
+      submittedAt: booking.createdAt
+    });
+    localStorage.setItem("drivora-kyc-data", JSON.stringify(kyc));
+
+    // Sync to Vercel + Supabase API endpoint in the background
+    fetch("/api/bookings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(booking)
+    }).catch(() => {});
+
+    form.hidden = true;
+    confirmation.hidden = false;
+    confirmation.innerHTML = `<p class="confirmation-check">✓</p><h2>Booking Confirmed</h2><p class="confirmation-id">Booking ID: <strong>${booking.id}</strong></p><dl><div><dt>Vehicle</dt><dd>${booking.vehicle}</dd></div><div><dt>Dates</dt><dd>${formatDate(booking.pickup)} – ${formatDate(booking.returnDate)}</dd></div><div><dt>Total</dt><dd>${money(booking.totalAmount)}</dd></div></dl><p class="kyc-note">KYC Status: Pending Verification</p><button class="btn btn-primary" type="button" data-close-booking>Done</button>`;
+    confirmation.querySelector("[data-close-booking]").addEventListener("click", close);
+    confirmation.querySelector("button").focus();
+  });
   renderFields(); addAvailabilityBadges();
 });
