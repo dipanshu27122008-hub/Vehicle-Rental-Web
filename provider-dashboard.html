@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Provider Dashboard — Drivora Marketplace</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/navbar.css" />
+  <link rel="stylesheet" href="./css/marketplace.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+</head>
+<body class="page">
+  <header class="header">
+    <a href="./index.html" class="logo"><img src="./assets/logo/logo drivora.png" alt="Drivora Logo" height="20" /></a>
+    <nav class="navbar" aria-label="Primary navigation">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">☰</button>
+      <ul class="nav-links" id="primary-navigation">
+        <li class="nav-item"><a href="./index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="./about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="./vehicles.html" class="nav-link">Vehicles</a></li>
+        <li class="nav-item"><a href="./gallery.html" class="nav-link">Gallery</a></li>
+        <li class="nav-item"><a href="./contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item"><a href="./terms.html" class="nav-link">Terms</a></li>
+        <li class="nav-item"><a href="./provider-dashboard.html" class="nav-link active">Provider Portal</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="dashboard-shell">
+    <!-- Hero / Header -->
+    <div class="dashboard-header">
+      <div>
+        <span class="badge-pill badge-verified" id="providerVerificationBadge">
+          <i class="fa-solid fa-Store"></i> Provider Portal
+        </span>
+        <h1 style="margin-top:0.4rem;">Vehicle Provider &amp; Shopkeeper Dashboard</h1>
+        <p style="color:#475569; font-size:0.95rem;">
+          Manage your fleet, pricing rules, availability windows, booking requests, condition inspections, and customer inquiries.
+        </p>
+      </div>
+      <div style="display:flex; gap:0.65rem; flex-wrap:wrap; align-items:center;">
+        <a href="./terms.html?tab=provider" class="btn-glass">
+          <i class="fa-solid fa-file-signature"></i> Provider Terms (v1.0)
+        </a>
+        <button type="button" class="btn-glass btn-glass-primary" id="btnOpenAddVehicle">
+          <i class="fa-solid fa-plus"></i> Add New Vehicle
+        </button>
+      </div>
+    </div>
+
+    <!-- Role Guard Banner (shown if visitor is not logged in as Provider or Admin) -->
+    <div id="providerAccessGuard" class="dashboard-panel" style="display:none; border-left:4px solid #f59e0b;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <h2 style="margin-bottom:0.35rem; color:#92400e;">
+            <i class="fa-solid fa-lock"></i> Provider Authentication Required
+          </h2>
+          <p style="color:#475569; font-size:0.92rem; margin:0;">
+            Protected provider operations require a verified <strong>Provider</strong> or <strong>Administrator</strong> session enforced by Supabase Auth &amp; Row Level Security.
+          </p>
+        </div>
+        <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+          <button type="button" class="btn-glass btn-glass-primary" id="btnProviderSignIn">
+            <i class="fa-solid fa-user-check"></i> Sign In / Register as Provider
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Real-Time KPI Overview Cards -->
+    <section aria-label="Provider Performance Metrics" class="dashboard-kpi-grid" id="providerKpiGrid">
+      <div class="kpi-card">
+        <span class="kpi-label">Total Fleet Listings</span>
+        <div class="kpi-value" id="kpiTotalListings">0</div>
+        <div class="kpi-sub"><span id="kpiPublishedCount">0</span> Published · <span id="kpiUnpublishedCount">0</span> Draft/Hidden</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Pending Requests</span>
+        <div class="kpi-value" id="kpiPendingBookings">0</div>
+        <div class="kpi-sub">Awaiting approval &amp; conflict check</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Confirmed &amp; Active</span>
+        <div class="kpi-value"><span id="kpiConfirmedBookings">0</span> / <span id="kpiActiveBookings">0</span></div>
+        <div class="kpi-sub">Confirmed upcoming / Active on-road</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Completed &amp; Cancelled</span>
+        <div class="kpi-value"><span id="kpiCompletedBookings">0</span> / <span id="kpiCancelledBookings">0</span></div>
+        <div class="kpi-sub">Returned trips / Cancelled requests</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Estimated Earnings</span>
+        <div class="kpi-value" id="kpiEstimatedEarnings">₹0</div>
+        <div class="kpi-sub">Confirmed + Active pipeline (excl. deposit)</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Finalized Settlements</span>
+        <div class="kpi-value" id="kpiFinalizedSettlements">₹0</div>
+        <div class="kpi-sub">Completed trips + settled fees</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Provider Rating &amp; Inquiries</span>
+        <div class="kpi-value"><span id="kpiAvgRating">4.8★</span></div>
+        <div class="kpi-sub"><span id="kpiOpenInquiries">0</span> Open customer inquiries</div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <div style="display:flex; gap:0.6rem; flex-wrap:wrap; margin-bottom:1.5rem;" role="tablist">
+      <button type="button" class="btn-glass btn-glass-primary provider-tab-btn" data-tab="fleet">
+        <i class="fa-solid fa-car-side"></i> My Vehicles &amp; Availability
+      </button>
+      <button type="button" class="btn-glass provider-tab-btn" data-tab="bookings">
+        <i class="fa-solid fa-calendar-check"></i> Booking Requests &amp; Active Trips
+      </button>
+      <button type="button" class="btn-glass provider-tab-btn" data-tab="inspections">
+        <i class="fa-solid fa-clipboard-check"></i> Pickup &amp; Return Inspections
+      </button>
+      <button type="button" class="btn-glass provider-tab-btn" data-tab="inquiries">
+        <i class="fa-solid fa-comments"></i> Customer Inquiries
+      </button>
+      <button type="button" class="btn-glass provider-tab-btn" data-tab="verification">
+        <i class="fa-solid fa-id-card-clip"></i> Provider KYC &amp; Verification
+      </button>
+    </div>
+
+    <!-- TAB 1: FLEET & VEHICLE MANAGEMENT -->
+    <section id="tab-fleet" class="provider-tab-section">
+      <!-- Add / Edit Vehicle Panel -->
+      <div class="dashboard-panel" id="vehicleFormPanel" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h2 id="vehicleFormTitle" style="margin:0;">
+            <i class="fa-solid fa-car-on"></i> Add New Marketplace Vehicle
+          </h2>
+          <button type="button" class="btn-glass" id="btnCloseVehicleForm">
+            <i class="fa-solid fa-xmark"></i> Close Form
+          </button>
+        </div>
+
+        <form id="providerVehicleForm" novalidate>
+          <input type="hidden" id="vehEditId" value="" />
+          <div class="glass-form-grid">
+            <div class="glass-field">
+              <label for="vehTitle">Vehicle Name &amp; Model *</label>
+              <input type="text" id="vehTitle" placeholder="e.g., Hyundai Creta SX (O) Turbo" required />
+            </div>
+            <div class="glass-field">
+              <label for="vehCategory">Category *</label>
+              <select id="vehCategory" required>
+                <option value="Cars">Cars</option>
+                <option value="Bikes">Bikes</option>
+                <option value="Scooters">Scooters</option>
+                <option value="Vans">Vans</option>
+                <option value="Buses">Buses</option>
+                <option value="Trucks">Trucks</option>
+              </select>
+            </div>
+            <div class="glass-field">
+              <label for="vehModelYear">Manufacturing Model Year *</label>
+              <input type="number" id="vehModelYear" min="2010" max="2027" value="2024" required />
+            </div>
+            <div class="glass-field">
+              <label for="vehFuel">Fuel / Powertrain *</label>
+              <select id="vehFuel" required>
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Electric">Electric</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="CNG">CNG</option>
+              </select>
+            </div>
+            <div class="glass-field">
+              <label for="vehTransmission">Transmission *</label>
+              <select id="vehTransmission" required>
+                <option value="Automatic">Automatic</option>
+                <option value="Manual">Manual</option>
+              </select>
+            </div>
+            <div class="glass-field">
+              <label for="vehSeats">Seating Capacity *</label>
+              <input type="number" id="vehSeats" min="1" max="60" value="5" required />
+            </div>
+            <div class="glass-field">
+              <label for="vehDailyRate">Daily Rental Rate (₹ / 24h) *</label>
+              <input type="number" id="vehDailyRate" min="100" max="250000" value="3200" required />
+            </div>
+            <div class="glass-field">
+              <label for="vehExtraHourRate">Extra-Hour Rate (₹ / hr, blank = 15% of daily)</label>
+              <input type="number" id="vehExtraHourRate" min="0" max="50000" placeholder="Auto: 15% of daily" />
+            </div>
+            <div class="glass-field">
+              <label for="vehLateHourRate">Late-Return Rate (₹ / hr after 1h grace)</label>
+              <input type="number" id="vehLateHourRate" min="0" max="50000" placeholder="Auto: 20% of daily" />
+            </div>
+            <div class="glass-field">
+              <label for="vehSecurityDeposit">Refundable Security Deposit (₹) *</label>
+              <input type="number" id="vehSecurityDeposit" min="0" max="500000" value="5000" required />
+            </div>
+            <div class="glass-field">
+              <label for="vehCity">Public City *</label>
+              <select id="vehCity" required>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi NCR">Delhi NCR</option>
+                <option value="Bengaluru">Bengaluru</option>
+                <option value="Pune">Pune</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Jaipur">Jaipur</option>
+              </select>
+            </div>
+            <div class="glass-field">
+              <label for="vehHub">Public Pickup Hub (Never enter private residential address) *</label>
+              <input type="text" id="vehHub" placeholder="e.g., Andheri East Metro Hub" required />
+            </div>
+            <div class="glass-field">
+              <label for="vehAvailability">Availability Status *</label>
+              <select id="vehAvailability">
+                <option value="available">Available for Booking</option>
+                <option value="maintenance">In Maintenance / Blocked</option>
+                <option value="unavailable">Temporarily Unavailable</option>
+              </select>
+            </div>
+            <div class="glass-field">
+              <label for="vehUnavailableDates">Blocked / Unavailable Dates (comma-separated YYYY-MM-DD)</label>
+              <input type="text" id="vehUnavailableDates" placeholder="e.g., 2026-11-10, 2026-11-11" />
+            </div>
+            <div class="glass-field">
+              <label for="vehPrimaryImage">Primary Photo URL or Asset Path *</label>
+              <input type="text" id="vehPrimaryImage" value="./assets/vehicles/bmw x5.jpg" required />
+            </div>
+            <div class="glass-field">
+              <label for="vehGalleryImages">Additional / 360° Frame URLs (comma-separated)</label>
+              <input type="text" id="vehGalleryImages" placeholder="./assets/vehicles/bmw x5.jpg, ./assets/hero/car1.png" />
+            </div>
+          </div>
+
+          <div class="glass-field" style="margin-bottom:1rem;">
+            <label for="vehRules">Rental Rules &amp; Pickup Requirements</label>
+            <textarea id="vehRules" rows="2" placeholder="Valid original driving licence + Gov ID required at pickup. Same-to-same fuel return policy."></textarea>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:0.55rem; margin-bottom:1rem; padding:0.85rem 1rem; border-radius:12px; background:rgba(255,255,255,0.65); border:1px solid rgba(15,23,42,0.1);">
+            <label style="display:flex; align-items:center; gap:0.6rem; font-size:0.88rem; cursor:pointer;">
+              <input type="checkbox" id="vehPublishedToggle" checked />
+              <span><strong>Publish immediately</strong> (Visible in public search once moderation status permits)</span>
+            </label>
+            <label style="display:flex; align-items:center; gap:0.6rem; font-size:0.88rem; cursor:pointer;">
+              <input type="checkbox" id="vehTermsAccept" required />
+              <span>I accept the <a href="./terms.html?tab=provider" target="_blank" style="color:#0284c7; font-weight:700;">Drivora Provider Terms &amp; Commercial Listing Policy (v1.0-provider)</a> and confirm vehicle RC, insurance, and roadworthiness validity. *</span>
+            </label>
+          </div>
+
+          <div id="vehFormFeedback" style="display:none; margin-bottom:0.85rem; padding:0.65rem 0.9rem; border-radius:10px; font-size:0.88rem;"></div>
+
+          <div style="display:flex; gap:0.65rem;">
+            <button type="submit" class="btn-glass btn-glass-primary" id="btnSaveVehicle">
+              <i class="fa-solid fa-floppy-disk"></i> Save Vehicle Listing
+            </button>
+            <button type="reset" class="btn-glass">Reset</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Fleet Table -->
+      <div class="dashboard-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem;">
+          <h2><i class="fa-solid fa-warehouse"></i> My Vehicle Listings</h2>
+          <div style="display:flex; gap:0.5rem; align-items:center;">
+            <input type="search" id="fleetSearchInput" placeholder="Filter my vehicles..." style="padding:0.45rem 0.85rem; border-radius:999px; border:1px solid rgba(15,23,42,0.15); background:rgba(255,255,255,0.85); font-size:0.85rem;" />
+          </div>
+        </div>
+        <div class="glass-table-wrapper">
+          <table class="glass-table">
+            <thead>
+              <tr>
+                <th>Vehicle</th>
+                <th>Year &amp; Specs</th>
+                <th>Pricing &amp; Deposit</th>
+                <th>Hub &amp; Availability</th>
+                <th>Moderation / Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="providerFleetTableBody">
+              <tr><td colspan="6">Loading fleet listings...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: BOOKING MANAGEMENT -->
+    <section id="tab-bookings" class="provider-tab-section" style="display:none;">
+      <div class="dashboard-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem;">
+          <div>
+            <h2 style="margin-bottom:0.2rem;"><i class="fa-solid fa-calendar-days"></i> Booking Requests &amp; Rental Lifecycle</h2>
+            <p style="color:#475569; font-size:0.85rem; margin:0;">
+              Confirming a booking automatically checks for overlapping confirmed/active reservations on the same vehicle. Returning a trip calculates actual late fees after the 1-hour grace period.
+            </p>
+          </div>
+          <select id="bookingStatusFilter" style="padding:0.45rem 0.85rem; border-radius:999px; border:1px solid rgba(15,23,42,0.15); background:rgba(255,255,255,0.85); font-size:0.85rem;">
+            <option value="all">All Statuses</option>
+            <option value="pending">Pending Approval</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="active">Active (On-Road)</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled / Rejected</option>
+          </select>
+        </div>
+
+        <div id="bookingActionFeedback" style="display:none; margin-bottom:0.85rem; padding:0.7rem 1rem; border-radius:10px; font-size:0.88rem;"></div>
+
+        <div class="glass-table-wrapper">
+          <table class="glass-table">
+            <thead>
+              <tr>
+                <th>Booking Ref</th>
+                <th>Vehicle</th>
+                <th>Customer</th>
+                <th>Pickup &amp; Return Schedule</th>
+                <th>Financial Breakdown</th>
+                <th>Status</th>
+                <th>Provider Actions</th>
+              </tr>
+            </thead>
+            <tbody id="providerBookingsTableBody">
+              <tr><td colspan="7">Loading bookings...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: PICKUP & RETURN CONDITION INSPECTIONS -->
+    <section id="tab-inspections" class="provider-tab-section" style="display:none;">
+      <div class="dashboard-panel">
+        <h2><i class="fa-solid fa-clipboard-list"></i> Record Pickup / Return Vehicle Condition Inspection</h2>
+        <p style="color:#475569; font-size:0.88rem; margin-bottom:1rem;">
+          Document odometer reading, fuel/battery level, exterior/interior condition, and any new damage at handover or return to protect both provider and customer deposits.
+        </p>
+
+        <form id="inspectionForm">
+          <div class="glass-form-grid">
+            <div class="glass-field">
+              <label for="inspBookingId">Booking Reference ID *</label>
+              <input type="text" id="inspBookingId" placeholder="Paste Booking UUID or select from Bookings tab" required />
+            </div>
+            <div class="glass-field">
+              <label for="inspType">Inspection Stage *</label>
+              <select id="inspType" required>
+                <option value="pickup">Pickup Handover Inspection</option>
+                <option value="return">Return Check-In Inspection</option>
+              </select>
+            </div>
+            <div class="glass-field">
+              <label for="inspOdometer">Odometer Reading (km) *</label>
+              <input type="number" id="inspOdometer" min="0" max="999999" value="18450" required />
+            </div>
+            <div class="glass-field">
+              <label for="inspFuel">Fuel / Battery Level (%) *</label>
+              <input type="number" id="inspFuel" min="0" max="100" value="85" required />
+            </div>
+            <div class="glass-field">
+              <label for="inspDamageCost">Estimated New Damage Charge (₹, 0 if none)</label>
+              <input type="number" id="inspDamageCost" min="0" max="500000" value="0" />
+            </div>
+            <div class="glass-field">
+              <label for="inspPhotoUrls">Condition Photo URLs (comma-separated)</label>
+              <input type="text" id="inspPhotoUrls" placeholder="./images/vehicle/c1.jpg" />
+            </div>
+          </div>
+
+          <div class="glass-form-grid">
+            <div class="glass-field">
+              <label for="inspConditionNotes">General Condition &amp; Tyre/Cleanliness Notes *</label>
+              <textarea id="inspConditionNotes" rows="2" placeholder="Interior clean, spare tyre present, tool kit verified." required></textarea>
+            </div>
+            <div class="glass-field">
+              <label for="inspDamageReport">Pre-existing or New Scratch/Dent Description</label>
+              <textarea id="inspDamageReport" rows="2" placeholder="No new scratches or dents observed."></textarea>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1.25rem; flex-wrap:wrap; margin-bottom:1rem;">
+            <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.88rem; cursor:pointer;">
+              <input type="checkbox" id="inspCustomerAck" checked />
+              <span>Customer counter-signed / acknowledged condition report at vehicle</span>
+            </label>
+            <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.88rem; cursor:pointer; color:#b91c1c;">
+              <input type="checkbox" id="inspDisputeFlag" />
+              <span><strong>Flag Dispute</strong> (Escalate to Administrator for deposit adjudication)</span>
+            </label>
+          </div>
+
+          <div id="inspFeedback" style="display:none; margin-bottom:0.85rem; padding:0.7rem 1rem; border-radius:10px; font-size:0.88rem;"></div>
+
+          <button type="submit" class="btn-glass btn-glass-primary">
+            <i class="fa-solid fa-file-shield"></i> Submit Condition Report
+          </button>
+        </form>
+      </div>
+
+      <div class="dashboard-panel">
+        <h2><i class="fa-solid fa-clock-rotate-left"></i> Logged Pickup &amp; Return Inspections</h2>
+        <div class="glass-table-wrapper">
+          <table class="glass-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Booking ID</th>
+                <th>Stage</th>
+                <th>Odometer &amp; Fuel</th>
+                <th>Condition &amp; Damage Notes</th>
+                <th>Damage Est.</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="inspectionsTableBody">
+              <tr><td colspan="7">No inspection logs recorded yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: CUSTOMER INQUIRIES -->
+    <section id="tab-inquiries" class="provider-tab-section" style="display:none;">
+      <div class="dashboard-panel">
+        <h2><i class="fa-solid fa-envelope-open-text"></i> Customer Vehicle Inquiries</h2>
+        <p style="color:#475569; font-size:0.88rem; margin-bottom:1rem;">
+          Respond directly to pre-booking questions from customers inspecting your vehicles.
+        </p>
+        <div class="glass-table-wrapper">
+          <table class="glass-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Vehicle</th>
+                <th>Customer</th>
+                <th>Question / Message</th>
+                <th>Status &amp; Response</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="providerInquiriesTableBody">
+              <tr><td colspan="6">Loading inquiries...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: PROVIDER KYC & IDENTITY VERIFICATION -->
+    <section id="tab-verification" class="provider-tab-section" style="display:none;">
+      <div class="dashboard-panel">
+        <h2><i class="fa-solid fa-shield-halved"></i> Provider Identity &amp; Fleet KYC Verification</h2>
+        <p style="color:#475569; font-size:0.88rem; margin-bottom:1rem;">
+          Drivora displays a <strong>Verified Provider</strong> badge only after an Administrator verifies your identity and commercial documentation. Self-approval is strictly blocked by database triggers and backend checks.
+        </p>
+
+        <form id="providerKycForm">
+          <div class="glass-form-grid">
+            <div class="glass-field">
+              <label for="kycResidencyType">Applicant Residency Category *</label>
+              <select id="kycResidencyType" required>
+                <option value="indian_resident">Indian Resident (Driving Licence + Aadhaar/PAN)</option>
+                <option value="nri_international">NRI / International (Passport + Visa/OCI + IDP)</option>
+              </select>
+            </div>
+            <div class="glass-field">
+              <label for="kycBusinessName">Shop / Fleet Dealership Name *</label>
+              <input type="text" id="kycBusinessName" placeholder="e.g., Apex Metro Mobility Pvt. Ltd." required />
+            </div>
+            <div class="glass-field">
+              <label for="kycDocType">Primary Document Type *</label>
+              <select id="kycDocType" required>
+                <option value="driving_licence">Driving Licence + Commercial RC</option>
+                <option value="aadhaar">Aadhaar + GST Certificate</option>
+                <option value="pan">PAN Card + Shop Act Licence</option>
+                <option value="passport">Passport (NRI / Foreign National)</option>
+              </select>
+            </div>
+            <div class="glass-field">
+              <label for="kycDocLast4">Document Number (Last 4 Characters Only for Privacy) *</label>
+              <input type="text" id="kycDocLast4" maxlength="4" pattern="[A-Za-z0-9]{4}" placeholder="e.g., 4829" required />
+            </div>
+            <div class="glass-field">
+              <label for="kycLicenceNumber">Driving Licence / Trade Permit Reference *</label>
+              <input type="text" id="kycLicenceNumber" placeholder="e.g., MH02-20190048291" required />
+            </div>
+            <div class="glass-field">
+              <label for="kycLicenceExpiry">Document Expiry Date *</label>
+              <input type="date" id="kycLicenceExpiry" required />
+            </div>
+          </div>
+
+          <div id="kycNriFields" class="glass-form-grid" style="display:none;">
+            <div class="glass-field">
+              <label for="kycPassportCountry">Passport Issuing Country *</label>
+              <input type="text" id="kycPassportCountry" placeholder="e.g., United Kingdom / UAE / USA" />
+            </div>
+            <div class="glass-field">
+              <label for="kycVisaOciRef">Visa / OCI Card Reference *</label>
+              <input type="text" id="kycVisaOciRef" placeholder="e.g., OCI-8849201" />
+            </div>
+            <div class="glass-field">
+              <label for="kycIdpRef">International Driving Permit (IDP) Number</label>
+              <input type="text" id="kycIdpRef" placeholder="e.g., IDP-2026-9921" />
+            </div>
+          </div>
+
+          <div id="kycSubmitFeedback" style="display:none; margin-bottom:0.85rem; padding:0.7rem 1rem; border-radius:10px; font-size:0.88rem;"></div>
+
+          <button type="submit" class="btn-glass btn-glass-primary">
+            <i class="fa-solid fa-paper-plane"></i> Submit Verification for Admin Review
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Drivora Vehicle Rental Marketplace. Protected by Supabase Auth &amp; Row Level Security.</p>
+  </footer>
+
+  <script src="./js/navbar.js"></script>
+  <script src="./js/vehicle-data.js"></script>
+  <script src="./js/pricing.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/provider-dashboard.js"></script>
+</body>
+</html>

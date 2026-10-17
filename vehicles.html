@@ -103,7 +103,10 @@
                     <p class="vehicle-type">SUV &bull; Automatic &bull; Petrol</p>
                     <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
                     <p class="vehicle-price">₹4,500/day</p>
-                    <button class="btn btn-secondary book-button" type="button" data-vehicle="BMW X5">Book Now</button>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="bmw-x5">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="BMW X5">Book Now</button>
+                    </div>
                 </article>
 
                 <article class="vehicle-card" data-category="sedan" data-vehicle-id="mercedes-c-class">
@@ -113,7 +116,10 @@
                     <p class="vehicle-type">Sedan &bull; Automatic &bull; Petrol</p>
                     <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
                     <p class="vehicle-price">₹3,600/day</p>
-                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Mercedes C-Class">Book Now</button>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="mercedes-c-class">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Mercedes C-Class">Book Now</button>
+                    </div>
                 </article>
 
                 <article class="vehicle-card" data-category="electric" data-vehicle-id="tesla-model-3">
@@ -123,7 +129,10 @@
                     <p class="vehicle-type">Electric &bull; Automatic &bull; Electric</p>
                     <p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p>
                     <p class="vehicle-price">₹3,900/day</p>
-                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Tesla Model 3">Book Now</button>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="tesla-model-3">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Tesla Model 3">Book Now</button>
+                    </div>
                 </article>
 
                 <article class="vehicle-card" data-category="luxury" data-vehicle-id="audi-q7">
@@ -133,7 +142,10 @@
                     <p class="vehicle-type">Luxury &bull; Automatic &bull; Diesel</p>
                     <p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p>
                     <p class="vehicle-price">₹5,200/day</p>
-                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Audi Q7">Book Now</button>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="audi-q7">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Audi Q7">Book Now</button>
+                    </div>
                 </article>
 
                 <article class="vehicle-card" data-category="sedan" data-vehicle-id="honda-city">
@@ -143,7 +155,10 @@
                     <p class="vehicle-type">Sedan &bull; Manual &bull; Petrol</p>
                     <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
                     <p class="vehicle-price">₹2,400/day</p>
-                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Honda City">Book Now</button>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="honda-city">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Honda City">Book Now</button>
+                    </div>
                 </article>
 
                 <article class="vehicle-card" data-category="bike" data-vehicle-id="royal-enfield-classic">
@@ -153,53 +168,119 @@
                     <p class="vehicle-type">Bike &bull; Manual &bull; Petrol</p>
                     <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
                     <p class="vehicle-price">₹1,500/day</p>
-                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Royal Enfield Classic">Book Now</button>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="royal-enfield-classic">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Royal Enfield Classic">Book Now</button>
+                    </div>
                 </article>
 
                 <article class="vehicle-card" data-category="convertible" data-vehicle-id="mini-convertible">
                     <button class="wishlist-button" type="button" aria-label="Add Mini Convertible to wishlist" aria-pressed="false">&#9825;</button>
                     <img src="./assets/vehicles/convertiblemini.jpg" alt="Mini Convertible">
-                    <h3>Mini Convertible</h3><p class="vehicle-type">Convertible &bull; Automatic &bull; Petrol</p><p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p><p class="vehicle-price">₹3,200/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Mini Convertible">Book Now</button>
+                    <h3>Mini Convertible</h3>
+                    <p class="vehicle-type">Convertible &bull; Automatic &bull; Petrol</p>
+                    <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
+                    <p class="vehicle-price">₹3,200/day</p>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="mini-convertible">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Mini Convertible">Book Now</button>
+                    </div>
                 </article>
                 <article class="vehicle-card" data-category="bike" data-vehicle-id="continental-gt-650">
                     <button class="wishlist-button" type="button" aria-label="Add Continental GT 650 to wishlist" aria-pressed="false">&#9825;</button>
                     <img src="./assets/vehicles/bikegt650.jpg" alt="Continental GT 650 motorcycle">
-                    <h3>Continental GT 650</h3><p class="vehicle-type">Bike &bull; Manual &bull; Petrol</p><p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p><p class="vehicle-price">₹2,000/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Continental GT 650">Book Now</button>
+                    <h3>Continental GT 650</h3>
+                    <p class="vehicle-type">Bike &bull; Manual &bull; Petrol</p>
+                    <p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p>
+                    <p class="vehicle-price">₹2,000/day</p>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="continental-gt-650">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Continental GT 650">Book Now</button>
+                    </div>
                 </article>
                 <article class="vehicle-card" data-category="electric" data-vehicle-id="ola-s1">
                     <button class="wishlist-button" type="button" aria-label="Add Ola S1 to wishlist" aria-pressed="false">&#9825;</button>
                     <img src="./assets/vehicles/electricscooterolas1.jpg" alt="Ola S1 electric scooter">
-                    <h3>Ola S1</h3><p class="vehicle-type">Electric Scooter &bull; Automatic &bull; Electric</p><p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p><p class="vehicle-price">₹900/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Ola S1">Book Now</button>
+                    <h3>Ola S1</h3>
+                    <p class="vehicle-type">Electric Scooter &bull; Automatic &bull; Electric</p>
+                    <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
+                    <p class="vehicle-price">₹900/day</p>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="ola-s1">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Ola S1">Book Now</button>
+                    </div>
                 </article>
                 <article class="vehicle-card" data-category="van" data-vehicle-id="toyota-commuter-van">
                     <button class="wishlist-button" type="button" aria-label="Add Toyota Commuter Van to wishlist" aria-pressed="false">&#9825;</button>
                     <img src="./assets/vehicles/vancommuter.jpg" alt="Toyota Commuter Van">
-                    <h3>Toyota Commuter Van</h3><p class="vehicle-type">Van &bull; Manual &bull; Diesel</p><p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p><p class="vehicle-price">₹4,000/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Toyota Commuter Van">Book Now</button>
+                    <h3>Toyota Commuter Van</h3>
+                    <p class="vehicle-type">Van &bull; Manual &bull; Diesel</p>
+                    <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
+                    <p class="vehicle-price">₹4,000/day</p>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="toyota-commuter-van">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Toyota Commuter Van">Book Now</button>
+                    </div>
                 </article>
                 <article class="vehicle-card" data-category="sports" data-vehicle-id="volkswagen-virtus-gt">
                     <button class="wishlist-button" type="button" aria-label="Add Volkswagen Virtus GT to wishlist" aria-pressed="false">&#9825;</button>
                     <img src="./assets/vehicles/sportsvirtusgt.jpg" alt="Volkswagen Virtus GT">
-                    <h3>Volkswagen Virtus GT</h3><p class="vehicle-type">Sports &bull; Manual &bull; Petrol</p><p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p><p class="vehicle-price">₹3,400/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Volkswagen Virtus GT">Book Now</button>
+                    <h3>Volkswagen Virtus GT</h3>
+                    <p class="vehicle-type">Sports &bull; Manual &bull; Petrol</p>
+                    <p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p>
+                    <p class="vehicle-price">₹3,400/day</p>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="volkswagen-virtus-gt">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Volkswagen Virtus GT">Book Now</button>
+                    </div>
                 </article>
                 <article class="vehicle-card" data-category="pickup" data-vehicle-id="isuzu-pickup">
                     <button class="wishlist-button" type="button" aria-label="Add Isuzu Pickup to wishlist" aria-pressed="false">&#9825;</button>
                     <img src="./assets/vehicles/pickupisuzu.jpg" alt="Isuzu Pickup Truck">
-                    <h3>Isuzu Pickup</h3><p class="vehicle-type">Pickup &bull; Manual &bull; Diesel</p><p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p><p class="vehicle-price">₹3,800/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Isuzu Pickup">Book Now</button>
+                    <h3>Isuzu Pickup</h3>
+                    <p class="vehicle-type">Pickup &bull; Manual &bull; Diesel</p>
+                    <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
+                    <p class="vehicle-price">₹3,800/day</p>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="isuzu-pickup">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Isuzu Pickup">Book Now</button>
+                    </div>
                 </article>
                 <article class="vehicle-card" data-category="hatchback" data-vehicle-id="tata-altroz">
                     <button class="wishlist-button" type="button" aria-label="Add Tata Altroz to wishlist" aria-pressed="false">&#9825;</button>
                     <img src="./assets/vehicles/hatchbackaltroz.jpg" alt="Tata Altroz hatchback">
-                    <h3>Tata Altroz</h3><p class="vehicle-type">Hatchback &bull; Manual &bull; Petrol</p><p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p><p class="vehicle-price">₹1,800/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Tata Altroz">Book Now</button>
+                    <h3>Tata Altroz</h3>
+                    <p class="vehicle-type">Hatchback &bull; Manual &bull; Petrol</p>
+                    <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
+                    <p class="vehicle-price">₹1,800/day</p>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="tata-altroz">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Tata Altroz">Book Now</button>
+                    </div>
                 </article>
                 <article class="vehicle-card" data-category="luxury" data-vehicle-id="bmw-i7">
                     <button class="wishlist-button" type="button" aria-label="Add BMW i7 to wishlist" aria-pressed="false">&#9825;</button>
                     <img src="./assets/vehicles/luxuryi7.jpg" alt="BMW i7 luxury electric sedan">
-                    <h3>BMW i7</h3><p class="vehicle-type">Luxury &bull; Automatic &bull; Electric</p><p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p><p class="vehicle-price">₹7,500/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="BMW i7">Book Now</button>
+                    <h3>BMW i7</h3>
+                    <p class="vehicle-type">Luxury &bull; Automatic &bull; Electric</p>
+                    <p class="vehicle-rating" aria-label="Rated 5 out of 5 stars">★★★★★</p>
+                    <p class="vehicle-price">₹7,500/day</p>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="bmw-i7">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="BMW i7">Book Now</button>
+                    </div>
                 </article>
                 <article class="vehicle-card" data-category="minivan" data-vehicle-id="toyota-hiace">
                     <button class="wishlist-button" type="button" aria-label="Add Toyota Hiace to wishlist" aria-pressed="false">&#9825;</button>
                     <img src="./assets/vehicles/minivantoyotahiace.jpg" alt="Toyota Hiace Minivan">
-                    <h3>Toyota Hiace</h3><p class="vehicle-type">Minivan &bull; Manual &bull; Diesel</p><p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p><p class="vehicle-price">₹4,300/day</p><button class="btn btn-secondary book-button" type="button" data-vehicle="Toyota Hiace">Book Now</button>
+                    <h3>Toyota Hiace</h3>
+                    <p class="vehicle-type">Minivan &bull; Manual &bull; Diesel</p>
+                    <p class="vehicle-rating" aria-label="Rated 4 out of 5 stars">★★★★☆</p>
+                    <p class="vehicle-price">₹4,300/day</p>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="toyota-hiace">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Toyota Hiace">Book Now</button>
+                    </div>
                 </article>
 
             </div>
