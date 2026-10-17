@@ -1,15 +1,23 @@
 {
-  "name": "drivora-vehicle-rental",
+  "name": "vehicle-rental-web",
   "version": "1.0.0",
-  "description": "Drivora Vehicle Rental Web Application with Vercel Serverless API & Supabase PostgreSQL Database",
-  "private": true,
+  "description": "Drivora - Premium Vehicle Rental Service",
+  "main": "index.html",
   "scripts": {
-    "start": "npx serve ."
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dipanshu27122008-hub/Vehicle-Rental-Web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dipanshu27122008-hub/Vehicle-Rental-Web/issues"
+  },
+  "homepage": "https://github.com/dipanshu27122008-hub/Vehicle-Rental-Web#readme",
   "dependencies": {
-    "@supabase/supabase-js": "^2.49.1"
-  },
-  "engines": {
-    "node": ">=18.x"
+    "@vercel/analytics": "^2.0.1"
   }
 }
