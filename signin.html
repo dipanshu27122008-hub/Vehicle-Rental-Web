@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sign in to your Drivora customer or provider account." />
+  <title>Sign In | Drivora Marketplace</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/navbar.css" />
+  <link rel="stylesheet" href="./css/marketplace.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+  <style>
+    .auth-page-container {
+      min-height: calc(100vh - 160px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem;
+    }
+    .auth-standalone-card {
+      width: min(100%, 460px);
+      padding: 2.5rem 2.25rem;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 30px 70px rgba(15, 23, 42, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+    }
+  </style>
+</head>
+<body class="page">
+  <header class="header">
+    <a href="./index.html" class="logo"><img src="./assets/logo/logo drivora.png" alt="Drivora Logo" /></a>
+    <nav class="navbar" aria-label="Primary navigation">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">☰</button>
+      <ul class="nav-links" id="primary-navigation">
+        <li class="nav-item"><a href="./index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="./about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="./vehicles.html" class="nav-link">Vehicles</a></li>
+        <li class="nav-item"><a href="./gallery.html" class="nav-link">Gallery</a></li>
+        <li class="nav-item"><a href="./contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item"><a href="./provider-dashboard.html" class="nav-link">Provider Portal</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="auth-page-container">
+    <div class="auth-standalone-card">
+      <div class="auth-header">
+        <div class="auth-logo"><i class="fa-solid fa-right-to-bracket"></i></div>
+        <h2>Welcome Back</h2>
+        <p>Sign in to manage your customer bookings or your provider fleet listings.</p>
+      </div>
+
+      <div id="page-signin-error" class="form-error" role="alert" style="color:#b91c1c; font-size:0.86rem; margin-bottom:1rem; text-align:center;"></div>
+
+      <form id="standalone-signin-form" novalidate>
+        <div class="glass-field" style="margin-bottom:1rem;">
+          <label for="page-signin-email">Email Address *</label>
+          <input id="page-signin-email" name="email" type="email" required placeholder="you@example.com" autocomplete="email" />
+        </div>
+
+        <div class="glass-field" style="margin-bottom:0.75rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+            <label for="page-signin-password" style="margin:0;">Password *</label>
+            <button type="button" id="page-forgot-link" style="background:transparent; border:0; color:#2563eb; font-size:0.8rem; font-weight:700; cursor:pointer;">Forgot Password?</button>
+          </div>
+          <div class="password-input-group">
+            <input id="page-signin-password" name="password" type="password" required placeholder="Enter your password" autocomplete="current-password" />
+            <button type="button" class="btn-toggle-pw" aria-label="Show or hide password"><i class="fa-solid fa-eye"></i></button>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-page-signin-submit" class="btn-glass btn-glass-primary" style="width:100%; justify-content:center; padding:0.8rem; margin-top:0.75rem; border-radius:14px; font-size:0.95rem;">
+          <i class="fa-solid fa-lock"></i> Sign In
+        </button>
+      </form>
+
+      <div class="auth-switch-footer">
+        Don't have an account? <a href="./signup.html" id="link-to-signup"><strong>Create Account / Sign Up</strong></a>
+        <div style="margin-top:0.65rem; font-size:0.8rem; color:#64748b;">
+          🚗 Vehicle Host or Shopkeeper? Sign in to manage your listings and incoming rental requests.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Drivora Vehicle Rental Marketplace. All rights reserved.</p>
+  </footer>
+
+  <script src="./js/navbar.js"></script>
+  <script src="./js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("standalone-signin-form");
+      const errEl = document.getElementById("page-signin-error");
+      const submitBtn = document.getElementById("btn-page-signin-submit");
+      const forgotBtn = document.getElementById("page-forgot-link");
+
+      // Password toggle
+      document.querySelectorAll(".btn-toggle-pw").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const input = btn.previousElementSibling;
+          if (!input) return;
+          const isPw = input.type === "password";
+          input.type = isPw ? "text" : "password";
+          btn.innerHTML = isPw ? '<i class="fa-solid fa-eye-slash"></i>' : '<i class="fa-solid fa-eye"></i>';
+        });
+      });
+
+      if (forgotBtn && window.DrivoraAuth) {
+        forgotBtn.addEventListener("click", () => {
+          window.DrivoraAuth.openResetModal();
+        });
+      }
+
+      if (form) {
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          errEl.textContent = "";
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing In...';
+
+          const fd = Object.fromEntries(new FormData(form).entries());
+          try {
+            const res = await fetch("/api/marketplace?action=auth", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ authOperation: "login", ...fd }),
+            });
+            const data = await res.json();
+            if (!res.ok || !data.ok) {
+              throw new Error(data.error || "Invalid login credentials.");
+            }
+            if (window.DrivoraAuth && typeof window.DrivoraAuth.setSession === "function") {
+              window.DrivoraAuth.setSession({
+                accessToken: data.accessToken,
+                refreshToken: data.refreshToken,
+                user: data.user,
+              });
+            }
+            if (data.user.role === "provider") {
+              window.location.href = "./provider-dashboard.html";
+            } else {
+              window.location.href = "./vehicles.html";
+            }
+          } catch (err) {
+            errEl.textContent = err.message;
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-lock"></i> Sign In';
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

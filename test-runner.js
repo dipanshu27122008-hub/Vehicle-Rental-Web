@@ -72,7 +72,9 @@ const htmlPages = [
   'gallery.html',
   'provider-dashboard.html',
   'admin-dashboard.html',
-  'terms.html'
+  'terms.html',
+  'signin.html',
+  'signup.html'
 ];
 
 htmlPages.forEach(page => {
@@ -360,6 +362,29 @@ async function testApiEndpoints() {
   assert(vehicleCss.includes('.card-action-group'), 'css/vehicle.css has overrides for .card-action-group');
   assert(marketCss.includes('.glass-panel'), 'css/marketplace.css defines .glass-panel');
   assert(marketCss.includes('.stat-card'), 'css/marketplace.css defines .stat-card for dashboards');
+
+  // ----------------------------------------------------
+  // 8. PROVIDER PORTAL & DEDICATED AUTH MODALS AUDIT
+  // ----------------------------------------------------
+  console.log('\n--- Step 8: Provider Portal & Dedicated Auth Pop-ups Audit ---');
+  const providerHtml = fs.readFileSync('provider-dashboard.html', 'utf8');
+  const appJs = fs.readFileSync('js/app.js', 'utf8');
+  const providerJs = fs.readFileSync('js/provider-dashboard.js', 'utf8');
+
+  assert(providerHtml.includes('data-tab="earnings"'), 'provider-dashboard.html has Earnings & Settlements tab button');
+  assert(providerHtml.includes('id="tab-earnings"'), 'provider-dashboard.html contains #tab-earnings section');
+  assert(providerHtml.includes('id="returnCheckinModal"'), 'provider-dashboard.html contains #returnCheckinModal dialog');
+  assert(providerHtml.includes('id="inquiryReplyModal"'), 'provider-dashboard.html contains #inquiryReplyModal dialog');
+  assert(providerHtml.includes('id="deleteVehicleModal"'), 'provider-dashboard.html contains #deleteVehicleModal dialog');
+  assert(providerHtml.includes('id="vehImageDropZone"'), 'provider-dashboard.html contains image dropzone uploader');
+  assert(providerHtml.includes('id="vehFileInput"'), 'provider-dashboard.html contains local file selector input');
+  assert(providerHtml.includes('class="preset-chip"'), 'provider-dashboard.html contains quick preset image chips');
+
+  assert(appJs.includes('openSignInModal'), 'js/app.js implements openSignInModal()');
+  assert(appJs.includes('openSignUpModal'), 'js/app.js implements openSignUpModal()');
+  assert(appJs.includes('openResetModal'), 'js/app.js implements openResetModal()');
+  assert(appJs.includes('openAccountModal'), 'js/app.js implements openAccountModal()');
+  assert(!providerJs.includes('window.prompt('), 'js/provider-dashboard.js has zero window.prompt calls (replaced by custom modals)');
 
   console.log('\n====================================================');
   console.log(`VERIFICATION SUMMARY: Total ${totalTests} | Passed: ${passedTests} | Failed: ${failedTests}`);

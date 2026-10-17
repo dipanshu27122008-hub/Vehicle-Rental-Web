@@ -269,6 +269,7 @@
     renderBookingsTable();
     renderInspectionsTable();
     renderInquiriesTable();
+    renderEarningsTable();
   }
 
   function renderKpis() {
@@ -401,6 +402,12 @@
                 </button>
                 <button type="button" class="btn-glass" style="padding:0.35rem 0.65rem; font-size:0.78rem;" data-toggle-pub="${id}">
                   <i class="fa-solid ${published ? "fa-eye-slash" : "fa-eye"}"></i> ${published ? "Hide" : "Publish"}
+                </button>
+                <a href="./vehicles.html?search=${encodeURIComponent(v.title || v.name)}" target="_blank" class="btn-glass" style="padding:0.35rem 0.65rem; font-size:0.78rem;">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Preview
+                </a>
+                <button type="button" class="btn-glass btn-glass-danger" style="padding:0.35rem 0.65rem; font-size:0.78rem;" data-delete-veh="${id}">
+                  <i class="fa-solid fa-trash"></i> Delete
                 </button>
               </div>
             </td>
@@ -618,6 +625,193 @@
       .join("");
   }
 
+  function renderEarningsTable() {
+    const tbody = document.getElementById("providerEarningsTableBody");
+    if (!tbody) return;
+
+    const completedBookings = providerBookings.filter((b) => b.status === "completed");
+
+    let grossCompleted = 0;
+    let totalPlatformFee = 0;
+    let totalLateFees = 0;
+    let totalNetReceivable = 0;
+
+    completedBookings.forEach((b) => {
+      const gross = Number(b.rental_subtotal || b.totalAmount || 0);
+      const late = Number(b.late_return_fee || b.lateFeeAmount || 0);
+      const fee = Math.round(gross * 0.1); // 10% platform commission
+      const net = (gross - fee) + late;
+
+      grossCompleted += gross;
+      totalPlatformFee += fee;
+      totalLateFees += late;
+      totalNetReceivable += net;
+    });
+
+    const setEl = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    };
+    setEl("earningsGrossCompleted", `₹${grossCompleted.toLocaleString("en-IN")}`);
+    setEl("earningsPlatformCommission", `₹${totalPlatformFee.toLocaleString("en-IN")}`);
+    setEl("earningsLateFees", `₹${totalLateFees.toLocaleString("en-IN")}`);
+    setEl("earningsNetReceivable", `₹${totalNetReceivable.toLocaleString("en-IN")}`);
+
+    if (!completedBookings.length) {
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:1.5rem;">No completed rentals settled yet. Complete an active booking in Bookings tab to see settlements.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = completedBookings
+      .map((b) => {
+        const bId = escapeHtml(b.id || "DRV-BK");
+        const vehName = escapeHtml(b.vehicle_name || "Drivora Vehicle");
+        const retDate = escapeHtml(b.actual_return_at || b.return_at || b.return_date || "—");
+        const gross = Number(b.rental_subtotal || b.totalAmount || 0);
+        const late = Number(b.late_return_fee || b.lateFeeAmount || 0);
+        const fee = Math.round(gross * 0.1);
+        const net = (gross - fee) + late;
+
+        return `
+          <tr>
+            <td><strong>${bId.slice(0, 14)}</strong></td>
+            <td><strong>${vehName}</strong></td>
+            <td>${retDate}</td>
+            <td><strong>₹${gross.toLocaleString("en-IN")}</strong></td>
+            <td style="color:#b45309;">-₹${fee.toLocaleString("en-IN")}</td>
+            <td style="color:${late > 0 ? '#15803d' : '#64748b'}; font-weight:${late > 0 ? '700' : 'normal'};">+₹${late.toLocaleString("en-IN")}</td>
+            <td><strong style="color:#2563eb; font-size:0.95rem;">₹${net.toLocaleString("en-IN")}</strong></td>
+            <td><span class="badge-pill badge-verified"><i class="fa-solid fa-circle-check"></i> SETTLED</span></td>
+            <td>
+              <button type="button" class="btn-glass" style="padding:0.3rem 0.6rem; font-size:0.75rem;" data-book-invoice="${bId}">
+                <i class="fa-solid fa-receipt"></i> Statement
+              </button>
+            </td>
+          </tr>
+        `;
+      })
+      .join("");
+  }
+
+  // Modal helpers for Return Check-in, Inquiry Reply, and Vehicle Deletion
+  let pendingDeleteVehId = null;
+
+  function openReturnCheckinModal(booking) {
+    const modal = document.getElementById("returnCheckinModal");
+    if (!modal) return;
+    document.getElementById("returnBookingId").value = booking.id;
+    document.getElementById("returnVehName").textContent = booking.vehicle_name;
+    document.getElementById("returnCustName").textContent = `${booking.customer_name} (${booking.customer_phone || "—"})`;
+    document.getElementById("returnScheduledTime").textContent = booking.return_at || booking.return_date || "—";
+    const deposit = Number(booking.security_deposit || 5000);
+    document.getElementById("returnDepositHeld").textContent = deposit.toLocaleString("en-IN");
+
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, "0");
+    const nowLocal = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    const input = document.getElementById("actualReturnInput");
+    input.value = nowLocal;
+
+    function updateBreakdown() {
+      const actualVal = input.value;
+      const summaryEl = document.getElementById("returnCalcSummary");
+      if (!actualVal || !window.DrivoraPricing) {
+        summaryEl.innerHTML = `<span style="color:#64748b;">Enter return timestamp to preview late fee &amp; deposit settlement.</span>`;
+        return;
+      }
+      const calc = window.DrivoraPricing.calculateBookingBreakdown({
+        dailyRate: Number(booking.daily_rate || 2500),
+        securityDeposit: deposit,
+        pickupAt: booking.pickup_at || booking.pickup_date,
+        returnAt: booking.return_at || booking.return_date,
+        actualReturnAt: actualVal,
+      });
+
+      if (calc.valid) {
+        const isLate = calc.lateBillableHours > 0;
+        const refundAmount = Math.max(0, deposit - calc.lateReturnFee);
+        summaryEl.innerHTML = `
+          <div style="display:flex; justify-content:space-between; margin-bottom:0.3rem;">
+            <span>Scheduled vs Actual:</span>
+            <strong>${calc.lateBillableHours === 0 ? '<span style="color:#15803d;"><i class="fa-solid fa-circle-check"></i> On-Time / Free Grace Period</span>' : `<span style="color:#b91c1c;"><i class="fa-solid fa-triangle-exclamation"></i> Late by ${calc.lateBillableHours} Billable Hr(s)</span>`}</strong>
+          </div>
+          <div style="font-size:0.78rem; color:#64748b; margin-bottom:0.4rem;">
+            Drivora applies a mandatory <strong>1-hour free grace period</strong> after scheduled return before late hourly penalties accrue.
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:0.25rem;">
+            <span>Late Hourly Penalty:</span>
+            <strong style="color:${isLate ? '#b91c1c' : '#0f172a'};">₹${calc.lateReturnFee.toLocaleString("en-IN")}</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding-top:0.35rem; border-top:1px dashed rgba(148,163,184,0.4); font-weight:700;">
+            <span>Refundable Deposit to Customer:</span>
+            <span style="color:#15803d;">₹${refundAmount.toLocaleString("en-IN")} (Deposit ₹${deposit.toLocaleString("en-IN")} - Late fee ₹${calc.lateReturnFee.toLocaleString("en-IN")})</span>
+          </div>
+        `;
+      }
+    }
+
+    input.oninput = updateBreakdown;
+    updateBreakdown();
+
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+  }
+
+  function closeReturnCheckinModal() {
+    const modal = document.getElementById("returnCheckinModal");
+    if (modal) {
+      modal.hidden = true;
+      modal.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  function openInquiryReplyModal(idx) {
+    const inq = providerInquiries[idx];
+    if (!inq) return;
+    const modal = document.getElementById("inquiryReplyModal");
+    if (!modal) return;
+
+    document.getElementById("inquiryIndex").value = idx;
+    document.getElementById("inqVehicleName").textContent = inq.vehicle_name || `Vehicle #${inq.vehicle_id || 1}`;
+    document.getElementById("inqCustomerName").textContent = inq.customer_name || "Customer";
+    document.getElementById("inqCustomerEmail").textContent = inq.customer_email || "Email hidden";
+    document.getElementById("inqMessageText").textContent = `"${inq.message || "No message"}"`;
+    document.getElementById("inquiryReplyText").value = inq.provider_response || inq.providerResponse || "";
+
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+    setTimeout(() => document.getElementById("inquiryReplyText")?.focus(), 50);
+  }
+
+  function closeInquiryReplyModal() {
+    const modal = document.getElementById("inquiryReplyModal");
+    if (modal) {
+      modal.hidden = true;
+      modal.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  function openDeleteVehicleModal(vehId) {
+    const veh = providerVehicles.find((v) => String(v.id || `veh-${v.legacy_id}`) === String(vehId));
+    if (!veh) return;
+    pendingDeleteVehId = vehId;
+    const modal = document.getElementById("deleteVehicleModal");
+    if (!modal) return;
+    document.getElementById("deleteVehTitle").textContent = veh.title || veh.name || "Vehicle";
+    document.getElementById("deleteVehId").textContent = vehId;
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+  }
+
+  function closeDeleteVehicleModal() {
+    pendingDeleteVehId = null;
+    const modal = document.getElementById("deleteVehicleModal");
+    if (modal) {
+      modal.hidden = true;
+      modal.setAttribute("aria-hidden", "true");
+    }
+  }
+
   function bindTabs() {
     const tabButtons = document.querySelectorAll(".provider-tab-btn");
     const sections = document.querySelectorAll(".provider-tab-section");
@@ -660,6 +854,72 @@
         panel.style.display = "none";
       });
     }
+
+    // Image uploader & live preview bindings
+    const primaryInput = document.getElementById("vehPrimaryImage");
+    const previewImg = document.getElementById("vehPreviewImg");
+    const fileInput = document.getElementById("vehFileInput");
+    const pickBtn = document.getElementById("btnPickLocalImage");
+    const dropZone = document.getElementById("vehImageDropZone");
+
+    if (primaryInput && previewImg) {
+      primaryInput.addEventListener("input", () => {
+        previewImg.src = primaryInput.value || "./assets/vehicles/bmw x5.jpg";
+      });
+    }
+
+    if (pickBtn && fileInput) {
+      pickBtn.addEventListener("click", () => fileInput.click());
+    }
+
+    if (fileInput && primaryInput && previewImg) {
+      fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const dataUrl = e.target.result;
+            primaryInput.value = dataUrl;
+            previewImg.src = dataUrl;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    if (dropZone && primaryInput && previewImg) {
+      dropZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropZone.classList.add("dragover");
+      });
+      dropZone.addEventListener("dragleave", () => {
+        dropZone.classList.remove("dragover");
+      });
+      dropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropZone.classList.remove("dragover");
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            const dataUrl = ev.target.result;
+            primaryInput.value = dataUrl;
+            previewImg.src = dataUrl;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    document.querySelectorAll(".preset-chip[data-img]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const img = chip.getAttribute("data-img");
+        if (img && primaryInput && previewImg) {
+          primaryInput.value = img;
+          previewImg.src = img;
+        }
+      });
+    });
 
     if (form) {
       form.addEventListener("submit", async (e) => {
@@ -828,6 +1088,8 @@
           document.getElementById("vehCity").value = veh.city || "Mumbai";
           document.getElementById("vehHub").value = veh.public_hub || veh.publicHub || veh.location || "";
           document.getElementById("vehPrimaryImage").value = veh.primary_image || veh.image || "./assets/vehicles/bmw x5.jpg";
+          const prevImg = document.getElementById("vehPreviewImg");
+          if (prevImg) prevImg.src = veh.primary_image || veh.image || "./assets/vehicles/bmw x5.jpg";
           document.getElementById("vehPublishedToggle").checked = veh.is_published !== false && veh.isPublished !== false;
           document.getElementById("vehTermsAccept").checked = true;
 
@@ -835,6 +1097,19 @@
           document.getElementById("vehicleFormTitle").innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Edit Vehicle: ${escapeHtml(veh.title || veh.name)}`;
           panel.style.display = "block";
           panel.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+
+        const delBtn = e.target.closest("[data-delete-veh]");
+        if (delBtn) {
+          if (!isAuthorizedProvider()) {
+            if (window.DrivoraAuth && typeof window.DrivoraAuth.openSignInModal === "function") {
+              window.DrivoraAuth.openSignInModal();
+            }
+            return;
+          }
+          const id = delBtn.getAttribute("data-delete-veh");
+          openDeleteVehicleModal(id);
           return;
         }
 
@@ -883,7 +1158,9 @@
         const actionBtn = e.target.closest("[data-book-action]");
         if (actionBtn) {
           if (!isAuthorizedProvider()) {
-            if (window.DrivoraAuth) window.DrivoraAuth.openAuthModal("login");
+            if (window.DrivoraAuth && typeof window.DrivoraAuth.openSignInModal === "function") {
+              window.DrivoraAuth.openSignInModal();
+            }
             return;
           }
           const newStatus = actionBtn.getAttribute("data-book-action");
@@ -900,42 +1177,13 @@
             return;
           }
 
-          let actualReturnIso = null;
-          let lateFee = Number(booking.late_return_fee || 0);
-
           if (newStatus === "completed") {
-            const defaultReturn = `${booking.return_date || "2026-11-05"}T10:00`;
-            const entered = window.prompt(
-              "Enter actual return timestamp (YYYY-MM-DDTHH:mm) to verify on-time or late return (1-hour free grace period applies):",
-              defaultReturn
-            );
-            if (!entered) return;
-            actualReturnIso = entered.trim();
-
-            if (window.DrivoraPricing && typeof window.DrivoraPricing.calculateBookingBreakdown === "function") {
-              const calc = window.DrivoraPricing.calculateBookingBreakdown({
-                dailyRate: Number(booking.daily_rate || 2500),
-                securityDeposit: Number(booking.security_deposit || 5000),
-                pickupAt: booking.pickup_at || booking.pickup_date,
-                returnAt: booking.return_at || booking.return_date,
-                actualReturnAt: actualReturnIso,
-              });
-              if (calc.valid) {
-                lateFee = calc.lateReturnFee;
-                booking.late_return_hours = calc.lateBillableHours;
-                booking.lateHours = calc.lateBillableHours;
-                booking.late_return_fee = calc.lateReturnFee;
-                booking.lateFeeAmount = calc.lateReturnFee;
-                booking.rental_subtotal = calc.rentalSubtotal;
-                booking.totalAmount = calc.rentalSubtotal;
-                booking.total_payable = calc.totalPayable;
-              }
-            }
+            openReturnCheckinModal(booking);
+            return;
           }
 
           booking.status = newStatus;
           booking.bookingStatus = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
-          if (actualReturnIso) booking.actual_return_at = actualReturnIso;
 
           try {
             await fetch("/api/bookings", {
@@ -944,7 +1192,6 @@
               body: JSON.stringify({
                 id: booking.id,
                 status: newStatus,
-                actual_return_at: actualReturnIso,
               }),
             });
           } catch (err) {
@@ -956,13 +1203,13 @@
           if (window.DrivoraAuth && typeof window.DrivoraAuth.addNotification === "function") {
             window.DrivoraAuth.addNotification({
               title: `Booking ${booking.bookingStatus}: ${booking.vehicle_name}`,
-              message: `Reservation ${booking.id} is now ${booking.bookingStatus}${lateFee > 0 ? ` (Late fee ₹${lateFee})` : ""}.`,
+              message: `Reservation ${booking.id} is now ${booking.bookingStatus}.`,
               bookingCode: booking.id,
             });
           }
           showFeedback(
             "bookingActionFeedback",
-            `Booking for <strong>${escapeHtml(booking.vehicle_name)}</strong> updated to <strong>${escapeHtml(newStatus.toUpperCase())}</strong>${lateFee > 0 ? ` (Late return fee applied: ₹${lateFee.toLocaleString("en-IN")})` : ""}.`
+            `Booking for <strong>${escapeHtml(booking.vehicle_name)}</strong> updated to <strong>${escapeHtml(newStatus.toUpperCase())}</strong>.`
           );
           await loadDashboardData();
           return;
@@ -995,25 +1242,107 @@
     // Inquiries reply handler
     const inqBody = document.getElementById("providerInquiriesTableBody");
     if (inqBody) {
-      inqBody.addEventListener("click", async (e) => {
+      inqBody.addEventListener("click", (e) => {
         const replyBtn = e.target.closest("[data-reply-inq]");
         if (!replyBtn) return;
         if (!isAuthorizedProvider()) {
-          if (window.DrivoraAuth) window.DrivoraAuth.openAuthModal("login");
+          if (window.DrivoraAuth && typeof window.DrivoraAuth.openSignInModal === "function") {
+            window.DrivoraAuth.openSignInModal();
+          }
           return;
         }
         const idx = Number(replyBtn.getAttribute("data-reply-inq"));
-        const inq = providerInquiries[idx];
-        if (!inq) return;
+        openInquiryReplyModal(idx);
+      });
+    }
 
-        const reply = window.prompt(
-          `Reply to ${inq.customer_name || "Customer"}'s inquiry about ${inq.vehicle_name || "vehicle"}:`,
-          inq.provider_response || "Yes, the vehicle is sanitized, insured, and available at our public pickup hub."
+    // Return Checkin form submission
+    const returnForm = document.getElementById("returnCheckinForm");
+    if (returnForm) {
+      returnForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const bId = document.getElementById("returnBookingId").value;
+        const actualReturnIso = document.getElementById("actualReturnInput").value;
+        const booking = providerBookings.find((b) => String(b.id) === String(bId));
+        if (!booking || !actualReturnIso) return;
+
+        let lateFee = 0;
+        if (window.DrivoraPricing && typeof window.DrivoraPricing.calculateBookingBreakdown === "function") {
+          const calc = window.DrivoraPricing.calculateBookingBreakdown({
+            dailyRate: Number(booking.daily_rate || 2500),
+            securityDeposit: Number(booking.security_deposit || 5000),
+            pickupAt: booking.pickup_at || booking.pickup_date,
+            returnAt: booking.return_at || booking.return_date,
+            actualReturnAt: actualReturnIso,
+          });
+          if (calc.valid) {
+            lateFee = calc.lateReturnFee;
+            booking.late_return_hours = calc.lateBillableHours;
+            booking.lateHours = calc.lateBillableHours;
+            booking.late_return_fee = calc.lateReturnFee;
+            booking.lateFeeAmount = calc.lateReturnFee;
+            booking.rental_subtotal = calc.rentalSubtotal;
+            booking.totalAmount = calc.rentalSubtotal;
+            booking.total_payable = calc.totalPayable;
+          }
+        }
+
+        booking.status = "completed";
+        booking.bookingStatus = "Completed";
+        booking.actual_return_at = actualReturnIso;
+
+        try {
+          await fetch("/api/bookings", {
+            method: "PATCH",
+            headers: getAuthHeaders(),
+            body: JSON.stringify({
+              id: booking.id,
+              status: "completed",
+              actual_return_at: actualReturnIso,
+            }),
+          });
+        } catch (err) {
+          // local fallback
+        }
+
+        writeLocalJson(LOCAL_BOOKINGS_KEY, providerBookings);
+        writeLocalJson(LOCAL_BOOKINGS_ALT_KEY, providerBookings);
+        if (window.DrivoraAuth && typeof window.DrivoraAuth.addNotification === "function") {
+          window.DrivoraAuth.addNotification({
+            title: `Trip Completed: ${booking.vehicle_name}`,
+            message: `Reservation ${booking.id} completed${lateFee > 0 ? ` (Late penalty ₹${lateFee} deducted)` : " on time"}.`,
+            bookingCode: booking.id,
+          });
+        }
+        closeReturnCheckinModal();
+        showFeedback(
+          "bookingActionFeedback",
+          `Trip for <strong>${escapeHtml(booking.vehicle_name)}</strong> completed${lateFee > 0 ? ` with late return fee of ₹${lateFee.toLocaleString("en-IN")}` : " on time"}. Deposit refunded: ₹${Math.max(0, Number(booking.security_deposit || 5000) - lateFee).toLocaleString("en-IN")}.`
         );
-        if (!reply || !reply.trim()) return;
+        await loadDashboardData();
+      });
+    }
 
-        inq.provider_response = reply.trim();
-        inq.providerResponse = reply.trim();
+    // Inquiry Quick Replies & Submission
+    document.querySelectorAll(".inq-quick-reply").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const text = btn.getAttribute("data-text");
+        const area = document.getElementById("inquiryReplyText");
+        if (text && area) area.value = text;
+      });
+    });
+
+    const inqForm = document.getElementById("inquiryReplyForm");
+    if (inqForm) {
+      inqForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const idx = Number(document.getElementById("inquiryIndex").value);
+        const reply = document.getElementById("inquiryReplyText").value.trim();
+        const inq = providerInquiries[idx];
+        if (!inq || !reply) return;
+
+        inq.provider_response = reply;
+        inq.providerResponse = reply;
         inq.status = "responded";
         inq.inquiryStatus = "responded";
         inq.responded_at = new Date().toISOString();
@@ -1034,8 +1363,60 @@
 
         writeLocalJson(LOCAL_INQUIRIES_KEY, providerInquiries);
         writeLocalJson(LOCAL_INQUIRIES_ALT_KEY, providerInquiries);
+        closeInquiryReplyModal();
         renderKpis();
         renderInquiriesTable();
+      });
+    }
+
+    // Vehicle Delete Confirmation
+    const confirmDelBtn = document.getElementById("btnConfirmDeleteVehicle");
+    if (confirmDelBtn) {
+      confirmDelBtn.addEventListener("click", async () => {
+        if (!pendingDeleteVehId) return;
+        const targetId = pendingDeleteVehId;
+        closeDeleteVehicleModal();
+
+        try {
+          await fetch(`/api/vehicles?id=${encodeURIComponent(targetId)}`, {
+            method: "DELETE",
+            headers: getAuthHeaders(),
+          });
+        } catch (err) {
+          // fallback
+        }
+
+        const customList = readLocalJson(CUSTOM_VEHICLES_KEY, []);
+        const filtered = customList.filter(
+          (c) => String(c.id) !== String(targetId) && String(c.legacy_id) !== String(targetId)
+        );
+        writeLocalJson(CUSTOM_VEHICLES_KEY, filtered);
+        writeLocalJson(CUSTOM_VEHICLES_ALT_KEY, filtered);
+
+        providerVehicles = providerVehicles.filter(
+          (v) => String(v.id || `veh-${v.legacy_id}`) !== String(targetId)
+        );
+        await loadDashboardData();
+        showFeedback("vehFormFeedback", `Vehicle listing <strong>${escapeHtml(targetId)}</strong> removed.`);
+      });
+    }
+
+    // Modal Close Buttons
+    document.querySelectorAll("[data-close-return-modal]").forEach((b) =>
+      b.addEventListener("click", closeReturnCheckinModal)
+    );
+    document.querySelectorAll("[data-close-inquiry-modal]").forEach((b) =>
+      b.addEventListener("click", closeInquiryReplyModal)
+    );
+    document.querySelectorAll("[data-close-delete-modal]").forEach((b) =>
+      b.addEventListener("click", closeDeleteVehicleModal)
+    );
+
+    // Print Settlement Statement
+    const printBtn = document.getElementById("btnPrintSettlementLedger");
+    if (printBtn) {
+      printBtn.addEventListener("click", () => {
+        window.print();
       });
     }
   }
@@ -1197,7 +1578,22 @@
     const signInBtn = document.getElementById("btnProviderSignIn");
     if (signInBtn) {
       signInBtn.addEventListener("click", () => {
-        if (window.DrivoraAuth) window.DrivoraAuth.openAuthModal("login");
+        if (window.DrivoraAuth && typeof window.DrivoraAuth.openSignInModal === "function") {
+          window.DrivoraAuth.openSignInModal();
+        } else if (window.DrivoraAuth) {
+          window.DrivoraAuth.openAuthModal("login");
+        }
+      });
+    }
+
+    const signUpBtn = document.getElementById("btnProviderSignUp");
+    if (signUpBtn) {
+      signUpBtn.addEventListener("click", () => {
+        if (window.DrivoraAuth && typeof window.DrivoraAuth.openSignUpModal === "function") {
+          window.DrivoraAuth.openSignUpModal("provider");
+        } else if (window.DrivoraAuth) {
+          window.DrivoraAuth.openAuthModal("register");
+        }
       });
     }
 
