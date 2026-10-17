@@ -132,32 +132,41 @@
         <section class="featured-vehicles">
             <h2 class="section-title">Featured Vehicles</h2>
             <div class="vehicle-grid">
-                <article class="vehicle-card">
+                <article class="vehicle-card" data-vehicle-id="bmw-x5">
                     <img src="./assets/vehicles/bmw x5.jpg" alt="BMW X5">
                     <h3>BMW X5</h3>
                     <p class="vehicle-type">SUV</p>
                     <p class="model-year">Model Year: 2024</p>
                     <p class="vehicle-price">₹4500/day</p>
                     <p class="vehicle-rating">⭐⭐⭐⭐☆</p>
-                    <button class="btn btn-secondary book-button" type="button" data-vehicle="BMW X5">Book Now</button>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="bmw-x5">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="BMW X5">Book Now</button>
+                    </div>
                 </article>
-                <article class="vehicle-card">
+                <article class="vehicle-card" data-vehicle-id="mercedes-c-class">
                     <img src="./assets/vehicles/c class.jpg" alt="Mercedes C-Class">
                     <h3>Mercedes C-Class</h3>
                     <p class="vehicle-type">Sedan</p>
                     <p class="model-year">Model Year: 2023</p>
                     <p class="vehicle-price">₹3600/day</p>
                     <p class="vehicle-rating">⭐⭐⭐⭐☆</p>
-                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Mercedes C-Class">Book Now</button>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="mercedes-c-class">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Mercedes C-Class">Book Now</button>
+                    </div>
                 </article>
-                <article class="vehicle-card">
+                <article class="vehicle-card" data-vehicle-id="tesla-model-3">
                     <img src="./assets/vehicles/model 3.jpg" alt="Tesla Model 3">
                     <h3>Tesla Model 3</h3>
                     <p class="vehicle-type">Luxury</p>
                     <p class="model-year">Model Year: 2025</p>
                     <p class="vehicle-price">₹3900/day</p>
                     <p class="vehicle-rating">⭐⭐⭐⭐⭐</p>
-                    <button class="btn btn-secondary book-button" type="button" data-vehicle="Tesla Model 3">Book Now</button>
+                    <div class="card-action-group">
+                        <button class="btn btn-primary details-button" type="button" data-vehicle-id="tesla-model-3">View Details</button>
+                        <button class="btn btn-secondary book-button" type="button" data-vehicle="Tesla Model 3">Book Now</button>
+                    </div>
                 </article>
             </div>
             <div class="view-all-container">
@@ -272,6 +281,7 @@
     <script src="./js/slider.js"></script>
     <script src="./js/weather.js"></script>
     <script src="./js/book.js"></script>
+    <script src="./js/vehicle-details.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,548 @@
+/* ==========================================================================
+   Drivora Marketplace Extended Glassmorphism Styles
+   Covers: Auth Modal, Role Navbar, Notifications, Distance Discovery,
+   360° Drag-to-Rotate Viewer, Pricing Breakdown, Invoice Print View,
+   Provider Dashboard, and Administrator Console.
+   ========================================================================== */
+
+.nav-portal-group {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.nav-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.notif-bell-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.notif-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+}
+
+/* Distance & Provider Badges on Vehicle Cards */
+.vehicle-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+  align-items: center;
+}
+
+.distance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #1e40af;
+  background: rgba(219, 234, 254, 0.78);
+  border: 1px solid rgba(147, 197, 253, 0.6);
+  border-radius: 999px;
+}
+
+.verified-provider-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #166534;
+  background: rgba(220, 252, 231, 0.82);
+  border: 1px solid rgba(134, 239, 172, 0.6);
+  border-radius: 999px;
+}
+
+.unverified-provider-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #64748b;
+  background: rgba(241, 245, 249, 0.82);
+  border: 1px solid rgba(203, 213, 225, 0.7);
+  border-radius: 999px;
+}
+
+/* 360-Degree Drag-to-Rotate Viewer */
+.viewer-360-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(219, 234, 254, 0.45));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.viewer-360-stage {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  display: grid;
+  place-items: center;
+  cursor: grab;
+  overflow: hidden;
+}
+
+.viewer-360-stage:active {
+  cursor: grabbing;
+}
+
+.viewer-360-stage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: transform 0.15s ease;
+}
+
+.viewer-360-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  background: rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--glass-border);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.viewer-360-controls {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.viewer-360-btn {
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--dark);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.viewer-360-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Dashboard Layouts (Provider & Admin) */
+.dashboard-page {
+  width: 92%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.dashboard-page > section {
+  padding: 0 !important;
+  margin-bottom: 3rem !important;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding: 2rem !important;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.stats-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+  gap: 1rem;
+}
+
+.kpi-card {
+  padding: 1.25rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.kpi-card span {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.kpi-card strong {
+  display: block;
+  font-size: 1.75rem;
+  color: var(--primary);
+  margin-top: 0.25rem;
+}
+
+.glass-panel {
+  padding: 1.75rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+
+.glass-panel h2 {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 1.45rem;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+
+.data-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: 0.85rem 0.75rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+  vertical-align: middle;
+}
+
+.data-table th {
+  color: var(--dark);
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.action-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.btn-xs {
+  padding: 0.38rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--dark);
+}
+
+.btn-xs--approve {
+  background: rgba(220, 252, 231, 0.9);
+  color: #166534;
+  border-color: rgba(134, 239, 172, 0.8);
+}
+
+.btn-xs--reject {
+  background: rgba(254, 226, 226, 0.9);
+  color: #b91c1c;
+  border-color: rgba(252, 165, 165, 0.8);
+}
+
+.btn-xs--primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.glass-panel input,
+.glass-panel select,
+.glass-panel textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  background: var(--glass-input);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  font: inherit;
+  color: var(--dark);
+}
+
+.glass-panel label {
+  display: block;
+  font-weight: 700;
+  color: var(--dark);
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.terms-checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  margin: 0.5rem 0;
+  font-size: 0.88rem;
+}
+
+.terms-checkbox-row input[type="checkbox"] {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 750px) {
+  .form-grid-2,
+  .form-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Extended Dashboard Shell & Glass Components */
+.dashboard-shell {
+  width: 92%;
+  max-width: 1240px;
+  margin: 2rem auto 4rem;
+}
+
+.dashboard-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.stat-card,
+.kpi-card {
+  padding: 1.25rem;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.72));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.65));
+  border-radius: 18px;
+  box-shadow: var(--shadow, 0 8px 24px rgba(15, 23, 42, 0.06));
+}
+
+.kpi-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.kpi-value {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: var(--primary, #2563eb);
+  margin: 0.3rem 0 0.2rem;
+}
+
+.kpi-sub {
+  font-size: 0.76rem;
+  color: #64748b;
+}
+
+.dashboard-panel {
+  padding: 1.65rem;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.72));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.65));
+  border-radius: 22px;
+  box-shadow: var(--shadow, 0 12px 32px rgba(15, 23, 42, 0.08));
+  margin-bottom: 1.75rem;
+}
+
+.glass-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.glass-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.glass-table th,
+.glass-table td {
+  text-align: left;
+  padding: 0.85rem 0.75rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.24);
+  vertical-align: middle;
+}
+
+.glass-table th {
+  font-weight: 700;
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.glass-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.glass-field label {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.35rem;
+}
+
+.glass-field input,
+.glass-field select,
+.glass-field textarea {
+  width: 100%;
+  padding: 0.68rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.16);
+  background: rgba(255, 255, 255, 0.86);
+  color: #0f172a;
+  font: inherit;
+}
+
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.05rem;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  background: rgba(255, 255, 255, 0.82);
+  color: #0f172a;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-glass:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.1);
+}
+
+.btn-glass-primary {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border-color: rgba(37, 99, 235, 0.5);
+}
+
+.btn-glass-danger {
+  background: rgba(254, 226, 226, 0.92);
+  color: #b91c1c;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.24rem 0.68rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.badge-verified {
+  background: rgba(220, 252, 231, 0.88);
+  color: #166534;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.badge-pending {
+  background: rgba(254, 243, 199, 0.9);
+  color: #92400e;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.badge-rejected {
+  background: rgba(254, 226, 226, 0.9);
+  color: #991b1b;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.badge-unverified {
+  background: rgba(241, 245, 249, 0.9);
+  color: #475569;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+

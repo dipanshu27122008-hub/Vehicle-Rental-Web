@@ -1,4 +1,4 @@
-/** Client-side validation for the contact form. */
+/** Client-side validation and Vercel + Supabase submission for the contact form. */
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("contact-form");
     if (!form) return;
@@ -49,6 +49,27 @@ document.addEventListener("DOMContentLoaded", () => {
             form.querySelector(".is-invalid")?.focus();
             return;
         }
+
+        const payload = {
+            "full-name": document.getElementById("full-name").value.trim(),
+            email: document.getElementById("email").value.trim(),
+            phone: document.getElementById("phone").value.trim(),
+            "vehicle-type": document.getElementById("vehicle-type").value.trim(),
+            message: document.getElementById("message").value.trim(),
+            createdAt: new Date().toISOString()
+        };
+
+        try {
+            const saved = JSON.parse(localStorage.getItem("drivora-contact-messages") || "[]");
+            saved.push(payload);
+            localStorage.setItem("drivora-contact-messages", JSON.stringify(saved));
+        } catch {}
+
+        fetch("/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        }).catch(() => {});
 
         form.reset();
         success.textContent = "✓ Message sent successfully! We'll be in touch shortly.";

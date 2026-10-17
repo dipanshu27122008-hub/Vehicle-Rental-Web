@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administrator Dashboard — Drivora Marketplace</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/navbar.css" />
+  <link rel="stylesheet" href="./css/marketplace.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+</head>
+<body class="page">
+  <header class="header">
+    <a href="./index.html" class="logo"><img src="./assets/logo/logo drivora.png" alt="Drivora Logo" height="20" /></a>
+    <nav class="navbar" aria-label="Primary navigation">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">☰</button>
+      <ul class="nav-links" id="primary-navigation">
+        <li class="nav-item"><a href="./index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="./about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="./vehicles.html" class="nav-link">Vehicles</a></li>
+        <li class="nav-item"><a href="./gallery.html" class="nav-link">Gallery</a></li>
+        <li class="nav-item"><a href="./contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item"><a href="./terms.html" class="nav-link">Terms</a></li>
+        <li class="nav-item"><a href="./admin-dashboard.html" class="nav-link active">Admin Console</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="dashboard-shell">
+    <div class="dashboard-header">
+      <div>
+        <span class="badge-pill badge-verified" id="adminRoleBadge">
+          <i class="fa-solid fa-user-shield"></i> Trust, Safety &amp; Operations
+        </span>
+        <h1 style="margin-top:0.4rem;">Drivora Administrator Command Center</h1>
+        <p style="color:#475569; font-size:0.95rem;">
+          Moderate Indian &amp; NRI KYC verifications, approve provider fleet listings, adjudicate deposit disputes, moderate reported reviews, and execute temporary media retention cleanup.
+        </p>
+      </div>
+      <div style="display:flex; gap:0.65rem; flex-wrap:wrap; align-items:center;">
+        <a href="./provider-dashboard.html" class="btn-glass">
+          <i class="fa-solid fa-store"></i> Provider View
+        </a>
+        <button type="button" class="btn-glass btn-glass-primary" id="btnRunMediaCleanup">
+          <i class="fa-solid fa-broom"></i> Run Expired Media Cleanup
+        </button>
+      </div>
+    </div>
+
+    <!-- Admin Access Guard -->
+    <div id="adminAccessGuard" class="dashboard-panel" style="display:none; border-left:4px solid #ef4444;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <h2 style="margin-bottom:0.35rem; color:#991b1b;">
+            <i class="fa-solid fa-shield-virus"></i> Restricted Administrator Route
+          </h2>
+          <p style="color:#475569; font-size:0.92rem; margin:0;">
+            Administrative actions (KYC approval, listing suspension, review removal, media retention purge) require an authenticated <strong>Administrator</strong> session verified against <code>public.profiles</code> on the backend.
+          </p>
+        </div>
+        <button type="button" class="btn-glass btn-glass-primary" id="btnAdminSignIn">
+          <i class="fa-solid fa-key"></i> Sign In as Administrator
+        </button>
+      </div>
+    </div>
+
+    <!-- Platform KPI Grid -->
+    <section aria-label="Marketplace Governance Metrics" class="dashboard-kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-label">Pending KYC Verifications</span>
+        <div class="kpi-value" id="adminKpiPendingKyc">0</div>
+        <div class="kpi-sub">Indian Resident &amp; NRI dossiers</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Marketplace Fleet</span>
+        <div class="kpi-value" id="adminKpiTotalVehicles">0</div>
+        <div class="kpi-sub">Active &amp; moderated listings</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Total Bookings</span>
+        <div class="kpi-value" id="adminKpiTotalBookings">0</div>
+        <div class="kpi-sub">Across all providers &amp; cities</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Reported Reviews</span>
+        <div class="kpi-value" id="adminKpiReportedReviews">0</div>
+        <div class="kpi-sub">Flagged for moderation</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Active Condition Disputes</span>
+        <div class="kpi-value" id="adminKpiDisputes">0</div>
+        <div class="kpi-sub">Pickup/Return deposit claims</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Temporary Media Queue</span>
+        <div class="kpi-value" id="adminKpiExpiringMedia">0</div>
+        <div class="kpi-sub">Subject to retention policy</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Security Audit Events</span>
+        <div class="kpi-value" id="adminKpiAuditCount">0</div>
+        <div class="kpi-sub">Immutable governance log</div>
+      </div>
+    </section>
+
+    <!-- Admin Tabs -->
+    <div style="display:flex; gap:0.6rem; flex-wrap:wrap; margin-bottom:1.5rem;" role="tablist">
+      <button type="button" class="btn-glass btn-glass-primary admin-tab-btn" data-tab="kyc">
+        <i class="fa-solid fa-id-card"></i> KYC &amp; Identity Queue
+      </button>
+      <button type="button" class="btn-glass admin-tab-btn" data-tab="listings">
+        <i class="fa-solid fa-car-Rear"></i> Listing Moderation
+      </button>
+      <button type="button" class="btn-glass admin-tab-btn" data-tab="reviews">
+        <i class="fa-solid fa-flag"></i> Reported Reviews
+      </button>
+      <button type="button" class="btn-glass admin-tab-btn" data-tab="disputes">
+        <i class="fa-solid fa-scale-unbalanced"></i> Inspections &amp; Disputes
+      </button>
+      <button type="button" class="btn-glass admin-tab-btn" data-tab="media">
+        <i class="fa-solid fa-photo-film"></i> Media Retention &amp; 360° Storage
+      </button>
+      <button type="button" class="btn-glass admin-tab-btn" data-tab="audit">
+        <i class="fa-solid fa-list-check"></i> Security Audit Logs
+      </button>
+    </div>
+
+    <div id="adminGlobalFeedback" style="display:none; margin-bottom:1rem; padding:0.75rem 1rem; border-radius:12px; font-size:0.9rem;"></div>
+
+    <!-- TAB 1: KYC & IDENTITY MODERATION -->
+    <section id="admin-tab-kyc" class="admin-tab-section">
+      <div class="dashboard-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem;">
+          <div>
+            <h2 style="margin-bottom:0.2rem;"><i class="fa-solid fa-passport"></i> Customer &amp; Provider Identity Verification Queue</h2>
+            <p style="color:#475569; font-size:0.85rem; margin:0;">
+              Supports Indian Residents (Driving Licence + Aadhaar/PAN last-4) and NRI/International customers (Passport + Visa/OCI + IDP). Self-approval by the submitting user is strictly blocked.
+            </p>
+          </div>
+        </div>
+        <div class="glass-table-wrapper">
+          <table class="glass-table">
+            <thead>
+              <tr>
+                <th>Applicant / Business</th>
+                <th>Role &amp; Residency</th>
+                <th>Document &amp; Licence Details</th>
+                <th>Expiry Date</th>
+                <th>Status &amp; Notes</th>
+                <th>Admin Decision</th>
+              </tr>
+            </thead>
+            <tbody id="adminKycTableBody">
+              <tr><td colspan="6">Loading KYC verification queue...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: LISTING MODERATION -->
+    <section id="admin-tab-listings" class="admin-tab-section" style="display:none;">
+      <div class="dashboard-panel">
+        <h2><i class="fa-solid fa-car-burst"></i> Provider Vehicle Listing Moderation</h2>
+        <p style="color:#475569; font-size:0.85rem; margin-bottom:1rem;">
+          Verify model year accuracy, disclosed pricing rules, and public pickup hub compliance before approving or suspending provider vehicles.
+        </p>
+        <div class="glass-table-wrapper">
+          <table class="glass-table">
+            <thead>
+              <tr>
+                <th>Vehicle</th>
+                <th>Provider</th>
+                <th>Model Year &amp; Category</th>
+                <th>Daily Rate &amp; Deposit</th>
+                <th>Moderation Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminListingsTableBody">
+              <tr><td colspan="6">Loading vehicle listings...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: REPORTED REVIEWS MODERATION -->
+    <section id="admin-tab-reviews" class="admin-tab-section" style="display:none;">
+      <div class="dashboard-panel">
+        <h2><i class="fa-solid fa-comment-slash"></i> Customer Review Moderation</h2>
+        <p style="color:#475569; font-size:0.85rem; margin-bottom:1rem;">
+          Inspect reported or all customer reviews. Hide fraudulent/abusive reviews or clear false-positive flags.
+        </p>
+        <div class="glass-table-wrapper">
+          <table class="glass-table">
+            <thead>
+              <tr>
+                <th>Vehicle ID</th>
+                <th>Reviewer</th>
+                <th>Rating &amp; Comment</th>
+                <th>Reported Reason</th>
+                <th>Visibility</th>
+                <th>Moderation Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminReviewsTableBody">
+              <tr><td colspan="6">Loading reviews...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: INSPECTIONS & DISPUTES -->
+    <section id="admin-tab-disputes" class="admin-tab-section" style="display:none;">
+      <div class="dashboard-panel">
+        <h2><i class="fa-solid fa-gavel"></i> Pickup/Return Condition Reports &amp; Deposit Disputes</h2>
+        <p style="color:#475569; font-size:0.85rem; margin-bottom:1rem;">
+          Adjudicate flagged damage disputes between providers and customers using logged odometer, fuel %, and timestamped inspection notes.
+        </p>
+        <div class="glass-table-wrapper">
+          <table class="glass-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Booking ID</th>
+                <th>Stage</th>
+                <th>Telemetry</th>
+                <th>Damage Claim &amp; Notes</th>
+                <th>Dispute Status</th>
+                <th>Resolution</th>
+              </tr>
+            </thead>
+            <tbody id="adminDisputesTableBody">
+              <tr><td colspan="7">Loading inspection reports...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: MEDIA RETENTION & 360 STORAGE -->
+    <section id="admin-tab-media" class="admin-tab-section" style="display:none;">
+      <div class="dashboard-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem;">
+          <div>
+            <h2 style="margin-bottom:0.2rem;"><i class="fa-solid fa-hard-drive"></i> Temporary Media Expiry &amp; Storage Lifecycle</h2>
+            <p style="color:#475569; font-size:0.85rem; margin:0;">
+              Temporary inspection photos and KYC uploads carry an <code>expires_at</code> timestamp. When expired, the cleanup job deletes the underlying Supabase Storage object first and only marks metadata deleted after verified object removal.
+            </p>
+          </div>
+          <button type="button" class="btn-glass" id="btnSimulateExpiredMedia">
+            <i class="fa-solid fa-vial"></i> Add Sample Expired Inspection Photo
+          </button>
+        </div>
+
+        <div class="glass-table-wrapper">
+          <table class="glass-table">
+            <thead>
+              <tr>
+                <th>Media ID</th>
+                <th>Bucket &amp; Object Path</th>
+                <th>Category</th>
+                <th>Retention Policy</th>
+                <th>Expires At</th>
+                <th>Lifecycle Status</th>
+              </tr>
+            </thead>
+            <tbody id="adminMediaTableBody">
+              <tr><td colspan="6">Loading media lifecycle records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: SECURITY AUDIT LOGS -->
+    <section id="admin-tab-audit" class="admin-tab-section" style="display:none;">
+      <div class="dashboard-panel">
+        <h2><i class="fa-solid fa-fingerprint"></i> Immutable Security &amp; Governance Audit Trail</h2>
+        <p style="color:#475569; font-size:0.85rem; margin-bottom:1rem;">
+          Every sensitive administrative decision (KYC approval/rejection, listing moderation, review suppression, media retention purge) is logged with actor role and timestamp.
+        </p>
+        <div class="glass-table-wrapper">
+          <table class="glass-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Actor / Role</th>
+                <th>Action</th>
+                <th>Target Entity</th>
+                <th>Metadata / Notes</th>
+              </tr>
+            </thead>
+            <tbody id="adminAuditTableBody">
+              <tr><td colspan="5">Loading audit trail...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Drivora Vehicle Rental Marketplace — Administrative Trust &amp; Safety Console.</p>
+  </footer>
+
+  <script src="./js/navbar.js"></script>
+  <script src="./js/vehicle-data.js"></script>
+  <script src="./js/pricing.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/admin-dashboard.js"></script>
+</body>
+</html>

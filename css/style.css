@@ -519,6 +519,60 @@ section {
   margin-bottom: 0.5rem;
 }
 
+.card-action-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+  width: 100%;
+}
+
+.card-action-group .btn,
+.vehicle-card .card-action-group .btn {
+  width: 100%;
+  margin: 0;
+  padding: 0.72rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.card-action-group .details-button {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  border: 1px solid rgba(37, 99, 235, 0.5);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+}
+
+.card-action-group .details-button:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+}
+
+.card-action-group .book-button {
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--dark, #0f172a);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.65));
+}
+
+.card-action-group .book-button:hover {
+  background: rgba(255, 255, 255, 0.98);
+  color: #0f172a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+}
+
 .cta {
   text-align: center;
   padding: 3rem 2rem;

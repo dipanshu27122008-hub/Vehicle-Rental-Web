@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Review Drivora Customer Rental Terms and Vehicle Provider Marketplace Terms.">
+    <title>Terms &amp; Policies | Drivora</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/marketplace.css">
+</head>
+
+<body class="page">
+    <header class="header">
+        <a href="./index.html" class="logo"><img src="./assets/logo/logo drivora.png" alt="Drivora Logo"></a>
+        <nav class="navbar" aria-label="Primary navigation">
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">☰</button>
+            <ul class="nav-links" id="primary-navigation">
+                <li class="nav-item"><a href="./index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="./about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="./vehicles.html" class="nav-link">Vehicles</a></li>
+                <li class="nav-item"><a href="./gallery.html" class="nav-link">Gallery</a></li>
+                <li class="nav-item"><a href="./contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="./contact.html" class="nav-link book-now">Book Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content dashboard-page">
+        <section class="dashboard-header">
+            <div>
+                <p class="hero-badge">Versioned Marketplace Policies (Draft for Legal Review)</p>
+                <h1 class="section-title" style="margin-bottom:0.4rem;">Customer &amp; Provider Terms</h1>
+                <p>Separate versioned terms governing vehicle rentals, deposits, late fees, KYC privacy, and provider obligations.</p>
+            </div>
+            <div class="action-btn-group">
+                <a href="./vehicles.html" class="btn btn-secondary">Browse Vehicles</a>
+                <a href="./provider-dashboard.html" class="btn btn-primary">Provider Portal</a>
+            </div>
+        </section>
+
+        <section class="glass-panel" aria-labelledby="customer-terms-heading">
+            <p class="hero-badge">Version: v1.0-customer • Effective: Oct 2026</p>
+            <h2 id="customer-terms-heading">1. Customer Rental Terms &amp; Conditions</h2>
+            <p class="kyc-note" style="margin-bottom:1rem;">Note: These platform rules are configurable operational templates and should be reviewed by qualified legal counsel before commercial deployment.</p>
+            <div style="display:grid;gap:0.85rem;">
+                <div><strong>1.1 Booking &amp; Cancellation Rules:</strong> Reservations are confirmed subject to non-overlapping vehicle availability. Customers may cancel free of charge up to 24 hours prior to scheduled pickup. Cancellations made within 24 hours of pickup incur a 15% fee of 1-day rental rate.</div>
+                <div><strong>1.2 Pricing, Extra Hours &amp; Refundable Security Deposit:</strong> Agreed daily rental rates are locked at the time of booking confirmation. Partial-day extra hours are rounded up to the nearest 1-hour interval and capped at 1 full daily rate. The refundable security deposit is itemized separately and refunded following a damage-free return inspection.</div>
+                <div><strong>1.3 Grace Period &amp; Late-Return Charges:</strong> Drivora provides a 1-hour free grace period after the scheduled return time. Returns beyond the 1-hour grace period incur the vehicle's disclosed hourly late fee. Scheduled extra hours and late-return fees never double-charge the same period.</div>
+                <div><strong>1.4 Pickup &amp; Return Responsibilities:</strong> Customers must present their original Driving Licence (or International Driving Permit + Passport for NRI visitors) and Government ID at pickup, and review/acknowledge the Pickup &amp; Return Condition Inspection Report.</div>
+                <div><strong>1.5 Vehicle Condition &amp; Damage Disputes:</strong> Pre-existing damage is recorded at pickup. Newly observed damage at return is documented with notes and inspection photos. Disputed damage claims are flagged for Administrator review and are never automatically deducted without review.</div>
+                <div><strong>1.6 Prohibited Use:</strong> Commercial sub-renting, track racing, driving under the influence of alcohol/drugs, or unauthorized off-road operation is strictly prohibited.</div>
+                <div><strong>1.7 Privacy &amp; KYC Data Handling:</strong> Only minimum required KYC verification data (masked last-4 ID digits and restricted verification records) is stored. Identity documents are never exposed on public pages.</div>
+            </div>
+            <form id="accept-customer-terms-form" style="margin-top:1.25rem;">
+                <label class="terms-checkbox-row">
+                    <input type="checkbox" required>
+                    <span>I have read and accept the <strong>Customer Rental Terms (v1.0-customer)</strong>.</span>
+                </label>
+                <button type="submit" class="btn btn-primary" style="margin-top:0.5rem;">Record Customer Terms Acceptance</button>
+                <p id="customer-terms-status" class="booking-success" role="status" style="margin-top:0.5rem;"></p>
+            </form>
+        </section>
+
+        <section class="glass-panel" aria-labelledby="provider-terms-heading">
+            <p class="hero-badge">Version: v1.0-provider • Effective: Oct 2026</p>
+            <h2 id="provider-terms-heading">2. Vehicle Provider / Shopkeeper Marketplace Terms</h2>
+            <div style="display:grid;gap:0.85rem;">
+                <div><strong>2.1 Accurate Listing Information:</strong> Providers must accurately state the vehicle make, model year, transmission, fuel type, seating capacity, pickup city/hub, and photographs.</div>
+                <div><strong>2.2 Ownership &amp; Authority to Rent:</strong> Providers warrant that they own or hold valid legal authority, registration, fitness certificate, and insurance to rent each listed vehicle.</div>
+                <div><strong>2.3 Vehicle Safety &amp; Maintenance:</strong> Every vehicle must be inspected for brakes, tyres, lights, fluids, and cabin cleanliness before every customer handover.</div>
+                <div><strong>2.4 Availability &amp; Non-Overlap Obligation:</strong> Providers must keep vehicle availability current and cannot approve a reservation that conflicts with another confirmed booking.</div>
+                <div><strong>2.5 Pricing Transparency:</strong> Providers must honour the locked daily rate, extra-hour rate, and refundable deposit shown at booking confirmation without demanding undisclosed surcharges.</div>
+                <div><strong>2.6 Customer Data Confidentiality:</strong> Customer personal information and KYC verification statuses may only be used for fulfilling the authorized Drivora booking.</div>
+                <div><strong>2.7 Inspections, Settlements &amp; Disputes:</strong> Providers must record accurate Pickup and Return Inspection Reports. Any damage dispute is subject to Administrator audit before deposit settlement.</div>
+            </div>
+            <form id="accept-provider-terms-form" style="margin-top:1.25rem;">
+                <label class="terms-checkbox-row">
+                    <input type="checkbox" required>
+                    <span>I have read and accept the <strong>Vehicle Provider Marketplace Terms (v1.0-provider)</strong>.</span>
+                </label>
+                <button type="submit" class="btn btn-primary" style="margin-top:0.5rem;">Record Provider Terms Acceptance</button>
+                <p id="provider-terms-status" class="booking-success" role="status" style="margin-top:0.5rem;"></p>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div><h3>Drivora</h3><p>Premium car rental service for every journey.</p></div>
+            <div><h3>Quick Links</h3><ul><li><a href="./index.html">Home</a></li><li><a href="./vehicles.html">Vehicles</a></li><li><a href="./provider-dashboard.html">Provider Portal</a></li><li><a href="./admin-dashboard.html">Admin Console</a></li></ul></div>
+            <div><h3>Contact</h3><p>Email: drivora@gmail.com</p><p>Phone: +91 9216660715</p></div>
+        </div>
+        <p class="footer-copy">&copy; 2026 Drivora. All rights reserved.</p>
+    </footer>
+
+    <script src="./js/app.js"></script>
+    <script src="./js/navbar.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const recordAcceptance = async (roleType, version, statusElId) => {
+          const session = window.DrivoraAuth?.getSession?.();
+          const entry = {
+            roleType,
+            termsVersion: version,
+            userEmail: session?.user?.email || "guest@drivora.local",
+            acceptedAt: new Date().toISOString()
+          };
+          const list = JSON.parse(localStorage.getItem("drivora-terms-acceptances") || "[]");
+          list.push(entry);
+          localStorage.setItem("drivora-terms-acceptances", JSON.stringify(list));
+
+          fetch("/api/marketplace?action=terms", {
+            method: "POST",
+            headers: window.DrivoraAuth?.getAuthHeaders?.() || { "Content-Type": "application/json" },
+            body: JSON.stringify(entry)
+          }).catch(() => {});
+
+          const el = document.getElementById(statusElId);
+          if (el) el.textContent = `✓ Accepted ${version} on ${new Date(entry.acceptedAt).toLocaleString("en-IN")}`;
+        };
+
+        document.getElementById("accept-customer-terms-form")?.addEventListener("submit", (e) => {
+          e.preventDefault();
+          recordAcceptance("customer", "v1.0-customer", "customer-terms-status");
+        });
+        document.getElementById("accept-provider-terms-form")?.addEventListener("submit", (e) => {
+          e.preventDefault();
+          recordAcceptance("provider", "v1.0-provider", "provider-terms-status");
+        });
+      });
+    </script>
+</body>
+</html>
