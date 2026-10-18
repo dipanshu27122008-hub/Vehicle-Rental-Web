@@ -128,31 +128,26 @@
   }
 
   function checkRoleGuard() {
-    const guard = document.getElementById("providerAccessGuard");
+    if (!isAuthorizedProvider()) {
+      window.location.replace("./signin.html?role=provider&redirect=provider-dashboard.html");
+      return false;
+    }
+
     const badge = document.getElementById("providerVerificationBadge");
     const user = getCurrentUser();
-
-    if (!isAuthorizedProvider()) {
-      if (guard) guard.style.display = "block";
-      if (badge) {
-        badge.className = "badge-pill badge-unverified";
-        badge.innerHTML = '<i class="fa-solid fa-lock"></i> Sign In as Provider Required';
-      }
-    } else {
-      if (guard) guard.style.display = "none";
-      if (badge) {
-        const displayName = user.fullName || user.full_name || user.email || "Provider";
-        const isVerified = Boolean(user.isVerified || user.is_verified || user.role === "admin");
-        badge.className = isVerified ? "badge-pill badge-verified" : "badge-pill badge-pending";
-        badge.innerHTML = isVerified
-          ? `<i class="fa-solid fa-circle-check"></i> Verified Provider (${escapeHtml(displayName)})`
-          : `<i class="fa-solid fa-clock"></i> Provider Unverified — Submit KYC (${escapeHtml(displayName)})`;
-      }
+    if (badge && user) {
+      const displayName = user.fullName || user.full_name || user.email || "Provider";
+      const isVerified = Boolean(user.isVerified || user.is_verified || user.role === "admin");
+      badge.className = isVerified ? "badge-pill badge-verified" : "badge-pill badge-pending";
+      badge.innerHTML = isVerified
+        ? `<i class="fa-solid fa-circle-check"></i> Verified Provider (${escapeHtml(displayName)})`
+        : `<i class="fa-solid fa-clock"></i> Provider Unverified — Submit KYC (${escapeHtml(displayName)})`;
     }
+    return true;
   }
 
   async function loadDashboardData() {
-    checkRoleGuard();
+    if (!checkRoleGuard()) return;
 
     // 1. Load Vehicles (merge default provider vehicles + custom local + API)
     const customLocal = [
@@ -971,7 +966,7 @@
           return;
         }
         if (!termsAccepted) {
-          showFeedback("vehFormFeedback", "You must accept the Provider Terms (v1.0-provider) before saving a listing.", true);
+          showFeedback("vehFormFeedback", "You must confirm the vehicle listing compliance declaration before saving a listing.", true);
           return;
         }
 
@@ -1574,28 +1569,6 @@
     bindTableDelegation();
     bindInspectionForm();
     bindKycForm();
-
-    const signInBtn = document.getElementById("btnProviderSignIn");
-    if (signInBtn) {
-      signInBtn.addEventListener("click", () => {
-        if (window.DrivoraAuth && typeof window.DrivoraAuth.openSignInModal === "function") {
-          window.DrivoraAuth.openSignInModal();
-        } else if (window.DrivoraAuth) {
-          window.DrivoraAuth.openAuthModal("login");
-        }
-      });
-    }
-
-    const signUpBtn = document.getElementById("btnProviderSignUp");
-    if (signUpBtn) {
-      signUpBtn.addEventListener("click", () => {
-        if (window.DrivoraAuth && typeof window.DrivoraAuth.openSignUpModal === "function") {
-          window.DrivoraAuth.openSignUpModal("provider");
-        } else if (window.DrivoraAuth) {
-          window.DrivoraAuth.openAuthModal("register");
-        }
-      });
-    }
 
     const fleetSearch = document.getElementById("fleetSearchInput");
     if (fleetSearch) fleetSearch.addEventListener("input", renderFleetTable);

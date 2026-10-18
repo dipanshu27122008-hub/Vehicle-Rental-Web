@@ -43,7 +43,6 @@
         <li class="nav-item"><a href="./vehicles.html" class="nav-link">Vehicles</a></li>
         <li class="nav-item"><a href="./gallery.html" class="nav-link">Gallery</a></li>
         <li class="nav-item"><a href="./contact.html" class="nav-link">Contact</a></li>
-        <li class="nav-item"><a href="./provider-dashboard.html" class="nav-link">Provider Portal</a></li>
       </ul>
     </nav>
   </header>
@@ -122,7 +121,7 @@
 
         <label class="terms-checkbox-row" style="margin-top:0.75rem; margin-bottom:1rem; display:flex; align-items:flex-start; gap:0.5rem; font-size:0.84rem; color:#475569; cursor:pointer;">
           <input type="checkbox" id="page-signup-terms" required style="margin-top:0.2rem;" />
-          <span>I accept the <a href="./terms.html" target="_blank" style="color:#2563eb; font-weight:700;">Drivora Marketplace Terms (v1.0)</a> and Privacy Guidelines.</span>
+          <span id="page-signup-terms-text">I accept the <a href="./terms.html" target="_blank" style="color:#2563eb; font-weight:700;">Terms &amp; Conditions</a> and Privacy Guidelines.</span>
         </label>
 
         <button type="submit" id="btn-page-signup-submit" class="btn-glass btn-glass-primary" style="width:100%; justify-content:center; padding:0.8rem; border-radius:14px; font-size:0.95rem;">
@@ -167,12 +166,19 @@
       function setRole(role) {
         roleCards.forEach((c) => c.classList.toggle("active", c.getAttribute("data-role-choice") === role));
         roleInput.value = role;
+        const termsText = document.getElementById("page-signup-terms-text");
         if (role === "provider") {
           providerFields.style.display = "block";
           businessInput.required = true;
+          if (termsText) {
+            termsText.innerHTML = 'I accept the <a href="./terms.html?tab=provider" target="_blank" style="color:#2563eb; font-weight:700;">Provider Commercial Terms (v1.0)</a>, Marketplace Terms &amp; Conditions, and Privacy Guidelines.';
+          }
         } else {
           providerFields.style.display = "none";
           businessInput.required = false;
+          if (termsText) {
+            termsText.innerHTML = 'I accept the <a href="./terms.html" target="_blank" style="color:#2563eb; font-weight:700;">Terms &amp; Conditions</a> and Privacy Guidelines.';
+          }
         }
       }
 

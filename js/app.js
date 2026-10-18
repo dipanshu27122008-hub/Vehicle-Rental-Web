@@ -295,6 +295,10 @@
               <input id="signin-password" name="password" type="password" required placeholder="Enter your password" autocomplete="current-password">
               <button type="button" class="btn-toggle-pw" aria-label="Show or hide password"><i class="fa-solid fa-eye"></i></button>
             </div>
+            <label class="terms-checkbox-row" style="margin-top:0.6rem;display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;color:#475569;cursor:pointer;">
+              <input type="checkbox" id="signin-terms" required checked style="margin-top:0.15rem;">
+              <span>I accept the <a href="./terms.html" target="_blank" style="color:var(--primary);font-weight:700;">Terms &amp; Conditions</a> and Privacy Guidelines.</span>
+            </label>
             <p id="signin-error" class="booking-error" role="alert" style="margin-top:0.4rem;"></p>
             <button type="submit" class="btn btn-primary" id="btn-submit-signin" style="width:100%;margin-top:0.6rem;padding:0.85rem;">
               <i class="fa-solid fa-lock"></i> Sign In
@@ -303,7 +307,7 @@
           <div class="auth-switch-footer">
             Don't have an account? <button type="button" id="switch-to-signup-btn"><strong>Create Account / Sign Up</strong></button>
             <div style="margin-top:0.65rem;font-size:0.8rem;color:#64748b;">
-              🚗 Vehicle Host or Shopkeeper? Sign in to manage your listings and incoming requests.
+              🚗 Looking to list your fleet? <button type="button" id="switch-to-provider-signup" style="background:transparent;border:0;color:var(--primary);font-weight:700;cursor:pointer;padding:0;">Register as Provider</button>
             </div>
           </div>
         </section>
@@ -318,6 +322,10 @@
         openSignUpModal("customer");
       });
 
+      signInModalEl.querySelector("#switch-to-provider-signup")?.addEventListener("click", () => {
+        openSignUpModal("provider");
+      });
+
       signInModalEl.querySelector("#signin-forgot-link").addEventListener("click", () => {
         openResetModal();
       });
@@ -329,6 +337,13 @@
         const errEl = signInModalEl.querySelector("#signin-error");
         const submitBtn = signInModalEl.querySelector("#btn-submit-signin");
         errEl.textContent = "";
+
+        const termsInput = signInModalEl.querySelector("#signin-terms");
+        if (termsInput && !termsInput.checked) {
+          errEl.textContent = "You must agree to the Terms & Conditions to sign in.";
+          return;
+        }
+
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing In...';
 
@@ -447,8 +462,8 @@
             </div>
 
             <label class="terms-checkbox-row" style="margin-top:0.75rem;">
-              <input type="checkbox" id="signup-terms" required>
-              <span>I accept the <a href="./terms.html" target="_blank" style="color:var(--primary);font-weight:700;">Customer &amp; Provider Rental Terms (v1.0)</a>.</span>
+              <input type="checkbox" id="signup-terms" required checked>
+              <span id="signup-terms-text">I accept the <a href="./terms.html" target="_blank" style="color:var(--primary);font-weight:700;">Terms &amp; Conditions</a> and Privacy Guidelines.</span>
             </label>
 
             <p id="signup-error" class="booking-error" role="alert" style="margin-top:0.35rem;"></p>
@@ -485,12 +500,19 @@
           roleButtons.forEach((b) => b.classList.remove("active"));
           btn.classList.add("active");
           roleInput.value = role;
+          const termsLabel = signUpModalEl.querySelector("#signup-terms-text");
           if (role === "provider") {
             providerFields.style.display = "block";
             businessInput.required = true;
+            if (termsLabel) {
+              termsLabel.innerHTML = 'I accept the <a href="./terms.html?tab=provider" target="_blank" style="color:var(--primary);font-weight:700;">Provider Commercial Terms (v1.0)</a>, Marketplace Terms &amp; Conditions, and Privacy Guidelines.';
+            }
           } else {
             providerFields.style.display = "none";
             businessInput.required = false;
+            if (termsLabel) {
+              termsLabel.innerHTML = 'I accept the <a href="./terms.html" target="_blank" style="color:var(--primary);font-weight:700;">Terms &amp; Conditions</a> and Privacy Guidelines.';
+            }
           }
         });
       });
@@ -853,14 +875,26 @@
     const navLinks = document.querySelector(".nav-links");
     if (!navLinks) return;
 
-    // Ensure Provider Portal link is in navigation
-    if (!navLinks.querySelector('a[href*="provider-dashboard.html"]')) {
-      const providerLi = document.createElement("li");
-      providerLi.className = "nav-item";
-      providerLi.innerHTML = `<a href="./provider-dashboard.html" class="nav-link">Provider Portal</a>`;
-      const bookNowLi = navLinks.querySelector(".book-now")?.closest("li");
-      if (bookNowLi) navLinks.insertBefore(providerLi, bookNowLi);
-      else navLinks.appendChild(providerLi);
+    const session = getSession();
+    const isProvider = Boolean(session?.user && (session.user.role === "provider" || session.user.role === "admin"));
+    const existingProviderLink = navLinks.querySelector('a[href*="provider-dashboard.html"]');
+
+    // Display Provider Portal only after a provider logs in (not for all users)
+    if (isProvider) {
+      if (!existingProviderLink) {
+        const providerLi = document.createElement("li");
+        providerLi.className = "nav-item";
+        providerLi.id = "nav-provider-portal-item";
+        providerLi.innerHTML = `<a href="./provider-dashboard.html" class="nav-link">Provider Portal</a>`;
+        const bookNowLi = navLinks.querySelector(".book-now")?.closest("li") || navLinks.querySelector("#nav-auth-item");
+        if (bookNowLi) navLinks.insertBefore(providerLi, bookNowLi);
+        else navLinks.appendChild(providerLi);
+      }
+    } else {
+      // Remove Provider Portal link for non-providers and logged-out visitors
+      if (existingProviderLink) {
+        existingProviderLink.closest("li")?.remove();
+      }
     }
 
     let portalLi = navLinks.querySelector("#nav-auth-item");
@@ -871,7 +905,6 @@
       navLinks.appendChild(portalLi);
     }
 
-    const session = getSession();
     const notifs = JSON.parse(localStorage.getItem(NOTIF_STORAGE_KEY) || "[]");
     const unreadCount = notifs.filter((n) => !n.isRead).length;
 

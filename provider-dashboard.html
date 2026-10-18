@@ -11,6 +11,18 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   />
+  <script>
+    (function () {
+      try {
+        var s = JSON.parse(localStorage.getItem("drivora-auth-session") || "null");
+        if (!s || !s.user || (s.user.role !== "provider" && s.user.role !== "admin")) {
+          window.location.replace("./signin.html?role=provider&redirect=provider-dashboard.html");
+        }
+      } catch (e) {
+        window.location.replace("./signin.html?role=provider&redirect=provider-dashboard.html");
+      }
+    })();
+  </script>
 </head>
 <body class="page">
   <header class="header">
@@ -23,7 +35,6 @@
         <li class="nav-item"><a href="./vehicles.html" class="nav-link">Vehicles</a></li>
         <li class="nav-item"><a href="./gallery.html" class="nav-link">Gallery</a></li>
         <li class="nav-item"><a href="./contact.html" class="nav-link">Contact</a></li>
-        <li class="nav-item"><a href="./terms.html" class="nav-link">Terms</a></li>
         <li class="nav-item"><a href="./provider-dashboard.html" class="nav-link active">Provider Portal</a></li>
       </ul>
     </nav>
@@ -42,34 +53,9 @@
         </p>
       </div>
       <div style="display:flex; gap:0.65rem; flex-wrap:wrap; align-items:center;">
-        <a href="./terms.html?tab=provider" class="btn-glass">
-          <i class="fa-solid fa-file-signature"></i> Provider Terms (v1.0)
-        </a>
         <button type="button" class="btn-glass btn-glass-primary" id="btnOpenAddVehicle">
           <i class="fa-solid fa-plus"></i> Add New Vehicle
         </button>
-      </div>
-    </div>
-
-    <!-- Role Guard Banner (shown if visitor is not logged in as Provider or Admin) -->
-    <div id="providerAccessGuard" class="dashboard-panel" style="display:none; border-left:4px solid #f59e0b;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-        <div>
-          <h2 style="margin-bottom:0.35rem; color:#92400e;">
-            <i class="fa-solid fa-lock"></i> Provider Authentication Required
-          </h2>
-          <p style="color:#475569; font-size:0.92rem; margin:0;">
-            Protected provider operations require a verified <strong>Provider</strong> or <strong>Administrator</strong> session enforced by Supabase Auth &amp; Row Level Security.
-          </p>
-        </div>
-        <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
-          <button type="button" class="btn-glass btn-glass-primary" id="btnProviderSignIn">
-            <i class="fa-solid fa-right-to-bracket"></i> Sign In as Provider
-          </button>
-          <button type="button" class="btn-glass" id="btnProviderSignUp">
-            <i class="fa-solid fa-user-plus"></i> Register as Provider
-          </button>
-        </div>
       </div>
     </div>
 
@@ -281,8 +267,8 @@
               <span><strong>Publish immediately</strong> (Visible in public search once moderation status permits)</span>
             </label>
             <label style="display:flex; align-items:center; gap:0.6rem; font-size:0.88rem; cursor:pointer;">
-              <input type="checkbox" id="vehTermsAccept" required />
-              <span>I accept the <a href="./terms.html?tab=provider" target="_blank" style="color:#0284c7; font-weight:700;">Drivora Provider Terms &amp; Commercial Listing Policy (v1.0-provider)</a> and confirm vehicle RC, insurance, and roadworthiness validity. *</span>
+              <input type="checkbox" id="vehTermsAccept" required checked />
+              <span>I confirm that this vehicle meets all RC, commercial permit, insurance, and roadworthiness compliance requirements. *</span>
             </label>
           </div>
 
