@@ -250,6 +250,15 @@
         m.setAttribute("aria-hidden", "true");
       }
     });
+    try {
+      document.body.style.overflow = "";
+    } catch {}
+  }
+
+  if (typeof window !== "undefined") {
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeAllAuthModals();
+    });
   }
 
   function bindPasswordToggles(container) {
@@ -387,6 +396,7 @@
 
     signInModalEl.hidden = false;
     signInModalEl.setAttribute("aria-hidden", "false");
+    try { document.body.style.overflow = "hidden"; } catch {}
     setTimeout(() => signInModalEl.querySelector("#signin-email")?.focus(), 50);
   }
 
@@ -579,6 +589,7 @@
 
     signUpModalEl.hidden = false;
     signUpModalEl.setAttribute("aria-hidden", "false");
+    try { document.body.style.overflow = "hidden"; } catch {}
     setTimeout(() => signUpModalEl.querySelector("#signup-name")?.focus(), 50);
   }
 
@@ -654,6 +665,7 @@
 
     resetModalEl.hidden = false;
     resetModalEl.setAttribute("aria-hidden", "false");
+    try { document.body.style.overflow = "hidden"; } catch {}
     setTimeout(() => resetModalEl.querySelector("#reset-account-email")?.focus(), 50);
   }
 
@@ -835,6 +847,7 @@
 
     accountModalEl.hidden = false;
     accountModalEl.setAttribute("aria-hidden", "false");
+    try { document.body.style.overflow = "hidden"; } catch {}
   }
 
   function escapeHtml(str) {

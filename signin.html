@@ -7,28 +7,18 @@
   <title>Sign In | Drivora Marketplace</title>
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="stylesheet" href="./css/navbar.css" />
+  <link rel="stylesheet" href="./css/booking.css" />
   <link rel="stylesheet" href="./css/marketplace.css" />
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   />
   <style>
-    .auth-page-container {
-      min-height: calc(100vh - 160px);
+    body.page {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 1rem;
-    }
-    .auth-standalone-card {
-      width: min(100%, 460px);
-      padding: 2.5rem 2.25rem;
-      border-radius: 28px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      box-shadow: 0 30px 70px rgba(15, 23, 42, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
     }
   </style>
 </head>
@@ -78,12 +68,12 @@
           </div>
         </div>
 
-        <label class="terms-checkbox-row" style="margin-top:0.75rem; margin-bottom:0.75rem; display:flex; align-items:flex-start; gap:0.5rem; font-size:0.84rem; color:#475569; cursor:pointer;">
-          <input type="checkbox" id="page-signin-terms" required style="margin-top:0.2rem;" checked />
-          <span>I accept the <a href="./terms.html" target="_blank" style="color:#2563eb; font-weight:700;">Terms &amp; Conditions</a> and Privacy Guidelines.</span>
+        <label class="terms-checkbox-row">
+          <input type="checkbox" id="page-signin-terms" required checked />
+          <span>I accept the <a href="./terms.html" target="_blank">Terms &amp; Conditions</a> and Privacy Guidelines.</span>
         </label>
 
-        <button type="submit" id="btn-page-signin-submit" class="btn-glass btn-glass-primary" style="width:100%; justify-content:center; padding:0.8rem; margin-top:0.75rem; border-radius:14px; font-size:0.95rem;">
+        <button type="submit" id="btn-page-signin-submit">
           <i class="fa-solid fa-lock"></i> Sign In
         </button>
       </form>
@@ -97,7 +87,13 @@
     </div>
   </main>
 
-  <footer>
+  <footer class="auth-minimal-footer">
+    <div class="footer-nav">
+      <a href="./index.html">Home</a>
+      <a href="./vehicles.html">Browse Fleet</a>
+      <a href="./terms.html">Terms &amp; Privacy</a>
+      <a href="./contact.html">Support</a>
+    </div>
     <p>&copy; 2026 Drivora Vehicle Rental Marketplace. All rights reserved.</p>
   </footer>
 
