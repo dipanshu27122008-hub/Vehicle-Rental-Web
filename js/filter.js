@@ -104,9 +104,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const originalOrder = cards.map((card, index) => ({ card, index }));
   const pageSize = 6;
   let currentPage = 1;
-  let selectedCategory = categorySelect?.value || "all";
 
   const normalise = (value) => (value || "").trim().toLowerCase();
+
+  // Parse initial category from URL query parameters (e.g. ?category=suv) or hash
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramCategory = normalise(urlParams.get("category"));
+  let initialCategoryFromUrl = paramCategory;
+
+  if (!initialCategoryFromUrl && window.location.hash) {
+    const rawHash = window.location.hash.replace(/^#/, "");
+    if (rawHash.startsWith("category=")) {
+      initialCategoryFromUrl = normalise(rawHash.replace("category=", ""));
+    } else if (["suv", "sedan", "luxury", "electric", "bike", "convertible", "van", "sports", "pickup", "hatchback", "minivan"].includes(normalise(rawHash))) {
+      initialCategoryFromUrl = normalise(rawHash);
+    }
+  }
+
+  let selectedCategory = initialCategoryFromUrl || categorySelect?.value || "all";
+  if (selectedCategory && categorySelect) {
+    categorySelect.value = selectedCategory;
+  }
+
+  // Pre-fill city from URL query params if present
+  const paramCity = urlParams.get("city");
+  if (paramCity && locationCitySelect) {
+    const match = Array.from(locationCitySelect.options).find(
+      (opt) => normalise(opt.value) === normalise(paramCity)
+    );
+    if (match) {
+      locationCitySelect.value = match.value;
+      if (cityCoords[match.value]) {
+        userLocation = { ...cityCoords[match.value] };
+      }
+    }
+  }
   const getPrice = (card) => Number((card.querySelector(".vehicle-price")?.textContent || "").replace(/[^0-9]/g, ""));
   const getRating = (card) => Number((card.querySelector(".vehicle-rating")?.getAttribute("aria-label") || "").match(/\d+(?:\.\d+)?/)?.[0] || 0);
 
@@ -266,6 +298,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (categorySelect) categorySelect.value = category;
     updateActiveButton();
     filterVehicles(true);
+
+    try {
+      const url = new URL(window.location.href);
+      if (selectedCategory && selectedCategory !== "all") {
+        url.searchParams.set("category", selectedCategory);
+      } else {
+        url.searchParams.delete("category");
+      }
+      window.history.replaceState({}, "", url.toString());
+    } catch {}
   };
 
   locationCitySelect?.addEventListener("change", () => {
@@ -347,4 +389,13 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("vehicles:ratings-updated", () => filterVehicles());
   updateActiveButton();
   filterVehicles();
+
+  if (initialCategoryFromUrl && initialCategoryFromUrl !== "all") {
+    window.setTimeout(() => {
+      const heading = document.getElementById("vehicles-heading") || document.querySelector(".vehicles-hero");
+      if (heading) {
+        heading.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 150);
+  }
 });

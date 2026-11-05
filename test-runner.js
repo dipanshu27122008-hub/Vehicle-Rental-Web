@@ -133,6 +133,15 @@ assert(iDetailsBtns.length === 3, `index.html has 3 details-buttons (found ${iDe
 const iHasVehicleDetailsScript = /<script\s+src=["']\.\/js\/vehicle-details\.js["']/.test(indexHtml);
 assert(iHasVehicleDetailsScript, `index.html includes js/vehicle-details.js for modal interaction`);
 
+// Index category cards navigation check
+const iCategoryCards = indexHtml.match(/<a\s+[^>]*(?:href=["'][^"']*vehicles\.html\?category=[^"']*["'][^>]*class="[^"]*category-card[^"]*"|class="[^"]*category-card[^"]*"[^>]*href=["'][^"']*vehicles\.html\?category=[^"']*["'])/g) || [];
+assert(iCategoryCards.length >= 3, `index.html category cards link to vehicles.html with ?category parameter (found ${iCategoryCards.length})`);
+
+// Filter JS category query parameter support check
+const filterJsCode = fs.readFileSync('js/filter.js', 'utf8');
+const filterHasUrlParamCheck = filterJsCode.includes('urlParams.get("category")');
+assert(filterHasUrlParamCheck, `js/filter.js checks URL query parameters for active category`);
+
 // ----------------------------------------------------
 // 4. VEHICLE CATALOG & HAVERSINE INTEGRITY
 // ----------------------------------------------------

@@ -59,19 +59,19 @@
         <section class="quick-search">
             <div class="quick-search-box">
                 <div class="search-field">
-                    <label>Pickup City</label>
-                    <select>
-                        <option>Jaipur</option>
-                        <option>Delhi</option>
-                        <option>Mumbai</option>
+                    <label for="quick-search-city">Pickup City</label>
+                    <select id="quick-search-city">
+                        <option value="Jaipur">Jaipur</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Mumbai">Mumbai</option>
                     </select>
                 </div>
                 <div class="search-field">
-                    <label>Vehicle Type</label>
-                    <select>
-                        <option>SUV</option>
-                        <option>Sedan</option>
-                        <option>Luxury</option>
+                    <label for="quick-search-category">Vehicle Type</label>
+                    <select id="quick-search-category">
+                        <option value="suv">SUV</option>
+                        <option value="sedan">Sedan</option>
+                        <option value="luxury">Luxury</option>
                     </select>
                 </div>
                 <div class="search-field">
@@ -82,7 +82,7 @@
                         <option>7 Days</option>
                     </select>
                 </div>
-                <a href="./vehicles.html" class="btn btn-primary search-btn">Find Vehicle</a>
+                <a href="./vehicles.html" id="quick-find-vehicle-btn" class="btn btn-primary search-btn">Find Vehicle</a>
             </div>
         </section>
 
@@ -108,21 +108,21 @@
         <section class="categories">
             <h2 class="section-title">Browse by Category</h2>
             <div class="category-grid">
-                <article class="category-card">
+                <a href="./vehicles.html?category=suv#vehicles-heading" class="category-card" data-category="suv" aria-label="Browse SUVs">
                     <div class="category-icon"><img src="./assets/vehicles/suv logo.webp" alt="SUV" height="100px" width="100px"></div>
                     <h3>SUVs</h3>
                     <p>Spacious comfort for family and city travel.</p>
-                </article>
-                <article class="category-card">
+                </a>
+                <a href="./vehicles.html?category=sedan#vehicles-heading" class="category-card" data-category="sedan" aria-label="Browse Sedans">
                     <div class="category-icon"><img src="./assets/vehicles/sedan logo.webp" alt="Sedans" height="100px" width="100px"></div>
                     <h3>Sedans</h3>
                     <p>Elegant and efficient for daily commuting.</p>
-                </article>
-                <article class="category-card">
+                </a>
+                <a href="./vehicles.html?category=luxury#vehicles-heading" class="category-card" data-category="luxury" aria-label="Browse Luxury Cars">
                     <div class="category-icon"><img src="./assets/vehicles/luxury logo.webp" alt="Luxury" height="100px" width="100px"></div>
                     <h3>Luxury Cars</h3>
                     <p>Premium comfort and standout design.</p>
-                </article>
+                </a>
             </div>
         </section>
 

@@ -483,6 +483,43 @@ section {
   box-shadow: var(--shadow-hover);
 }
 
+.category-card {
+  display: block;
+  color: var(--text);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.category-card:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.4);
+  outline-offset: 4px;
+}
+
+.category-card h3 {
+  color: var(--dark);
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.35rem;
+  transition: color 0.2s ease;
+}
+
+.category-card:hover h3 {
+  color: var(--primary);
+}
+
+.category-card p {
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.category-card .category-icon img {
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover .category-icon img {
+  transform: scale(1.08) translateY(-2px);
+}
+
 .category-icon,
 .benefit-icon {
   font-size: 1.8rem;

@@ -999,6 +999,21 @@
     });
 
     updateNavbarUI();
+
+    // Home page quick-search redirect with category & city query params
+    const quickBtn = document.getElementById("quick-find-vehicle-btn");
+    const quickCat = document.getElementById("quick-search-category");
+    const quickCity = document.getElementById("quick-search-city");
+    if (quickBtn && quickCat) {
+      const updateQuickHref = () => {
+        const cat = encodeURIComponent((quickCat.value || "all").toLowerCase());
+        const city = quickCity ? encodeURIComponent(quickCity.value || "") : "";
+        quickBtn.href = `./vehicles.html?category=${cat}${city ? `&city=${city}` : ""}#vehicles-heading`;
+      };
+      quickCat.addEventListener("change", updateQuickHref);
+      quickCity?.addEventListener("change", updateQuickHref);
+      updateQuickHref();
+    }
   });
 })();
 
