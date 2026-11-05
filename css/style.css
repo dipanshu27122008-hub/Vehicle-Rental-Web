@@ -45,10 +45,9 @@ body::after {
   content: '';
   position: fixed;
   border-radius: 50%;
-  filter: blur(75px);
+  filter: blur(70px);
   pointer-events: none;
   z-index: -1;
-  will-change: transform;
 }
 
 body::before {
@@ -57,7 +56,6 @@ body::before {
   top: 8%;
   left: -100px;
   background: radial-gradient(circle, rgba(37, 99, 235, 0.24), transparent 70%);
-  animation: orbFloatA 22s ease-in-out infinite;
 }
 
 body::after {
@@ -66,19 +64,6 @@ body::after {
   bottom: 5%;
   right: -120px;
   background: radial-gradient(circle, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.18), transparent 70%);
-  animation: orbFloatB 26s ease-in-out infinite;
-}
-
-@keyframes orbFloatA {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(45px, -35px) scale(1.08); }
-  66% { transform: translate(-30px, 25px) scale(0.94); }
-}
-
-@keyframes orbFloatB {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-40px, 30px) scale(0.92); }
-  66% { transform: translate(35px, -40px) scale(1.06); }
 }
 
 img {
@@ -186,105 +171,21 @@ a {
   gap: 2.5rem;
   align-items: center;
   padding: 3rem 0 2.5rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-ambient-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
 }
 
 .hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
+  display: inline-block;
   color: var(--primary);
   font-weight: 700;
   margin-bottom: 1rem;
   font-size: 0.92rem;
-  padding: 0.45rem 1.15rem;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  padding: 0.4rem 1rem;
+  background: rgba(255, 255, 255, 0.66);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   border-radius: 999px;
-  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.95);
-  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.25s ease;
-}
-
-.hero-badge:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.18), inset 0 1px 1px rgba(255, 255, 255, 1);
-}
-
-.live-pulse-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  animation: livePulseDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes livePulseDot {
-  0% {
-    transform: scale(0.9);
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  }
-  70% {
-    transform: scale(1.05);
-    box-shadow: 0 0 0 7px rgba(16, 185, 129, 0);
-  }
-  100% {
-    transform: scale(0.9);
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-  }
-}
-
-.live-bars {
-  display: inline-flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 11px;
-}
-
-.live-bars span {
-  display: block;
-  width: 2.5px;
-  background: var(--primary);
-  border-radius: 2px;
-  animation: liveBarAnim 1.2s ease-in-out infinite alternate;
-}
-
-.live-bars span:nth-child(1) {
-  animation-delay: 0.1s;
-  height: 40%;
-}
-
-.live-bars span:nth-child(2) {
-  animation-delay: 0.35s;
-  height: 85%;
-}
-
-.live-bars span:nth-child(3) {
-  animation-delay: 0.2s;
-  height: 60%;
-}
-
-@keyframes liveBarAnim {
-  0% { height: 25%; opacity: 0.45; }
-  100% { height: 100%; opacity: 1; }
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.9);
 }
 
 .hero-title {
@@ -448,27 +349,8 @@ a {
 .slider-dots button[aria-current="true"] { width: 1.6rem; background: #fff; }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before,
-  body::after,
-  .live-pulse-dot,
-  .live-bars span {
-    animation: none !important;
-  }
-  .reveal,
-  .reveal-fade,
-  .reveal-scale {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-  .hero-image img,
-  .category-card,
-  .vehicle-card,
-  .benefit-card,
-  .testimonial-card,
-  .vehicle-card img,
-  .category-card .category-icon img {
-    transition: none !important;
+  .hero-image img {
+    transition: none;
   }
 }
 
@@ -589,17 +471,14 @@ section {
   border-radius: 22px;
   padding: 1.45rem;
   box-shadow: var(--shadow);
-  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
-              box-shadow 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
-              border-color 0.4s ease;
-  will-change: transform, box-shadow;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .category-card:hover,
 .vehicle-card:hover,
 .benefit-card:hover,
 .testimonial-card:hover {
-  transform: translateY(-8px) scale(1.015);
+  transform: translateY(-8px);
   border-color: rgba(255, 255, 255, 0.96);
   box-shadow: var(--shadow-hover);
 }
@@ -608,14 +487,6 @@ section {
 .benefit-icon {
   font-size: 1.8rem;
   margin-bottom: 0.7rem;
-}
-
-.category-card .category-icon img {
-  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.category-card:hover .category-icon img {
-  transform: scale(1.08) translateY(-3px);
 }
 
 .vehicle-card {
@@ -631,51 +502,6 @@ section {
   border: 1px solid rgba(255, 255, 255, 0.75);
   border-radius: 14px;
   margin-bottom: 0.9rem;
-  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.vehicle-card:hover img {
-  transform: scale(1.04);
-}
-
-/* Scroll-Driven Reveal System (Modern Web Guidance: scroll-entry-exit-effects & motion) */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
-              transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
-  transition-delay: var(--reveal-delay, 0s);
-  will-change: opacity, transform;
-}
-
-.reveal.is-in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-fade {
-  opacity: 0;
-  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
-  transition-delay: var(--reveal-delay, 0s);
-  will-change: opacity;
-}
-
-.reveal-fade.is-in {
-  opacity: 1;
-}
-
-.reveal-scale {
-  opacity: 0;
-  transform: scale(0.96) translateY(20px);
-  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
-              transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
-  transition-delay: var(--reveal-delay, 0s);
-  will-change: opacity, transform;
-}
-
-.reveal-scale.is-in {
-  opacity: 1;
-  transform: scale(1) translateY(0);
 }
 
 .vehicle-type,

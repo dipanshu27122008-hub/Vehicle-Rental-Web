@@ -43,7 +43,6 @@ const jsFiles = [
   'js/gallery.js',
   'js/provider-dashboard.js',
   'js/admin-dashboard.js',
-  'js/hero-ambient.js',
   'api/_lib/supabase.js',
   'api/_lib/pricing.js',
   'api/marketplace.js',
