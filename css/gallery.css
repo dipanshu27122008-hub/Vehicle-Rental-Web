@@ -22,7 +22,7 @@
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--glass-border);
     border-radius: 999px;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 52, 142, 0.1);
 }
 
 .gallery-hero {
@@ -126,9 +126,9 @@
 .filter-button:hover,
 .filter-button.active {
     color: #fff;
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    background: linear-gradient(135deg, #0a47a8 0%, #00348e 100%);
     border-color: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+    box-shadow: 0 6px 16px rgba(0, 52, 142, 0.32);
 }
 
 .gallery-grid {

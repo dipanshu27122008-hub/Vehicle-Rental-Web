@@ -22,7 +22,7 @@
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--glass-border);
     border-radius: 999px;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 52, 142, 0.1);
 }
 
 .section-heading {
@@ -227,7 +227,7 @@
 .form-field textarea:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, .2);
+    box-shadow: 0 0 0 3px rgba(0, 52, 142, 0.2);
 }
 
 .form-field input.is-invalid,

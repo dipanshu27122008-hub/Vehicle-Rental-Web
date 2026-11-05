@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div style="flex:1;min-width:240px;">
           <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.25rem;">
             <strong id="studio-title" style="font-size:1.15rem;color:var(--dark);">${currentVehicle.name}</strong>
-            <span id="studio-cat-tag" style="background:rgba(37,99,235,0.12);color:var(--primary);font-size:0.75rem;padding:0.2rem 0.6rem;border-radius:12px;font-weight:700;">${currentVehicle.category}</span>
+            <span id="studio-cat-tag" style="background:rgba(0,52,142,0.12);color:var(--primary);font-size:0.75rem;padding:0.2rem 0.6rem;border-radius:12px;font-weight:700;">${currentVehicle.category}</span>
           </div>
           <span id="studio-mode" style="display:block;font-size:0.82rem;color:#64748b;">
             🔄 Drag left/right, swipe on mobile, or scrub slider (${angleLabels[0]})

@@ -675,7 +675,7 @@
             <td><strong>₹${gross.toLocaleString("en-IN")}</strong></td>
             <td style="color:#b45309;">-₹${fee.toLocaleString("en-IN")}</td>
             <td style="color:${late > 0 ? '#15803d' : '#64748b'}; font-weight:${late > 0 ? '700' : 'normal'};">+₹${late.toLocaleString("en-IN")}</td>
-            <td><strong style="color:#2563eb; font-size:0.95rem;">₹${net.toLocaleString("en-IN")}</strong></td>
+            <td><strong style="color:#00348e; font-size:0.95rem;">₹${net.toLocaleString("en-IN")}</strong></td>
             <td><span class="badge-pill badge-verified"><i class="fa-solid fa-circle-check"></i> SETTLED</span></td>
             <td>
               <button type="button" class="btn-glass" style="padding:0.3rem 0.6rem; font-size:0.75rem;" data-book-invoice="${bId}">

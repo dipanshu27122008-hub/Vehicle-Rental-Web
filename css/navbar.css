@@ -32,7 +32,7 @@
 
 .nav-toggle:focus-visible,
 .nav-link:focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.4);
+  outline: 3px solid rgba(0, 52, 142, 0.4);
   outline-offset: 4px;
 }
 

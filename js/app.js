@@ -144,7 +144,7 @@
     .total-row td { font-weight: 800; font-size: 1.05rem; background: #eff6ff; }
     .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; font-size: 0.92rem; }
     .print-bar { text-align: right; margin-bottom: 1rem; max-width: 740px; margin-inline: auto; }
-    .btn { padding: 0.6rem 1.2rem; background: #2563eb; color: #fff; border: 0; border-radius: 999px; font-weight: 700; cursor: pointer; }
+    .btn { padding: 0.6rem 1.2rem; background: #00348e; color: #fff; border: 0; border-radius: 999px; font-weight: 700; cursor: pointer; }
     @media print { .print-bar { display: none; } body { background: #fff; margin: 0; } .sheet { box-shadow: none; border: 0; } }
   </style>
 </head>
@@ -153,7 +153,7 @@
   <div class="sheet">
     <div class="top">
       <div>
-        <h1 style="margin:0;color:#2563eb;">DRIVORA</h1>
+        <h1 style="margin:0;color:#00348e;">DRIVORA</h1>
         <p style="margin:0.2rem 0 0;color:#475569;font-size:0.9rem;">Vehicle Rental Marketplace • Jaipur, Delhi &amp; Mumbai</p>
         <p style="margin:0.15rem 0 0;font-weight:700;font-size:0.95rem;">${docTitle}</p>
       </div>
@@ -694,7 +694,7 @@
 
     const bookings = JSON.parse(localStorage.getItem("drivora-bookings") || "[]");
     const notifs = JSON.parse(localStorage.getItem(NOTIF_STORAGE_KEY) || "[]");
-    const roleBadgeColor = session.user.role === "admin" ? "#b91c1c" : session.user.role === "provider" ? "#2563eb" : "#166534";
+    const roleBadgeColor = session.user.role === "admin" ? "#b91c1c" : session.user.role === "provider" ? "#00348e" : "#166534";
 
     accountModalEl.innerHTML = `
       <div class="booking-modal__backdrop" data-close-auth></div>
