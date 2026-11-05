@@ -25,7 +25,7 @@
                 <li class="nav-item"><a href="./gallery.html" class="nav-link active" aria-current="page">Gallery</a>
                 </li>
                 <li class="nav-item"><a href="./contact.html" class="nav-link">Contact</a></li>
-                <li class="nav-item"><a href="./contact.html" class="nav-link book-now">Book Now</a></li>
+                <li class="nav-item"><a href="./vehicles.html#vehicles-heading" class="nav-link book-now">Book Now</a></li>
             </ul>
         </nav>
     </header>
@@ -62,76 +62,94 @@
             </div>
 
             <div class="gallery-grid">
-                <article class="gallery-card gallery-card-featured"><img src="./assets/vehicles/bmw x5.jpg"
+                <article class="gallery-card gallery-card-featured" data-vehicle-id="bmw-x5"><img src="./assets/vehicles/bmw x5.jpg"
                         alt="BMW X5 luxury SUV">
                     <div class="gallery-overlay">
                         <p>SUV</p>
                         <h3>BMW X5</h3>
                     </div>
                 </article>
-                <article class="gallery-card"><img src="./assets/vehicles/convertiblemini.jpg" alt="MINI Cooper Convertible">
+                <article class="gallery-card" data-vehicle-id="mercedes-c-class"><img src="./assets/vehicles/c class.jpg" alt="Mercedes-Benz C-Class">
                     <div class="gallery-overlay">
-                        <p>convertible</p>
+                        <p>Luxury</p>
+                        <h3>Mercedes-Benz C-Class</h3>
+                    </div>
+                </article>
+                <article class="gallery-card" data-vehicle-id="mini-convertible"><img src="./assets/vehicles/convertiblemini.jpg" alt="MINI Cooper Convertible">
+                    <div class="gallery-overlay">
+                        <p>Convertible</p>
                         <h3>MINI Cooper Convertible</h3>
                     </div>
                 </article>
-                <article class="gallery-card"><img src="./assets/vehicles/bikegt650.jpg" alt="Royal Enfield Continental GT 650 bike">
+                <article class="gallery-card" data-vehicle-id="audi-q7"><img src="./assets/vehicles/audi q7.jpg" alt="Audi Q7">
+                    <div class="gallery-overlay">
+                        <p>SUV</p>
+                        <h3>Audi Q7</h3>
+                    </div>
+                </article>
+                <article class="gallery-card" data-vehicle-id="bikegt650"><img src="./assets/vehicles/bikegt650.jpg" alt="Royal Enfield Continental GT 650 bike">
                     <div class="gallery-overlay">
                         <p>Bike</p>
                         <h3>Royal Enfield Continental GT 650</h3>
                     </div>
                 </article>
-                <article class="gallery-card gallery-card-tall"><img src="./assets/vehicles/model 3.jpg"
+                <article class="gallery-card gallery-card-tall" data-vehicle-id="tesla-model-3"><img src="./assets/vehicles/model 3.jpg"
                         alt="Tesla Model 3 electric vehicle">
                     <div class="gallery-overlay">
                         <p>Electric</p>
                         <h3>Tesla Model 3</h3>
                     </div>
                 </article>
-                <article class="gallery-card"><img src="./assets/vehicles/electricscooterolas1.jpg" alt="Ola S1 Pro">
+                <article class="gallery-card" data-vehicle-id="royal-enfield-classic"><img src="./assets/vehicles/bullet.jpg" alt="Royal Enfield Bullet 350">
+                    <div class="gallery-overlay">
+                        <p>Bike</p>
+                        <h3>Royal Enfield Bullet 350</h3>
+                    </div>
+                </article>
+                <article class="gallery-card" data-vehicle-id="ola-s1"><img src="./assets/vehicles/electricscooterolas1.jpg" alt="Ola S1 Pro">
                     <div class="gallery-overlay">
                         <p>Electric Scooter</p>
                         <h3>Ola S1 Pro</h3>
                     </div>
                 </article>
-                <article class="gallery-card"><img src="./assets/vehicles/vancommuter.jpg" alt="Toyota HiAce Commuter Van">
+                <article class="gallery-card" data-vehicle-id="toyota-commuter-van"><img src="./assets/vehicles/vancommuter.jpg" alt="Toyota HiAce Commuter Van">
                     <div class="gallery-overlay">
                         <p>Van</p>
                         <h3>Toyota HiAce Commuter Van</h3>
                     </div>
                 </article>
-                <article class="gallery-card"><img src="./assets/vehicles/sportsvirtusgt.jpg"
+                <article class="gallery-card" data-vehicle-id="volkswagen-virtus-gt"><img src="./assets/vehicles/sportsvirtusgt.jpg"
                         alt="Volkswagen Virtus GT">
                     <div class="gallery-overlay">
                         <p>Sports</p>
                         <h3>Volkswagen Virtus GT</h3>
                     </div>
                 </article>
-                <article class="gallery-card"><img src="./assets/vehicles/pickupisuzu.jpg" alt="Isuzu D-Max V-Cross Pickup Truck">
+                <article class="gallery-card" data-vehicle-id="isuzu-pickup"><img src="./assets/vehicles/pickupisuzu.jpg" alt="Isuzu D-Max V-Cross Pickup Truck">
                     <div class="gallery-overlay">
                         <p>Pickup</p>
                         <h3>Isuzu D-Max V-Cross</h3>
                     </div>
                 </article>
-                <article class="gallery-card"><img src="./assets/vehicles/hatchbackaltroz.jpg" alt="Tata Altroz Racer">
+                <article class="gallery-card" data-vehicle-id="tata-altroz"><img src="./assets/vehicles/hatchbackaltroz.jpg" alt="Tata Altroz Racer">
                     <div class="gallery-overlay">
                         <p>Hatchback</p>
                         <h3>Tata Altroz Racer</h3>
                     </div>
                 </article>
-                <article class="gallery-card"><img src="./assets/vehicles/sedanhondacity.jpg" alt="Honda city">
+                <article class="gallery-card" data-vehicle-id="honda-city"><img src="./assets/vehicles/sedanhondacity.jpg" alt="Honda city">
                     <div class="gallery-overlay">
                         <p>Sedan</p>
                         <h3>Honda City</h3>
                     </div>
                 </article>
-                <article class="gallery-card"><img src="./assets/vehicles/luxuryi7.jpg" alt="BMW i7 xDrive60">
+                <article class="gallery-card" data-vehicle-id="bmw-i7"><img src="./assets/vehicles/luxuryi7.jpg" alt="BMW i7 xDrive60">
                     <div class="gallery-overlay">
-                        <p>luxury</p>
+                        <p>Luxury</p>
                         <h3>BMW i7 xDrive60</h3>
                     </div>
                 </article>
-                <article class="gallery-card"><img src="./assets/vehicles/minivantoyotahiace.jpg"
+                <article class="gallery-card" data-vehicle-id="toyota-hiace"><img src="./assets/vehicles/minivantoyotahiace.jpg"
                         alt="Toyota HiAce Luxury Minivan">
                     <div class="gallery-overlay">
                         <p>Minivan</p>
@@ -176,6 +194,7 @@
         <p class="footer-copy">&copy; 2026 Drivora. All rights reserved.</p>
     </footer>
     <script src="./js/app.js"></script>
+    <script src="./js/vehicle-data.js"></script>
     <script src="./js/navbar.js"></script>
     <script src="./js/gallery.js"></script>
 </body>

@@ -391,6 +391,10 @@ async function testApiEndpoints() {
   const providerHtml = fs.readFileSync('provider-dashboard.html', 'utf8');
   const appJs = fs.readFileSync('js/app.js', 'utf8');
   const providerJs = fs.readFileSync('js/provider-dashboard.js', 'utf8');
+  const adminJs = fs.readFileSync('js/admin-dashboard.js', 'utf8');
+  const contactHtml = fs.readFileSync('contact.html', 'utf8');
+  const indexHtml = fs.readFileSync('index.html', 'utf8');
+  const galleryHtml = fs.readFileSync('gallery.html', 'utf8');
 
   assert(providerHtml.includes('data-tab="earnings"'), 'provider-dashboard.html has Earnings & Settlements tab button');
   assert(providerHtml.includes('id="tab-earnings"'), 'provider-dashboard.html contains #tab-earnings section');
@@ -406,6 +410,10 @@ async function testApiEndpoints() {
   assert(appJs.includes('openResetModal'), 'js/app.js implements openResetModal()');
   assert(appJs.includes('openAccountModal'), 'js/app.js implements openAccountModal()');
   assert(!providerJs.includes('window.prompt('), 'js/provider-dashboard.js has zero window.prompt calls (replaced by custom modals)');
+  assert(!adminJs.includes('window.prompt('), 'js/admin-dashboard.js has zero window.prompt calls (replaced by custom modals)');
+  assert(contactHtml.includes('href="tel:+919216660715"'), 'contact.html phone href matches display number +91 9216660715');
+  assert(indexHtml.includes('href="./vehicles.html#vehicles-heading" class="nav-link book-now"'), 'index.html book-now points to vehicles fleet');
+  assert(galleryHtml.includes('data-vehicle-id="bmw-x5"'), 'gallery.html cards include data-vehicle-id for 360 sync');
 
   console.log('\n====================================================');
   console.log(`VERIFICATION SUMMARY: Total ${totalTests} | Passed: ${passedTests} | Failed: ${failedTests}`);

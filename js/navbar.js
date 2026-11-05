@@ -16,6 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     toggle.addEventListener("click", () => setMenuState(!navbar.classList.contains("is-open")));
     links.forEach((link) => link.addEventListener("click", () => setMenuState(false)));
+    
+    // Auto-close mobile drawer when tapping dynamic auth buttons
+    document.addEventListener("click", (event) => {
+        if (event.target.closest("#nav-signin-btn, #nav-signup-btn, #nav-account-btn, #nav-notif-btn, #nav-quick-signout-btn")) {
+            setMenuState(false);
+        }
+    });
+    window.closeMobileNavbar = () => setMenuState(false);
+
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") setMenuState(false);
     });

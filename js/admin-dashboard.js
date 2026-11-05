@@ -82,6 +82,61 @@
     el.innerHTML = message;
   }
 
+  function openAdminPromptModal({ title, subtitle, label, defaultValue, onConfirm }) {
+    let modalEl = document.getElementById("admin-prompt-modal");
+    if (!modalEl) {
+      modalEl = document.createElement("div");
+      modalEl.id = "admin-prompt-modal";
+      modalEl.className = "booking-modal";
+      modalEl.innerHTML = `
+        <div class="booking-modal__backdrop" data-close-prompt></div>
+        <section class="booking-modal__dialog auth-modal-dialog" role="dialog" aria-modal="true" style="max-width:540px;">
+          <button class="booking-modal__close" type="button" aria-label="Close" data-close-prompt>&times;</button>
+          <div class="auth-header" style="margin-bottom:1rem;">
+            <div class="auth-logo"><i class="fa-solid fa-gavel"></i></div>
+            <h2 id="admin-prompt-title" style="font-size:1.3rem;">Adjudication Decision</h2>
+            <p id="admin-prompt-subtitle" style="font-size:0.86rem;color:#64748b;"></p>
+          </div>
+          <form id="admin-prompt-form">
+            <label id="admin-prompt-label" for="admin-prompt-input" style="display:block;font-weight:700;margin-bottom:0.4rem;font-size:0.86rem;color:#0f172a;"></label>
+            <textarea id="admin-prompt-input" rows="4" required style="width:100%;box-sizing:border-box;padding:0.75rem;border-radius:12px;border:1px solid rgba(148,163,184,0.4);font-family:inherit;font-size:0.9rem;resize:vertical;background:rgba(255,255,255,0.9);"></textarea>
+            <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1.25rem;">
+              <button type="button" class="btn btn-secondary" data-close-prompt style="padding:0.6rem 1.2rem;">Cancel</button>
+              <button type="submit" class="btn btn-primary" id="admin-prompt-submit-btn" style="padding:0.6rem 1.4rem;">Confirm &amp; Record</button>
+            </div>
+          </form>
+        </section>
+      `;
+      document.body.appendChild(modalEl);
+      modalEl.querySelectorAll("[data-close-prompt]").forEach((b) =>
+        b.addEventListener("click", () => {
+          modalEl.hidden = true;
+          modalEl.setAttribute("aria-hidden", "true");
+        })
+      );
+    }
+
+    modalEl.querySelector("#admin-prompt-title").textContent = title || "Administrator Decision";
+    modalEl.querySelector("#admin-prompt-subtitle").textContent = subtitle || "";
+    modalEl.querySelector("#admin-prompt-label").textContent = label || "Decision / Audit Note:";
+    const input = modalEl.querySelector("#admin-prompt-input");
+    input.value = defaultValue || "";
+
+    const form = modalEl.querySelector("#admin-prompt-form");
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const val = input.value.trim();
+      if (!val) return;
+      modalEl.hidden = true;
+      modalEl.setAttribute("aria-hidden", "true");
+      onConfirm(val);
+    };
+
+    modalEl.hidden = false;
+    modalEl.setAttribute("aria-hidden", "false");
+    setTimeout(() => input.focus(), 50);
+  }
+
   function logLocalAudit(action, targetType, targetId, metadata) {
     const user = getCurrentUser();
     const entry = {
@@ -622,43 +677,45 @@
           return;
         }
 
-        const notes = window.prompt(
-          `Enter reviewer audit note for marking ${record.applicant_name || record.id} as ${decision.toUpperCase()}:`,
-          decision === "approved"
+        openAdminPromptModal({
+          title: `KYC Review: ${decision.toUpperCase()}`,
+          subtitle: `Applicant: ${record.applicant_name || record.id} (${record.residency_type || "Customer"})`,
+          label: "Enter reviewer audit note for compliance:",
+          defaultValue: decision === "approved"
             ? "Verified DL + ID last-4 and commercial permit validity."
-            : "Document image blurry or expiry mismatch; please resubmit."
-        );
-        if (notes === null) return;
+            : "Document image blurry or expiry mismatch; please resubmit.",
+          onConfirm: async (notes) => {
+            record.status = decision;
+            record.reviewer_notes = notes;
+            record.reviewed_at = new Date().toISOString();
 
-        record.status = decision;
-        record.reviewer_notes = notes.trim();
-        record.reviewed_at = new Date().toISOString();
+            try {
+              await fetch("/api/marketplace?action=verification", {
+                method: "PATCH",
+                headers: getAuthHeaders(),
+                body: JSON.stringify({
+                  id: record.id,
+                  status: decision,
+                  reviewer_notes: record.reviewer_notes,
+                }),
+              });
+            } catch (err) {
+              // local fallback
+            }
 
-        try {
-          await fetch("/api/marketplace?action=verification", {
-            method: "PATCH",
-            headers: getAuthHeaders(),
-            body: JSON.stringify({
-              id: record.id,
-              status: decision,
-              reviewer_notes: record.reviewer_notes,
-            }),
-          });
-        } catch (err) {
-          // local fallback
-        }
+            writeLocalJson(LOCAL_KYC_KEY, kycRecords);
+            logLocalAudit(`kyc_${decision}`, "identity_verifications", record.id, {
+              applicant: record.applicant_name,
+              residency_type: record.residency_type,
+              notes: record.reviewer_notes,
+            });
 
-        writeLocalJson(LOCAL_KYC_KEY, kycRecords);
-        logLocalAudit(`kyc_${decision}`, "identity_verifications", record.id, {
-          applicant: record.applicant_name,
-          residency_type: record.residency_type,
-          notes: record.reviewer_notes,
+            showAdminFeedback(
+              `KYC verification for <strong>${escapeHtml(record.applicant_name)}</strong> updated to <strong>${escapeHtml(decision.toUpperCase())}</strong> and recorded in audit trail.`
+            );
+            await loadAdminDashboard();
+          }
         });
-
-        showAdminFeedback(
-          `KYC verification for <strong>${escapeHtml(record.applicant_name)}</strong> updated to <strong>${escapeHtml(decision.toUpperCase())}</strong> and recorded in audit trail.`
-        );
-        await loadAdminDashboard();
       });
     }
 
@@ -791,22 +848,24 @@
         const insp = allInspections[idx];
         if (!insp) return;
 
-        const resolution = window.prompt(
-          `Enter deposit adjudication decision for Booking ${insp.booking_id}:`,
-          "Verified pre-pickup photos; ₹1,500 deducted for bumper scratch, remaining ₹3,500 deposit refunded to customer."
-        );
-        if (!resolution) return;
+        openAdminPromptModal({
+          title: "Adjudicate Deposit Dispute",
+          subtitle: `Booking ${insp.booking_id} — Disputed Return Condition`,
+          label: "Enter deposit adjudication decision & audit note:",
+          defaultValue: "Verified pre-pickup photos; ₹1,500 deducted for bumper scratch, remaining ₹3,500 deposit refunded to customer.",
+          onConfirm: async (resolution) => {
+            insp.dispute_resolved = true;
+            insp.resolution_note = resolution;
+            writeLocalJson(LOCAL_INSPECTIONS_KEY, allInspections);
 
-        insp.dispute_resolved = true;
-        insp.resolution_note = resolution.trim();
-        writeLocalJson(LOCAL_INSPECTIONS_KEY, allInspections);
-
-        logLocalAudit("resolve_deposit_dispute", "pickup_return_inspections", insp.id, {
-          booking_id: insp.booking_id,
-          resolution: insp.resolution_note,
+            logLocalAudit("resolve_deposit_dispute", "pickup_return_inspections", insp.id, {
+              booking_id: insp.booking_id,
+              resolution: insp.resolution_note,
+            });
+            showAdminFeedback(`Dispute for Booking <strong>${escapeHtml(insp.booking_id)}</strong> resolved and logged.`);
+            await loadAdminDashboard();
+          }
         });
-        showAdminFeedback(`Dispute for Booking <strong>${escapeHtml(insp.booking_id)}</strong> resolved and logged.`);
-        await loadAdminDashboard();
       });
     }
 

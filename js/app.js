@@ -244,6 +244,9 @@
   let accountModalEl = null;
 
   function closeAllAuthModals() {
+    if (typeof window !== "undefined" && typeof window.closeMobileNavbar === "function") {
+      try { window.closeMobileNavbar(); } catch {}
+    }
     [signInModalEl, signUpModalEl, resetModalEl, accountModalEl].forEach((m) => {
       if (m) {
         m.hidden = true;
