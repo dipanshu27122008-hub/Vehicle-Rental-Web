@@ -54,8 +54,15 @@ window.vehicleCatalog = {
     providerName: "Rajputana Luxury Fleet",
     providerVerified: true,
     image: "./assets/vehicles/bmw x5.jpg",
+    frames360: [
+      "./assets/vehicles/bmw x5.jpg",
+      "./assets/vehicles/360/bmw-x5-2.jpg",
+      "./assets/vehicles/360/bmw-x5-3.jpg"
+    ],
     photos: [
       "./assets/vehicles/bmw x5.jpg",
+      "./assets/vehicles/360/bmw-x5-2.jpg",
+      "./assets/vehicles/360/bmw-x5-3.jpg",
       "./assets/hero/car1.png",
       "./assets/vehicles/about1.jpg",
       "./assets/vehicles/about2.jpg"
@@ -66,7 +73,7 @@ window.vehicleCatalog = {
   },
   "mercedes-c-class": {
     id: "mercedes-c-class",
-    name: "Mercedes C-Class",
+    name: "Mercedes-Benz C-Class",
     modelYear: 2023,
     category: "Sedan",
     transmission: "Automatic",
@@ -83,8 +90,15 @@ window.vehicleCatalog = {
     providerName: "Capital Executive Mobility",
     providerVerified: true,
     image: "./assets/vehicles/c class.jpg",
+    frames360: [
+      "./assets/vehicles/c class.jpg",
+      "./assets/vehicles/360/mercedes-c-class-2.jpg",
+      "./assets/vehicles/360/mercedes-c-class-3.jpg"
+    ],
     photos: [
       "./assets/vehicles/c class.jpg",
+      "./assets/vehicles/360/mercedes-c-class-2.jpg",
+      "./assets/vehicles/360/mercedes-c-class-3.jpg",
       "./assets/hero/car2.jpg",
       "./assets/hero/car3.jpg"
     ],
@@ -111,8 +125,15 @@ window.vehicleCatalog = {
     providerName: "VoltDrive Mumbai",
     providerVerified: true,
     image: "./assets/vehicles/model 3.jpg",
+    frames360: [
+      "./assets/vehicles/model 3.jpg",
+      "./assets/vehicles/360/tesla-model-3-2.jpg",
+      "./assets/vehicles/360/tesla-model-3-3.jpg"
+    ],
     photos: [
       "./assets/vehicles/model 3.jpg",
+      "./assets/vehicles/360/tesla-model-3-2.jpg",
+      "./assets/vehicles/360/tesla-model-3-3.jpg",
       "./assets/vehicles/luxuryi7.jpg",
       "./assets/hero/car4.jpg"
     ],
@@ -139,8 +160,15 @@ window.vehicleCatalog = {
     providerName: "Rajputana Luxury Fleet",
     providerVerified: true,
     image: "./assets/vehicles/audi q7.jpg",
+    frames360: [
+      "./assets/vehicles/audi q7.jpg",
+      "./assets/vehicles/360/audi-q7-2.jpg",
+      "./assets/vehicles/360/audi-q7-3.jpg"
+    ],
     photos: [
       "./assets/vehicles/audi q7.jpg",
+      "./assets/vehicles/360/audi-q7-2.jpg",
+      "./assets/vehicles/360/audi-q7-3.jpg",
       "./assets/vehicles/bmw x5.jpg",
       "./assets/vehicles/about1.jpg"
     ],
@@ -167,8 +195,15 @@ window.vehicleCatalog = {
     providerName: "PinkCity Auto Rentals",
     providerVerified: true,
     image: "./assets/vehicles/honda city.jpg",
+    frames360: [
+      "./assets/vehicles/honda city.jpg",
+      "./assets/vehicles/360/honda-city-2.jpg",
+      "./assets/vehicles/360/honda-city-3.jpg"
+    ],
     photos: [
       "./assets/vehicles/honda city.jpg",
+      "./assets/vehicles/360/honda-city-2.jpg",
+      "./assets/vehicles/360/honda-city-3.jpg",
       "./assets/vehicles/sedanhondacity.jpg"
     ],
     rating: 4.5,
@@ -177,7 +212,7 @@ window.vehicleCatalog = {
   },
   "royal-enfield-classic": {
     id: "royal-enfield-classic",
-    name: "Royal Enfield Classic",
+    name: "Royal Enfield Bullet 350",
     modelYear: 2024,
     category: "Bike",
     transmission: "Manual",
@@ -194,8 +229,15 @@ window.vehicleCatalog = {
     providerName: "Thar Moto Expeditions",
     providerVerified: true,
     image: "./assets/vehicles/bullet.jpg",
+    frames360: [
+      "./assets/vehicles/bullet.jpg",
+      "./assets/vehicles/360/royal-enfield-classic-2.jpg",
+      "./assets/vehicles/360/royal-enfield-classic-3.jpg"
+    ],
     photos: [
       "./assets/vehicles/bullet.jpg",
+      "./assets/vehicles/360/royal-enfield-classic-2.jpg",
+      "./assets/vehicles/360/royal-enfield-classic-3.jpg",
       "./assets/vehicles/bikegt650.jpg"
     ],
     rating: 4.6,
@@ -204,7 +246,7 @@ window.vehicleCatalog = {
   },
   "mini-convertible": {
     id: "mini-convertible",
-    name: "Mini Convertible",
+    name: "MINI Cooper Convertible",
     modelYear: 2022,
     category: "Convertible",
     transmission: "Automatic",
@@ -221,8 +263,15 @@ window.vehicleCatalog = {
     providerName: "Coastal Cabrio Hub",
     providerVerified: true,
     image: "./assets/vehicles/convertiblemini.jpg",
+    frames360: [
+      "./assets/vehicles/convertiblemini.jpg",
+      "./assets/vehicles/360/mini-convertible-2.jpg",
+      "./assets/vehicles/360/mini-convertible-3.jpg"
+    ],
     photos: [
       "./assets/vehicles/convertiblemini.jpg",
+      "./assets/vehicles/360/mini-convertible-2.jpg",
+      "./assets/vehicles/360/mini-convertible-3.jpg",
       "./assets/hero/car3.jpg"
     ],
     rating: 4.5,
@@ -231,7 +280,7 @@ window.vehicleCatalog = {
   },
   "continental-gt-650": {
     id: "continental-gt-650",
-    name: "Continental GT 650",
+    name: "Royal Enfield Continental GT 650",
     modelYear: 2025,
     category: "Bike",
     transmission: "Manual",
@@ -248,8 +297,15 @@ window.vehicleCatalog = {
     providerName: "Thar Moto Expeditions",
     providerVerified: true,
     image: "./assets/vehicles/bikegt650.jpg",
+    frames360: [
+      "./assets/vehicles/bikegt650.jpg",
+      "./assets/vehicles/360/continental-gt-650-2.jpg",
+      "./assets/vehicles/360/continental-gt-650-3.jpg"
+    ],
     photos: [
       "./assets/vehicles/bikegt650.jpg",
+      "./assets/vehicles/360/continental-gt-650-2.jpg",
+      "./assets/vehicles/360/continental-gt-650-3.jpg",
       "./assets/vehicles/bullet.jpg"
     ],
     rating: 4.8,
@@ -258,7 +314,7 @@ window.vehicleCatalog = {
   },
   "ola-s1": {
     id: "ola-s1",
-    name: "Ola S1",
+    name: "Ola S1 Pro",
     modelYear: 2024,
     category: "Electric Scooter",
     transmission: "Automatic",
@@ -275,14 +331,22 @@ window.vehicleCatalog = {
     providerName: "GreenRide Jaipur",
     providerVerified: false,
     image: "./assets/vehicles/electricscooterolas1.jpg",
-    photos: ["./assets/vehicles/electricscooterolas1.jpg"],
+    frames360: [
+      "./assets/vehicles/electricscooterolas1.jpg",
+      "./assets/vehicles/360/ola-s1-2.jpg",
+      "./assets/vehicles/360/ola-s1-3.jpg"
+    ],
+    photos: [
+      "./assets/vehicles/electricscooterolas1.jpg",
+      "./assets/vehicles/360/ola-s1-2.jpg",
+      "./assets/vehicles/360/ola-s1-3.jpg",],
     rating: 4.4,
     reviewCount: 14,
     availability: "available"
   },
   "toyota-commuter-van": {
     id: "toyota-commuter-van",
-    name: "Toyota Commuter Van",
+    name: "Toyota HiAce Commuter Van",
     modelYear: 2023,
     category: "Van",
     transmission: "Manual",
@@ -299,8 +363,15 @@ window.vehicleCatalog = {
     providerName: "Capital Executive Mobility",
     providerVerified: true,
     image: "./assets/vehicles/vancommuter.jpg",
+    frames360: [
+      "./assets/vehicles/vancommuter.jpg",
+      "./assets/vehicles/360/toyota-commuter-van-2.jpg",
+      "./assets/vehicles/360/toyota-commuter-van-3.jpg"
+    ],
     photos: [
       "./assets/vehicles/vancommuter.jpg",
+      "./assets/vehicles/360/toyota-commuter-van-2.jpg",
+      "./assets/vehicles/360/toyota-commuter-van-3.jpg",
       "./assets/vehicles/minivantoyotahiace.jpg"
     ],
     rating: 4.6,
@@ -326,8 +397,15 @@ window.vehicleCatalog = {
     providerName: "Autobahn West Fleet",
     providerVerified: true,
     image: "./assets/vehicles/sportsvirtusgt.jpg",
+    frames360: [
+      "./assets/vehicles/sportsvirtusgt.jpg",
+      "./assets/vehicles/360/volkswagen-virtus-gt-2.jpg",
+      "./assets/vehicles/360/volkswagen-virtus-gt-3.jpg"
+    ],
     photos: [
       "./assets/vehicles/sportsvirtusgt.jpg",
+      "./assets/vehicles/360/volkswagen-virtus-gt-2.jpg",
+      "./assets/vehicles/360/volkswagen-virtus-gt-3.jpg",
       "./assets/hero/car2.jpg"
     ],
     rating: 4.7,
@@ -336,7 +414,7 @@ window.vehicleCatalog = {
   },
   "isuzu-pickup": {
     id: "isuzu-pickup",
-    name: "Isuzu Pickup",
+    name: "Isuzu D-Max V-Cross",
     modelYear: 2022,
     category: "Pickup",
     transmission: "Manual",
@@ -353,14 +431,22 @@ window.vehicleCatalog = {
     providerName: "PinkCity Auto Rentals",
     providerVerified: true,
     image: "./assets/vehicles/pickupisuzu.jpg",
-    photos: ["./assets/vehicles/pickupisuzu.jpg"],
+    frames360: [
+      "./assets/vehicles/pickupisuzu.jpg",
+      "./assets/vehicles/360/isuzu-pickup-2.jpg",
+      "./assets/vehicles/360/isuzu-pickup-3.jpg"
+    ],
+    photos: [
+      "./assets/vehicles/pickupisuzu.jpg",
+      "./assets/vehicles/360/isuzu-pickup-2.jpg",
+      "./assets/vehicles/360/isuzu-pickup-3.jpg",],
     rating: 4.5,
     reviewCount: 10,
     availability: "available"
   },
   "tata-altroz": {
     id: "tata-altroz",
-    name: "Tata Altroz",
+    name: "Tata Altroz Racer",
     modelYear: 2024,
     category: "Hatchback",
     transmission: "Manual",
@@ -377,14 +463,22 @@ window.vehicleCatalog = {
     providerName: "PinkCity Auto Rentals",
     providerVerified: true,
     image: "./assets/vehicles/hatchbackaltroz.jpg",
-    photos: ["./assets/vehicles/hatchbackaltroz.jpg"],
+    frames360: [
+      "./assets/vehicles/hatchbackaltroz.jpg",
+      "./assets/vehicles/360/tata-altroz-2.jpg",
+      "./assets/vehicles/360/tata-altroz-3.jpg"
+    ],
+    photos: [
+      "./assets/vehicles/hatchbackaltroz.jpg",
+      "./assets/vehicles/360/tata-altroz-2.jpg",
+      "./assets/vehicles/360/tata-altroz-3.jpg",],
     rating: 4.4,
     reviewCount: 17,
     availability: "available"
   },
   "bmw-i7": {
     id: "bmw-i7",
-    name: "BMW i7",
+    name: "BMW i7 xDrive60",
     modelYear: 2026,
     category: "Luxury",
     transmission: "Automatic",
@@ -401,8 +495,15 @@ window.vehicleCatalog = {
     providerName: "VoltDrive Mumbai",
     providerVerified: true,
     image: "./assets/vehicles/luxuryi7.jpg",
+    frames360: [
+      "./assets/vehicles/luxuryi7.jpg",
+      "./assets/vehicles/360/bmw-i7-2.jpg",
+      "./assets/vehicles/360/bmw-i7-3.jpg"
+    ],
     photos: [
       "./assets/vehicles/luxuryi7.jpg",
+      "./assets/vehicles/360/bmw-i7-2.jpg",
+      "./assets/vehicles/360/bmw-i7-3.jpg",
       "./assets/vehicles/model 3.jpg",
       "./assets/hero/car4.jpg"
     ],
@@ -412,7 +513,7 @@ window.vehicleCatalog = {
   },
   "toyota-hiace": {
     id: "toyota-hiace",
-    name: "Toyota Hiace",
+    name: "Toyota HiAce Luxury Minivan",
     modelYear: 2023,
     category: "Minivan",
     transmission: "Manual",
@@ -429,8 +530,15 @@ window.vehicleCatalog = {
     providerName: "Capital Executive Mobility",
     providerVerified: true,
     image: "./assets/vehicles/minivantoyotahiace.jpg",
+    frames360: [
+      "./assets/vehicles/minivantoyotahiace.jpg",
+      "./assets/vehicles/360/toyota-hiace-2.jpg",
+      "./assets/vehicles/360/toyota-hiace-3.jpg"
+    ],
     photos: [
       "./assets/vehicles/minivantoyotahiace.jpg",
+      "./assets/vehicles/360/toyota-hiace-2.jpg",
+      "./assets/vehicles/360/toyota-hiace-3.jpg",
       "./assets/vehicles/vancommuter.jpg"
     ],
     rating: 4.6,

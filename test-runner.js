@@ -167,6 +167,18 @@ if (catalogValid) {
   assert(true, 'All catalog vehicles contain valid name, category, price, modelYear, and GPS coordinates');
 }
 
+let frames360Valid = true;
+for (const [id, v] of Object.entries(catalog)) {
+  if (!Array.isArray(v.frames360) || v.frames360.length < 3) {
+    frames360Valid = false;
+    assert(false, `Vehicle ${id} missing required 360 multi-angle frames`);
+    break;
+  }
+}
+if (frames360Valid) {
+  assert(true, 'All catalog vehicles contain at least 3 multi-angle 360 viewer frames');
+}
+
 // Test Haversine formula
 const haversine = catalogSandbox.window.calculateHaversineKm;
 assert(typeof haversine === 'function', 'window.calculateHaversineKm is exported');

@@ -39,11 +39,11 @@ document.addEventListener("DOMContentLoaded", () => {
       { src: "./assets/vehicles/bmw x5.jpg", title: "BMW X5 — Front Quarter Angle", mode: "Multi-Angle Fleet Sequence (Frame 1/8)" },
       { src: "./assets/vehicles/audi q7.jpg", title: "Audi Q7 — Executive Profile", mode: "Multi-Angle Fleet Sequence (Frame 2/8)" },
       { src: "./assets/vehicles/model 3.jpg", title: "Tesla Model 3 — Aero View", mode: "Multi-Angle Fleet Sequence (Frame 3/8)" },
-      { src: "./assets/vehicles/luxuryi7.jpg", title: "BMW i7 — Flagship Saloon", mode: "Multi-Angle Fleet Sequence (Frame 4/8)" },
-      { src: "./assets/vehicles/convertiblemini.jpg", title: "Mini Convertible — Open Top", mode: "Multi-Angle Fleet Sequence (Frame 5/8)" },
-      { src: "./assets/vehicles/sportsvirtusgt.jpg", title: "VW Virtus GT — Dynamic Stance", mode: "Multi-Angle Fleet Sequence (Frame 6/8)" },
-      { src: "./assets/vehicles/bikegt650.jpg", title: "Continental GT 650 — Café Racer", mode: "Multi-Angle Fleet Sequence (Frame 7/8)" },
-      { src: "./assets/vehicles/bullet.jpg", title: "Royal Enfield Classic — Cruiser", mode: "Multi-Angle Fleet Sequence (Frame 8/8)" }
+      { src: "./assets/vehicles/luxuryi7.jpg", title: "BMW i7 xDrive60 — Flagship Saloon", mode: "Multi-Angle Fleet Sequence (Frame 4/8)" },
+      { src: "./assets/vehicles/convertiblemini.jpg", title: "MINI Cooper Convertible — Open Top", mode: "Multi-Angle Fleet Sequence (Frame 5/8)" },
+      { src: "./assets/vehicles/sportsvirtusgt.jpg", title: "Volkswagen Virtus GT — Dynamic Stance", mode: "Multi-Angle Fleet Sequence (Frame 6/8)" },
+      { src: "./assets/vehicles/bikegt650.jpg", title: "Royal Enfield Continental GT 650 — Café Racer", mode: "Multi-Angle Fleet Sequence (Frame 7/8)" },
+      { src: "./assets/vehicles/bullet.jpg", title: "Royal Enfield Bullet 350 — Iconic Cruiser", mode: "Multi-Angle Fleet Sequence (Frame 8/8)" }
     ];
 
     let activeIndex = 0;

@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
       score = summary(activeId),
       reviews = reviewsFor(activeId);
     const frames = Array.isArray(v.frames360) && v.frames360.length > 0 ? v.frames360 : Array.isArray(v.photos) && v.photos.length > 0 ? v.photos : [v.image];
-    const hasTrue360 = Array.isArray(v.frames360) && v.frames360.length >= 6;
+    const hasTrue360 = Array.isArray(v.frames360) && v.frames360.length >= 3;
     frameIndex = frameIndex % frames.length;
 
     const extraRate = v.extraHourRate || Math.round(v.price / 8);
@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <img id="detail-360-img" src="${frames[frameIndex]}" alt="${v.name} angle ${frameIndex + 1} of ${frames.length}">
         </div>
         <div class="viewer-360-toolbar">
-          <span>🔄 ${hasTrue360 ? "360° Interactive Spin Viewer (Drag or Swipe)" : `Multi-Angle Photo Viewer (${frameIndex + 1}/${frames.length}) — True 360° sequence not uploaded, showing verified photos`}</span>
+          <span>🔄 ${hasTrue360 ? `360° Multi-Angle Spin Viewer (${frameIndex + 1}/${frames.length}) — Drag to Rotate or use arrows` : `Multi-Angle Photo Viewer (${frameIndex + 1}/${frames.length}) — Showing verified photos`}</span>
           <div class="viewer-360-controls">
             <button type="button" class="viewer-360-btn" id="viewer-prev-btn" aria-label="Previous angle">◀</button>
             <button type="button" class="viewer-360-btn" id="viewer-next-btn" aria-label="Next angle">▶</button>
@@ -273,8 +273,8 @@ document.addEventListener("DOMContentLoaded", () => {
       frameIndex = (frameIndex + delta + frames.length) % frames.length;
       imgEl.src = frames[frameIndex];
       const labelSpan = content.querySelector(".viewer-360-toolbar span");
-      if (labelSpan && !hasTrue360) {
-        labelSpan.textContent = `🔄 Multi-Angle Photo Viewer (${frameIndex + 1}/${frames.length}) — Drag or use arrows`;
+      if (labelSpan) {
+        labelSpan.textContent = `🔄 ${hasTrue360 ? "360° Multi-Angle Spin Viewer" : "Multi-Angle Photo Viewer"} (${frameIndex + 1}/${frames.length}) — Drag to Rotate or use arrows`;
       }
     };
 

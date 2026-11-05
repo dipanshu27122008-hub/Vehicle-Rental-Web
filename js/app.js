@@ -1000,6 +1000,18 @@
 
     updateNavbarUI();
 
+    // Browse by Category cards: clicking anywhere on the card navigates immediately
+    document.querySelectorAll(".category-card").forEach((card) => {
+      card.style.cursor = "pointer";
+      card.addEventListener("click", (e) => {
+        if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+          e.preventDefault();
+          const category = card.dataset.category || "all";
+          window.location.href = `./vehicles.html?category=${encodeURIComponent(category)}#vehicles-heading`;
+        }
+      });
+    });
+
     // Home page quick-search redirect with category & city query params
     const quickBtn = document.getElementById("quick-find-vehicle-btn");
     const quickCat = document.getElementById("quick-search-category");
