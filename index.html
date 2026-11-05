@@ -32,8 +32,9 @@
 
     <main class="main-content">
         <section class="hero">  
+            <canvas id="hero-ambient-canvas" class="hero-ambient-canvas" aria-hidden="true"></canvas>
             <div class="hero-content">
-                <p class="hero-badge">★★★★★ Premium Rental Service</p>
+                <p class="hero-badge"><span class="live-pulse-dot" aria-hidden="true"></span> ★★★★★ Premium Rental Service <span class="live-bars" aria-hidden="true"><span></span><span></span><span></span></span></p>
                 <h1 class="hero-title">Drive Smarter.<br>Travel Better.</h1>
                 <p class="hero-text">Discover premium vehicles for every journey with comfort, style, and reliability.
                 </p>
@@ -273,6 +274,7 @@
         <p class="footer-copy">© 2026 Drivora. All rights reserved.</p>
     </footer>
     <script src="./js/app.js"></script>
+    <script src="./js/hero-ambient.js" defer></script>
     <script src="./js/vehicle-data.js"></script>
     <script src="./js/navbar.js"></script>
     <script src="./js/slider.js"></script>

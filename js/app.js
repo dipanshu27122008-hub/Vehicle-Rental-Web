@@ -999,7 +999,60 @@
     });
 
     updateNavbarUI();
+    initScrollReveal();
   });
+
+  /**
+   * Scroll-Driven Reveal System (Modern Web Guidance: scroll-entry-exit-effects & motion)
+   * Discovers .reveal elements and applies cubic-bezier transition as they enter viewport.
+   * Gracefully falls back to instantaneous display when prefers-reduced-motion is active.
+   */
+  function initScrollReveal() {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Automatically mark key cards and glass containers for staggered reveal
+    const autoCandidates = document.querySelectorAll(
+      ".category-card, .vehicle-card, .benefit-card, .testimonial-card, .quick-search-box, .stat-card, .glass-panel, .vehicle-stats, .vehicle-controls"
+    );
+    autoCandidates.forEach((el, index) => {
+      if (!el.classList.contains("reveal") && !el.classList.contains("reveal-fade")) {
+        el.classList.add("reveal");
+        const delay = (index % 3) * 0.08;
+        el.style.setProperty("--reveal-delay", `${delay}s`);
+      }
+    });
+
+    const revealElements = document.querySelectorAll(".reveal, .reveal-fade, .reveal-scale");
+    if (!revealElements.length) return;
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      revealElements.forEach((el) => el.classList.add("is-in"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px -40px 0px",
+        threshold: 0.12
+      }
+    );
+
+    revealElements.forEach((el) => observer.observe(el));
+  }
+
+  window.DrivoraReveal = {
+    init: initScrollReveal,
+    refresh: initScrollReveal
+  };
 })();
 
 /** Scroll the current page back to its top. */
